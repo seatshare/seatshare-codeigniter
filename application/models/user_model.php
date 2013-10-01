@@ -147,6 +147,7 @@ class User_Model extends CI_Model {
 			'last_name' => $this->input->post('last_name'),
 			'email' => $this->input->post('email'),
 			'status' => 1,
+			'inserted_ts' => date('c')
 		);
 		
 		$insert = $this->db->insert('users', $insert_user_data);
