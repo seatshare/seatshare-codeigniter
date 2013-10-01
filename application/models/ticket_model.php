@@ -124,7 +124,7 @@ class Ticket_Model extends CI_Model {
 		$record->inserted_ts = date('c');
 
 		$this->db->insert('tickets', $record);
-		return $this->db->insert_id;
+		return $this->db->insert_id();
 	}
 
 	/**
