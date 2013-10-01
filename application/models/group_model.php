@@ -101,7 +101,7 @@ class Group_Model extends CI_Model {
 		$record->creator_id = $this->user_model->getCurrentUser()->user_id;
 		$record->invitation_code = $this->generateInvitationCode();
 		$record->status = 1;
-		$record->inserted_ts = date('c');
+		$record->inserted_ts = date('Y-m-d h:i:s');
 
 		$this->db->insert('groups', $record);
 		$group_id = $this->db->insert_id();
