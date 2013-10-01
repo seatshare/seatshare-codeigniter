@@ -158,7 +158,7 @@ class User_Model extends CI_Model {
 			show_eror('User registration failed.', 500);
 		endif;
 		
-		return $user;
+		return true;
 	}
 	
 	/**

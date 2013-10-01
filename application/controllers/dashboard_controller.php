@@ -20,9 +20,9 @@ class Dashboard_Controller extends MY_Controller {
 	public function index() {
 
 		$group = $this->group_model->getCurrentGroup();
-		error_log(print_r($group,true));
+
 		// No group associated, take to group page
-		if (!$group->group_id) {
+		if (!is_object($group) || !$group->group_id) {
 			redirect('groups');
 		}
 		$group->administrator = $this->group_model->getCurrentGroupAdministrator();
