@@ -10,6 +10,8 @@
 
 <br />
 
+<?php if (is_array($events) && count($events)): ?>
+
 <?php foreach ($events as $event): ?>
 <div class="row well">
 	<div class="col-md-7">
@@ -21,3 +23,13 @@
 	</div>
 </div>
 <?php endforeach; ?>
+
+<?php else: ?>
+
+<div class="alert alert-info">
+	<p>
+		There are no events available right now. Please check back later.
+	</p>
+</div>
+
+<?php endif; ?>

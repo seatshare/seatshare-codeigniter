@@ -40,6 +40,7 @@ class Event_Model extends CI_Model {
 		$this->db->order_by('e.start_time', 'ASC');
 		$query = $this->db->get('events e');
 		$results = $query->result();
+		$events = array();
 		foreach ($results as $i => $row) {
 			$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id);
 			$events[$i] = $row;
