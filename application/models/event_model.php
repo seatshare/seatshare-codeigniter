@@ -37,6 +37,9 @@ class Event_Model extends CI_Model {
 		$this->db->join('entities n', 'e.entity_id = n.entity_id');
 		$this->db->join('groups g', 'n.entity_id = g.entity_id');
 		$this->db->where('g.group_id', $group_id);
+		if (isset($options['after']) && $options['after']) {
+			$this->db->where('e.start_time >' ,$options['after']);
+		}
 		$this->db->order_by('e.start_time', 'ASC');
 		$query = $this->db->get('events e');
 		$results = $query->result();
