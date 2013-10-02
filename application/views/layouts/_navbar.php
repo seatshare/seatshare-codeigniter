@@ -10,10 +10,10 @@
     </div>
     <div class="navbar-collapse collapse">
       <?php if ($this->user_model->isLoggedIn()): ?>
-      <?php if ($this->group_model->getUserGroups()): ?>
+      <?php if ($this->group_model->getUserGroupsAsArray()): ?>
       <form class="navbar-form navbar-left" role="form">
         <div class="form-group">
-          <?php echo form_dropdown('group', $this->group_model->getUserGroups(), $this->group_model->getCurrentGroupId(), 'id="group_switcher" class="form-control"'); ?>
+          <?php echo form_dropdown('group', $this->group_model->getUserGroupsAsArray(), $this->group_model->getCurrentGroupId(), 'id="group_switcher" class="form-control"'); ?>
         </div>
       </form>
       <?php endif; ?>

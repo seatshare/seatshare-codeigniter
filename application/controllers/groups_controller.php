@@ -17,13 +17,25 @@ class Groups_Controller extends MY_Controller {
 	}
 
 	public function index() {
-
-		$this->load->view('groups/welcome');
+		$groups = $this->group_model->getUserGroups();
+		if (is_array($groups) && count($groups)) {
+			$data['groups'] = $groups;
+			$data['title'] = 'Groups';
+			$this->load->view('groups/groups', $data);
+		} else {
+			$data['title'] = 'Welcome!';
+			$this->load->view('groups/welcome', $data);
+		}
 	}
 
-	public function switch_groups() {
-		$group_id = $this->input->post('group_id');
+	public function switch_groups($group_id=0) {
+		// Direct link
 		if ($group_id) {
+			$this->group_model->setCurrentGroup($group_id);
+			redirect('dashboard');
+		// Nav bar
+		} else {
+			$group_id = $this->input->post('group_id');
 			$return = $this->group_model->setCurrentGroup($group_id);
 			$this->echoJSON($return);
 			exit;
@@ -35,7 +47,7 @@ class Groups_Controller extends MY_Controller {
 		if (!is_object($group) || !$group->group_id) {
 			redirect('groups');
 		}
-
+		$data['title'] = $group->group;
 		$this->load->view('groups/group_detail', $data);
 	}
 

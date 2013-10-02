@@ -9,28 +9,48 @@ class Group_Model extends CI_Model {
 		parent::__construct();
 	}
 
+	public function getGroupById($group_id=0) {
+		$this->db->select('*');
+		$this->db->where('group_id', $group_id);
+		$this->db->where('status', 1);
+		$query = $this->db->get('groups');
+		$group = $query->row();
+		return $group;
+	}
+
 	public function getUserGroups() {
-		$this->db->select('g.group_id, g.group');
+		$this->db->select('g.group_id, g.group, n.entity, n.logo');
 		$this->db->join('groups g', 'gu.group_id = g.group_id', 'INNER');
+		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
 		$this->db->where('g.status', 1);
 		$this->db->where('gu.user_id', $this->user_model->getCurrentUser()->user_id);
 		$this->db->group_by('group_id');
 		$query = $this->db->get('group_users gu');
-		$result = $query->result();
-		$groups = array();
+		$groups = $query->result();
+		return $groups;
+	}
+
+	public function getUserGroupsAsArray() {
+		$result = $this->getUserGroups();
 		foreach ($result as $row) {
 			$groups[$row->group_id] = $row->group;
 		}
 		return $groups;
 	}
 
-	public function getCurrentGroupUsers() {
+	public function getGroupUsersByGroupId($group_id=0) {
 		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email');
 		$this->db->from('group_users gu');
 		$this->db->join('users u', 'u.user_id = gu.user_id');
-		$this->db->where('gu.group_id', $this->getCurrentGroupId());
+		$this->db->where('gu.group_id', $group_id);
 		$query = $this->db->get();
 		$result = $query->result();
+		return $result;
+	}
+
+	public function getCurrentGroupUsers() {
+		$group_id = $this->getCurrentGroupId();
+		$result = $this->getGroupUsersByGroupId($group_id);
 		$users = array();
 		foreach ($result as $row) {
 			$users[$row->user_id] = $row;
@@ -63,7 +83,7 @@ class Group_Model extends CI_Model {
 	public function getCurrentGroupId() {
 		$current_group = $this->session->userdata('current_group') ? $this->session->userdata('current_group') : false;
 		if (!$current_group) {
-			$groups = $this->getUserGroups();
+			$groups = $this->getUserGroupsAsArray();
 			reset($groups);
 			$group_id = $this->setCurrentGroup(key($groups));
 			return $group_id;
@@ -73,6 +93,12 @@ class Group_Model extends CI_Model {
 	}
 
 	public function setCurrentGroup($group_id=0) {
+		// Verify user can see this group
+		$group = $this->getGroupById($group_id);
+		if (!in_array($this->user_model->getCurrentUser()->user_id, array_keys($this->getUserGroupsAsArray()))) {
+			return false;
+		}
+
 		$this->session->set_userdata('current_group', $group_id);
 		return $group_id;
 	}
