@@ -42,6 +42,7 @@ class Register_Controller extends MY_Controller {
 			}
 		}
 
+		$data['invitation_code'] = $this->input->get_post('invitation_code');
 		$data['title'] = 'Register';
 		$data['sidebar'] = $this->load->view('register/_group', $data, true);
 		$this->load->view('register/new_user', $data);

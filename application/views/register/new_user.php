@@ -48,7 +48,7 @@
 
 <div class="row">
 	<div style="text-align:right;">
-		<?php echo form_hidden(array('invitation_code' => $this->input->get('invitation_code'))); ?>
+		<?php echo form_hidden(array('invitation_code' => $invitation_code)); ?>
 		<?php echo form_submit(array('value'=>'Create Account', 'class'=>'btn btn-primary')); ?>
 	</div>
 </div>
