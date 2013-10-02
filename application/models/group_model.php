@@ -95,7 +95,14 @@ class Group_Model extends CI_Model {
 	public function setCurrentGroup($group_id=0) {
 		// Verify user can see this group
 		$group = $this->getGroupById($group_id);
-		if (!in_array($this->user_model->getCurrentUser()->user_id, array_keys($this->getUserGroupsAsArray()))) {
+		$group_users = $this->getGroupUsersByGroupId($group_id);
+		$allowed = false;
+		foreach ($group_users as $user) {
+			if ($this->user_model->getCurrentUser()->user_id == $user->user_id) {
+				$allowed = true;
+			}
+		}
+		if (!$allowed) {
 			return false;
 		}
 
