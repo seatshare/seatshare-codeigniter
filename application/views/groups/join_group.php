@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<?php echo form_label('Invitation Code', 'invitation_code', array('class'=>'col-lg-3 control-label')); ?>
 			<div class="col-lg-9">
-				<?php echo form_input(array('name'=>'invitation_code', 'class'=>'form-control', 'value'=>$this->input->post('invitation_code'))); ?>
+				<?php echo form_input(array('name'=>'invitation_code', 'class'=>'form-control', 'value'=>$this->input->get_post('invitation_code'))); ?>
 			</div>
 		</div>
 		<?php echo form_fieldset_close(); ?>

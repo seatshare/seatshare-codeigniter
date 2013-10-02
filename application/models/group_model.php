@@ -32,6 +32,7 @@ class Group_Model extends CI_Model {
 
 	public function getUserGroupsAsArray() {
 		$result = $this->getUserGroups();
+		$groups = array();
 		foreach ($result as $row) {
 			$groups[$row->group_id] = $row->group;
 		}

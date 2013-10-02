@@ -32,7 +32,13 @@ class Register_Controller extends MY_Controller {
 				$this->user_model->createNewUserFromPost();
 				$this->user_model->login($this->input->post('username'), $this->input->post('password'));
 				$this->growl('Your account has been created!');
-				redirect('dashboard');
+
+				// If from an invitation email, redirect to accept it.
+				if ($this->input->post('invitation_code') != '') {
+					redirect('groups/join/?invitation_code=' . $this->input->post('invitation_code'));
+				} else {
+					redirect('groups');
+				}
 			}
 		}
 
