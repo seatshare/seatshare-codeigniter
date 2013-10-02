@@ -18,7 +18,7 @@
 	<div class="form-group">
 		<?php echo form_label('Cost', 'assigned', array('class'=>'col-lg-3 control-label')); ?>
 		<div class="col-lg-9">
-			<?php echo form_input(array('name'=>'cost', 'class'=>'form-control', 'value'=>number_format($ticket->cost,2))); ?>
+			<?php echo form_input(array('name'=>'cost', 'class'=>'form-control', 'placeholder'=>'25.00', 'value'=>number_format($ticket->cost,2))); ?>
 		</div>
 	</div>
 	<div class="form-group">
@@ -52,7 +52,7 @@
 	<div class="form-group">
 		<?php echo form_label('Message', 'message', array('class'=>'col-lg-3 control-label')); ?>
 		<div class="col-lg-9">
-			<?php echo form_textarea(array('name'=>'message', 'class'=>'form-control', 'value'=>'')); ?>
+			<?php echo form_textarea(array('name'=>'message', 'class'=>'form-control', 'placeholder'=>'You can include additional notes here for this request. We will already include the ticket details.', 'value'=>'')); ?>
 		</div>
 	</div>
 	<div class="form-group">
