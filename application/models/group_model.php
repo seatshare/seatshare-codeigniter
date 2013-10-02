@@ -40,7 +40,7 @@ class Group_Model extends CI_Model {
 	}
 
 	public function getGroupUsersByGroupId($group_id=0) {
-		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email');
+		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email, gu.role');
 		$this->db->from('group_users gu');
 		$this->db->join('users u', 'u.user_id = gu.user_id');
 		$this->db->where('gu.group_id', $group_id);
