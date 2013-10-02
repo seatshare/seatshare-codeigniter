@@ -1,7 +1,7 @@
 
 <hr />
 
-<h4>Tickets</h4>
+<p class="lead">These are the tickets that have been added for this event.</p> 
 
 <table class="table table-striped table-bordered">
 	<thead>
@@ -10,7 +10,7 @@
 			<th>Purchased By</th>
 			<th>Assigned</th>
 			<th>Cost</th>
-			<th class="col-md-1"></th>
+			<th class="action"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,7 +33,7 @@
 			</td>
 			<td>
 				<div class="dropdown">
-					<a data-toggle="dropdown" href="#" class="btn btn-default" id="ticket">Actions</a>
+					<a data-toggle="dropdown" href="#" class="btn btn-default" id="ticket"><span class="glyphicon glyphicon-wrench"></span></a>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<?php if ($ticket->owner_id != $this->user_model->getCurrentUser()->user_id): ?>
 						<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>">Request</a></li>
@@ -45,7 +45,7 @@
 						<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>">Assign</a></li>
 						<?php endif; ?>
 						<?php if ($ticket->owner_id == $this->user_model->getCurrentUser()->user_id): ?>
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo site_url('tickets/delete/' . $ticket->ticket_id); ?>">Delete</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo site_url('tickets/delete/' . $ticket->ticket_id); ?>" class="confirm">Delete</a></li>
 						<?php endif; ?>
 					</ul>
 				</div>

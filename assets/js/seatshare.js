@@ -11,3 +11,8 @@ $(document).ready(function() {
 		}, 300);
 	});
 });
+
+// Confirm actions
+$('a.confirm').click(function() {
+	return window.confirm('Are you sure?');
+});
