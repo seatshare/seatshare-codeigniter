@@ -16,3 +16,9 @@ This project is a mock SaaS to allow a group of people to manage a pool of ticke
 **Important**: There is currently no system administrator tools for adding entities (teams, venues) or events. These will have to be done by hand in the interim. Some sample data is loaded for two local teams by default.
 
 If all went well, you should now be able to navigate to the project URL and register for an account. You will want to select 'Create a New Group' for the first user.
+
+## Deploying
+
+1. Send me a public key to add to the server
+2. Deployments use `whiskey_disk`
+3. `wd deploy --to=production --path=application/config/deploy.yml`
