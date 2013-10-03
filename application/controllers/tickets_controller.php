@@ -29,7 +29,8 @@ class Tickets_Controller extends MY_Controller {
 		$history = $this->ticket_model->getTicketHistoryById($ticket_id);
 		$can_edit = (bool) ($ticket->owner_id == $this->user_model->getCurrentUser()->user_id || $ticket->user_id == $this->user_model->getCurrentUser()->user_id);
 
-		if (!$ticket->event_id) {
+		if (!is_object($ticket) || !$ticket->event_id) {
+			$this->growl('Could not load specified ticket.', 'error');
 			redirect('dashboard');
 		}
 
@@ -135,7 +136,7 @@ class Tickets_Controller extends MY_Controller {
 	public function unassign($ticket_id=0) {
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
 
-		if (!$ticket->event_id) {
+		if (!is_object($ticket) || !$ticket->event_id) {
 			redirect('dashboard');
 		}
 
@@ -151,7 +152,7 @@ class Tickets_Controller extends MY_Controller {
 	public function delete($ticket_id=0) {
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
 
-		if (!$ticket->event_id) {
+		if (!is_object($ticket) || !$ticket->event_id) {
 			redirect('dashboard');
 		}
 
@@ -168,7 +169,7 @@ class Tickets_Controller extends MY_Controller {
 		$event = $this->event_model->getEventById($ticket->event_id);
 		$history = $this->ticket_model->getTicketHistoryById($ticket_id);
 
-		if (!$ticket->event_id) {
+		if (!is_object($ticket) || !$ticket->event_id) {
 			redirect('dashboard');
 		}
 
