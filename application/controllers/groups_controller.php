@@ -29,22 +29,19 @@ class Groups_Controller extends MY_Controller {
 	}
 
 	public function switch_groups($group_id=0) {
-		// Direct link
-		if ($group_id) {
-			$this->group_model->setCurrentGroup($group_id);
+		if (!$group_id) {
+			$this->growl('Could not switch to specified group.', 'error');
 			redirect('dashboard');
-		// Nav bar
-		} else {
-			$group_id = $this->input->post('group_id');
-			$return = $this->group_model->setCurrentGroup($group_id);
-			$this->echoJSON($return);
-			exit;
 		}
+
+		$this->group_model->setCurrentGroup($group_id);
+		redirect('dashboard');
 	}
 
 	public function group($group_id=0) {
 		$group = $this->group_model->getGroupById($group_id);
 		if (!is_object($group) || !$group->group_id) {
+			$this->growl('Could not load specified group.', 'error');
 			redirect('groups');
 		}
 		$data['title'] = $group->group;

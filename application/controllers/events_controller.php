@@ -24,6 +24,11 @@ class Events_Controller extends MY_Controller {
 		$event = $this->event_model->getEventById($event_id);
 		$tickets = $this->ticket_model->getTicketsByEventId($event_id);
 
+		if (!$event->event_id) {
+			$this->growl('Could not find specified event in group.', 'error');
+			redirect('dashboard');
+		}
+
 		$data['entity'] = $entity;
 		$data['event'] = $event;
 		$data['tickets'] = $tickets;
