@@ -2,6 +2,9 @@
 
 class Login_Controller extends MY_Controller {
 
+	/**
+	 * Login
+	 **/
 	public function index() {
 
 		if ($this->user_model->isLoggedIn()) {
@@ -25,6 +28,9 @@ class Login_Controller extends MY_Controller {
 		$this->load->view('login/form');
 	}
 
+	/**
+	 * Logout
+	 **/
 	public function logout() {
 
 		$this->session->sess_destroy();

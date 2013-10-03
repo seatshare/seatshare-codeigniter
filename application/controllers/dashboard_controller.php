@@ -4,6 +4,9 @@ class Dashboard_Controller extends MY_Controller {
 
 	public $layout = 'two_column';
 
+	/**
+	 * Constructor
+	 **/
 	public function __construct() {
 		parent::__construct();
 		if (!$this->user_model->isLoggedIn()) {

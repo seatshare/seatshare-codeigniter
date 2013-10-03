@@ -17,10 +17,18 @@ class Tickets_Controller extends MY_Controller {
 		$this->load->model('email_model');
 	}
 
+	/**
+	 * Return to Dashboard
+	 **/
 	public function index() {
-
+		redirect('dashboard');
 	}
 
+	/**
+	 * Ticket Detail
+	 *
+	 * @param int $ticket_id
+	 **/
 	public function ticket($ticket_id=0) {
 
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
@@ -62,6 +70,11 @@ class Tickets_Controller extends MY_Controller {
 
 	}
 
+	/**
+	 * Create Ticket
+	 *
+	 * @param int $event_id
+	 **/
 	public function create($event_id=0) {
 		$event = $this->event_model->getEventById($event_id);
 		if (!$event) {
@@ -98,6 +111,9 @@ class Tickets_Controller extends MY_Controller {
 		$this->load->view('tickets/new_ticket', $data);
 	}
 
+	/**
+	 * Create Season Ticket
+	 **/
 	public function create_season() {
 		$group_users = $this->group_model->getCurrentGroupUsersAsArray();
 		$events = $this->event_model->getEventsAsArray();
@@ -133,6 +149,9 @@ class Tickets_Controller extends MY_Controller {
 		$this->load->view('tickets/new_season_ticket', $data);
 	}
 
+	/**
+	 * Unassign a Ticket
+	 **/
 	public function unassign($ticket_id=0) {
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
 
@@ -149,6 +168,11 @@ class Tickets_Controller extends MY_Controller {
 		redirect('events/event/' . $ticket->event_id);
 	}
 
+	/**
+	 * Delete Ticket
+	 *
+	 * @param int $ticket_id
+	 **/
 	public function delete($ticket_id=0) {
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
 
@@ -164,6 +188,11 @@ class Tickets_Controller extends MY_Controller {
 		redirect('events/event/' . $ticket->event_id);
 	}
 
+	/**
+	 * Request a Ticket
+	 *
+	 * @param int $ticket_id
+	 **/
 	public function request($ticket_id=0) {
 		$ticket = $this->ticket_model->getTicketById($ticket_id);
 		$event = $this->event_model->getEventById($ticket->event_id);

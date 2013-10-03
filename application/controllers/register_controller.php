@@ -16,7 +16,7 @@ class Register_Controller extends MY_Controller {
 	}
 
 	/**
-	 * Index
+	 * Register User
 	 **/
 	public function index() {
 

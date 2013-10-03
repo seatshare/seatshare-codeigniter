@@ -16,6 +16,9 @@ class Groups_Controller extends MY_Controller {
 		$this->load->model('email_model');
 	}
 
+	/**
+	 * Group List
+	 **/
 	public function index() {
 		$groups = $this->group_model->getUserGroups();
 		if (is_array($groups) && count($groups)) {
@@ -28,6 +31,11 @@ class Groups_Controller extends MY_Controller {
 		}
 	}
 
+	/**
+	 * Switch Groups
+	 *
+	 * @param int $group_id
+	 **/
 	public function switch_groups($group_id=0) {
 		if (!$group_id) {
 			$this->growl('Could not switch to specified group.', 'error');
@@ -38,6 +46,11 @@ class Groups_Controller extends MY_Controller {
 		redirect('dashboard');
 	}
 
+	/**
+	 * Group Detail
+	 *
+	 * @param int $group_id
+	 **/
 	public function group($group_id=0) {
 		$group = $this->group_model->getGroupById($group_id);
 		if (!is_object($group) || !$group->group_id) {
@@ -48,6 +61,9 @@ class Groups_Controller extends MY_Controller {
 		$this->load->view('groups/group_detail', $data);
 	}
 
+	/**
+	 * Create Group
+	 **/
 	public function create() {
 		$this->layout = 'two_column';
 		if ($this->input->post()) {
@@ -69,6 +85,9 @@ class Groups_Controller extends MY_Controller {
 		$this->load->view('groups/create_group', $data);
 	}
 
+	/**
+	 * Join Group
+	 **/
 	public function join() {
 		$this->layout = 'two_column';
 
@@ -86,9 +105,14 @@ class Groups_Controller extends MY_Controller {
 		$this->load->view('groups/join_group', $data);
 	}
 
-	public function inviteCodeLookup($inviteCode='') {
+	/**
+	 * Invite Code Lookup
+	 *
+	 * @param string $invite_code
+	 **/
+	public function inviteCodeLookup($invite_code='') {
 		$this->form_validation->set_message('inviteCodeLookup', 'Your %s does not match an existing group.');
-		$group = $this->group_model->getGroupByInvitationCode($this->input->post('invitation_code'));
+		$group = $this->group_model->getGroupByInvitationCode($invite_code);
 		if (is_object($group) && $group->group_id) {
 			return true;
 		} else {
@@ -96,6 +120,9 @@ class Groups_Controller extends MY_Controller {
 		}
 	}
 
+	/**
+	 * Invite User
+	 **/
 	public function invite() {
 		if ($this->input->post()) {
 			$this->email_model->sendInvite($this->input->post('email'));

@@ -2,6 +2,9 @@
 
 class Migration_Controller extends MY_Controller {
 
+	/**
+	 * Constructor
+	 **/
 	public function __construct() {
 		parent::__construct();
 		if (!$this->input->is_cli_request()) {
@@ -11,6 +14,9 @@ class Migration_Controller extends MY_Controller {
 		$this->load->library('migration');
 	}
 
+	/**
+	 * Run Migration
+	 **/
 	public function index() {
 		if ( ! $this->migration->current()) {
 			show_error($this->migration->error_string());

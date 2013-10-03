@@ -15,10 +15,18 @@ class Events_Controller extends MY_Controller {
 		$this->load->model('entity_model');
 	}
 
+	/**
+	 * Return to Dashboard
+	 **/
 	public function index() {
 		redirect('dashboard');
 	}
 
+	/**
+	 * Event Detail
+	 *
+	 * @param int $event_id
+	 **/
 	public function event($event_id=0) {
 		$entity = $this->entity_model->getEntityByCurrentGroup();
 		$event = $this->event_model->getEventById($event_id);
