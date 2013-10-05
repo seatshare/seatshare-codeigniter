@@ -1,8 +1,10 @@
+<?php if (count($events)): ?>
 <div class="well text-center">
 	<ul class="list-inline" style="margin-bottom:0;">
 		<li><a href="<?php echo site_url('tickets/create_season'); ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-calendar"></span> Add Season Tickets</a></li>			
 	</ul>
 </div>
+<?php endif; ?>
 
 <?php echo form_fieldset('Group members'); ?>
 
@@ -13,7 +15,6 @@
 </ul>
 
 <?php echo form_fieldset_close(); ?>
-
 
 <?php echo form_open('groups/invite', array('role'=>'form', 'class' => 'form-inline')); ?>
 
