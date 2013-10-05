@@ -53,7 +53,8 @@ class Email_Model extends CI_Model {
 			return false;
 		}
 
-		$this->email->from($from->email, $from->first_name . ' ' . $from->last_name);
+		$this->email->from('no-reply@' . $_SERVER['HTTP_HOST'], $this->config->item('application_name'));
+		$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($message);

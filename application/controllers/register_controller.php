@@ -26,9 +26,9 @@ class Register_Controller extends MY_Controller {
 			$this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
 			$this->form_validation->set_rules('password', 'Password', 'required|matches[password_confirm]');
 			$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
-			$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
 
-			if ($this->form_validation->run() != FALSE) {
+			if ($this->form_validation->run() != false) {
 				$this->user_model->createNewUserFromPost();
 				$this->user_model->login($this->input->post('username'), $this->input->post('password'));
 				$this->growl('Your account has been created!');
