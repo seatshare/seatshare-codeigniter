@@ -265,6 +265,9 @@ class Group_Model extends CI_Model {
 			foreach ($tickets as $ticket) {
 				$this->ticket_model->unassignTicket($ticket->ticket_id);
 			}
+
+			// If current group equals this one, unset it
+			$this->session->unset_userdata('current_group');
 			
 			return true;
 		}

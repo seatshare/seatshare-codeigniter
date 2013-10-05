@@ -28,6 +28,12 @@ class Dashboard_Controller extends MY_Controller {
 		if (!is_object($group) || !$group->group_id) {
 			redirect('groups');
 		}
+
+		// Sanity check to ensure a departed group is not still displayed
+		if (!$this->group_model->getGroupById($group->group_id)) {
+			redirect('groups');
+		}
+
 		$group->administrator = $this->group_model->getCurrentGroupAdministrator();
 
 		$data['group'] = $group;
