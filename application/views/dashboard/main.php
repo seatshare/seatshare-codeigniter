@@ -4,7 +4,7 @@
 	</div>
 	<div class="col-md-10">
 		<p>Your group is administered by <?php echo $group->administrator->name; ?></p>
-		<h1>Upcoming Events</h1>
+		<h2>Upcoming Events</h2>
 	</div>
 </div>
 
