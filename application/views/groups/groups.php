@@ -7,7 +7,7 @@
 	<div class="col-md-2">
 		<img src="<?php echo $group->logo; ?>" class="img-responsive" /> 
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-8">
 		<h3><a href="<?php echo site_url('groups/switch_groups/' . $group->group_id); ?>"><?php echo $group->group; ?></a></h3>
 		<ul class="list-inline">
 			<?php foreach ($this->group_model->getGroupUsersByGroupId($group->group_id) as $row): ?>
@@ -20,6 +20,11 @@
 			</li>
 			<?php endforeach; ?>
 		</ul>
+	</div>
+	<div class="col-md-2">
+		<?php if ($group->role == 'member'): ?>
+		<a href="<?php echo site_url('groups/leave/' . $group->group_id); ?>" class="btn btn-default">Leave Group</a>
+		<?php endif; ?>
 	</div>
 </div>
 <hr />

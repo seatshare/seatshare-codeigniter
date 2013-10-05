@@ -16,6 +16,12 @@ class Group_Model extends CI_Model {
 	 * @return object $group
 	 **/
 	public function getGroupById($group_id=0) {
+		if (!$group_id) {
+			return false;
+		}
+		if (!$this->checkAllowedGroupById($group_id)) {
+			return false;
+		}
 		$this->db->select('*');
 		$this->db->where('group_id', $group_id);
 		$this->db->where('status', 1);
@@ -30,7 +36,7 @@ class Group_Model extends CI_Model {
 	 * @return array $groups
 	 **/
 	public function getUserGroups() {
-		$this->db->select('g.group_id, g.group, n.entity, n.logo');
+		$this->db->select('g.group_id, g.group, n.entity, n.logo, gu.role');
 		$this->db->join('groups g', 'gu.group_id = g.group_id', 'INNER');
 		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
 		$this->db->where('g.status', 1);
@@ -144,14 +150,7 @@ class Group_Model extends CI_Model {
 	public function setCurrentGroup($group_id=0) {
 		// Verify user can see this group
 		$group = $this->getGroupById($group_id);
-		$group_users = $this->getGroupUsersByGroupId($group_id);
-		$allowed = false;
-		foreach ($group_users as $user) {
-			if ($this->user_model->getCurrentUser()->user_id == $user->user_id) {
-				$allowed = true;
-			}
-		}
-		if (!$allowed) {
+		if (!$this->checkAllowedGroupById($group_id)) {
 			return false;
 		}
 
@@ -237,9 +236,11 @@ class Group_Model extends CI_Model {
 	 * @param int $group_id
 	 **/
 	public function leaveGroup($group_id=0) {
+		$this->load->model('ticket_model');
 		if (!$group_id) {
 			return false;
 		}
+		// Only 'member' roles can leave.
 		$this->db->where('role', 'member');
 		$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
 		$this->db->where('group_id', $group_id);
@@ -247,12 +248,46 @@ class Group_Model extends CI_Model {
 		if ($this->db->affected_rows() == 0) {
 			return false;
 		} else {
+			// Remove owned tickets
+			$this->db->select('*');
+			$this->db->where('owner_id', $this->user_model->getCurrentUser()->user_id);
+			$query = $this->db->get('tickets');
+			$tickets = $query->result();
+			foreach ($tickets as $ticket) {
+				$this->ticket_model->deleteTicket($ticket->ticket_id);
+			}
+
+			// Un-assign tickets
+			$this->db->select('*');
+			$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
+			$query = $this->db->get('tickets');
+			$tickets = $query->result();
+			foreach ($tickets as $ticket) {
+				$this->ticket_model->unassignTicket($ticket->ticket_id);
+			}
+			
 			return true;
 		}
 	}
 
 
 	/* Private Metods */
+
+	/**
+	 * Check Allowed Group By Id
+	 *
+	 * @param int $group_id
+	 * @return boolean
+	 **/
+	public function checkAllowedGroupById($group_id=0) {
+		$group_users = $this->getGroupUsersByGroupId($group_id);
+		foreach ($group_users as $user) {
+			if ($this->user_model->getCurrentUser()->user_id == $user->user_id) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Generate Invitation Code

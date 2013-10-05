@@ -159,10 +159,7 @@ class Tickets_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 
-		$this->ticket_model->updateTicket(array(
-			'ticket_id' => $ticket->ticket_id,
-			'user_id' => 0
-		));
+		$this->ticket_model->unassignTicket($ticket->ticket_id);
 		$this->ticket_model->log('unassigned', $ticket);
 
 		redirect('events/event/' . $ticket->event_id);
@@ -180,9 +177,7 @@ class Tickets_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 
-		$this->ticket_model->deleteTicket(array(
-			'ticket_id' => $ticket->ticket_id
-		));
+		$this->ticket_model->deleteTicket($ticket->ticket_id);
 		$this->ticket_model->log('deleted', $ticket);
 
 		redirect('events/event/' . $ticket->event_id);

@@ -147,18 +147,31 @@ class Ticket_Model extends CI_Model {
 	}
 
 	/**
+	 * Unassign Ticket
+	 *
+	 * @param int $ticket_id
+	 **/
+	public function unassignTicket($ticket_id=0) {
+		$this->updateTicket(array(
+			'ticket_id' => $ticket_id,
+			'user_id' => 0
+		));
+		return true;
+	}
+
+	/**
 	 * Delete Ticket
 	 *
-	 * @param array $ticket
+	 * @param int $ticket_id
 	 **/
-	public function deleteTicket($ticket=array()) {
-		if (!$ticket['ticket_id']) {
+	public function deleteTicket($ticket_id=0) {
+		if (!$ticket_id) {
 			return false;
 		}
 
-		$this->db->where('ticket_id', $ticket['ticket_id']);
+		$this->db->where('ticket_id', $ticket_id);
 		$this->db->delete('tickets');
-		return $ticket['ticket_id'];
+		return $ticket_id;
 	}
 
 	/**

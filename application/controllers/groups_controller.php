@@ -14,6 +14,7 @@ class Groups_Controller extends MY_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('entity_model');
 		$this->load->model('email_model');
+		$this->load->model('ticket_model');
 	}
 
 	/**
@@ -103,6 +104,28 @@ class Groups_Controller extends MY_Controller {
 		}
 		$data['title'] = 'Join Group';
 		$this->load->view('groups/join_group', $data);
+	}
+
+	/**
+	 * Leave Group
+	 *
+	 * @param int $group_id
+	 **/
+	public function leave($group_id=0) {
+		$this->layout = 'two_column';
+		$group = $this->group_model->getGroupById($group_id);
+		if (!is_object($group) || !$group->group_id) {
+			redirect('groups');
+		}
+
+		if ($this->input->post()) {
+			$this->group_model->leaveGroup($group->group_id);
+			$this->growl(sprintf('You have left "%s"', $group->group));
+			redirect('groups');
+		}
+		$data['group'] = $group;
+		$data['title'] = 'Leave Group';
+		$this->load->view('groups/leave_group', $data);
 	}
 
 	/**
