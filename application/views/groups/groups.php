@@ -16,7 +16,7 @@
 				<?php if ($row->role=='admin'): ?>
 				<span class="glyphicon glyphicon-star"></span>
 				<?php endif; ?>
-				<?php echo $row->first_name; ?> <?php echo $row->last_name; ?>
+				<a href="<?php echo site_url('profile/view/' . $row->username); ?>"><?php echo $row->first_name; ?> <?php echo $row->last_name; ?></a>
 			</li>
 			<?php endforeach; ?>
 		</ul>

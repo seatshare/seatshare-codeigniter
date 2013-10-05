@@ -6,7 +6,7 @@ class User_Model extends CI_Model {
 	public $first_name;
 	public $last_name;
 	public $email;
-	public $public_fields = array('user_id', 'username', 'first_name', 'last_name', 'email', 'status');
+	public $public_fields = array('user_id', 'username', 'first_name', 'last_name', 'email', 'status', 'inserted_ts');
 	
 	/**
 	 * Return instance

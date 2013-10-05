@@ -22,7 +22,7 @@
         <li><a href="<?php echo site_url('groups'); ?>">Groups</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right">
-        <li><a><?php echo $this->user_model->getCurrentUser()->first_name; ?> <?php echo $this->user_model->getCurrentUser()->last_name; ?></a></li>
+        <li><a href="<?php echo site_url('profile'); ?>"><?php echo $this->user_model->getCurrentUser()->first_name; ?> <?php echo $this->user_model->getCurrentUser()->last_name; ?></a></li>
         <li><a href="<?php echo site_url('logout'); ?>">Logout</a></li>
       </ul>
       <?php else: ?>
