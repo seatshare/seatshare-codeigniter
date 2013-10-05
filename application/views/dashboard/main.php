@@ -15,8 +15,9 @@
 <?php foreach ($events as $event): ?>
 <div class="row well">
 	<div class="col-md-7">
-		<p><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo date('g:i a', strtotime($event->start_time)); ?></p>
+		<p><?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
 		<h3><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h3>
+		<p><?php echo ($event->description) ? $event->description : ''; ?></p>
 	</div>
 	<div class="col-md-5">
 		<?php include APPPATH . '/views/shared/_tickets.php'; ?>
