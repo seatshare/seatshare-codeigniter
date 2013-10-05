@@ -9,6 +9,12 @@ class Group_Model extends CI_Model {
 		parent::__construct();
 	}
 
+	/**
+	 * Get By Group Id
+	 *
+	 * @param int $group_id
+	 * @return object $group
+	 **/
 	public function getGroupById($group_id=0) {
 		$this->db->select('*');
 		$this->db->where('group_id', $group_id);
@@ -18,6 +24,11 @@ class Group_Model extends CI_Model {
 		return $group;
 	}
 
+	/**
+	 * Get User Groups
+	 *
+	 * @return array $groups
+	 **/
 	public function getUserGroups() {
 		$this->db->select('g.group_id, g.group, n.entity, n.logo');
 		$this->db->join('groups g', 'gu.group_id = g.group_id', 'INNER');
@@ -30,6 +41,11 @@ class Group_Model extends CI_Model {
 		return $groups;
 	}
 
+	/**
+	 * Get User Groups As Array
+	 *
+	 * @return array $groups
+	 **/
 	public function getUserGroupsAsArray() {
 		$result = $this->getUserGroups();
 		$groups = array();
@@ -39,27 +55,43 @@ class Group_Model extends CI_Model {
 		return $groups;
 	}
 
+	/**
+	 * Get Group Users By Group Id
+	 *
+	 * @param int $group_id
+	 * @return array $groups
+	 **/
 	public function getGroupUsersByGroupId($group_id=0) {
 		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email, gu.role');
 		$this->db->from('group_users gu');
 		$this->db->join('users u', 'u.user_id = gu.user_id');
 		$this->db->where('gu.group_id', $group_id);
 		$query = $this->db->get();
-		$result = $query->result();
-		return $result;
+		$group_users = $query->result();
+		return $group_users;
 	}
 
+	/**
+	 * Get Current Group Users
+	 *
+	 * @return array $groups
+	 **/
 	public function getCurrentGroupUsers() {
 		$group_id = $this->getCurrentGroupId();
 		$result = $this->getGroupUsersByGroupId($group_id);
-		$users = array();
+		$group_users = array();
 		foreach ($result as $row) {
-			$users[$row->user_id] = $row;
-			$users[$row->user_id]->name = $row->first_name . ' ' . substr($row->last_name,0,1) . '.';
+			$group_users[$row->user_id] = $row;
+			$group_users[$row->user_id]->name = $row->first_name . ' ' . substr($row->last_name,0,1) . '.';
 		}
-		return $users;
+		return $group_users;
 	}
 
+	/**
+	 * Get Current Group Administrator
+	 *
+	 * @return object $admin
+	 **/
 	public function getCurrentGroupAdministrator() {
 		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email');
 		$this->db->join('users u', 'u.user_id = gu.user_id');
@@ -71,6 +103,11 @@ class Group_Model extends CI_Model {
 		return $admin;
 	}
 
+	/**
+	 * Get Current Group
+	 *
+	 * @return object $group
+	 **/
 	public function getCurrentGroup() {
 		$group_id = $this->getCurrentGroupId();
 		$this->db->select('*');
@@ -81,6 +118,11 @@ class Group_Model extends CI_Model {
 		return $group;
 	}
 
+	/**
+	 * Get Current Group Id
+	 *
+	 * @return int $group_id
+	 **/
 	public function getCurrentGroupId() {
 		$current_group = $this->session->userdata('current_group') ? $this->session->userdata('current_group') : false;
 		if (!$current_group) {
@@ -93,6 +135,12 @@ class Group_Model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Set Current Group
+	 *
+	 * @param int $group_id
+	 * @return int $group_id
+	 **/
 	public function setCurrentGroup($group_id=0) {
 		// Verify user can see this group
 		$group = $this->getGroupById($group_id);
@@ -111,6 +159,11 @@ class Group_Model extends CI_Model {
 		return $group_id;
 	}
 
+	/**
+	 * Get Current Group Users As Array
+	 *
+	 * @return array $group_users
+	 **/
 	public function getCurrentGroupUsersAsArray() {
 		$group_users_objects = $this->getCurrentGroupUsers();
 		$group_users['0'] = 'Unassigned';
@@ -120,6 +173,12 @@ class Group_Model extends CI_Model {
 		return $group_users;
 	}
 
+	/**
+	 * Get Group By Invitation Code
+	 *
+	 * @param string $invitation_code
+	 * @return object $group
+	 **/
 	public function getGroupByInvitationCode($invitation_code='') {
 		$this->db->select('*');
 		$this->db->where('invitation_code', trim($invitation_code));
@@ -128,6 +187,11 @@ class Group_Model extends CI_Model {
 		return $group;
 	}
 
+	/**
+	 * Create Group
+	 *
+	 * @param array $group
+	 **/
 	public function createGroup($group=array()) {
 		$record = new StdClass();
 		$record->entity_id = $group['entity_id'];
@@ -141,28 +205,58 @@ class Group_Model extends CI_Model {
 		$group_id = $this->db->insert_id();
 
 		// Join group just created, switch to it
-		$this->setCurrentGroup($group_id);
 		$this->db->insert('group_users', array(
 			'user_id' => $this->user_model->getCurrentUser()->user_id,
 			'group_id' => $group_id,
 			'role' => 'admin'
 		));
+		$this->setCurrentGroup($group_id);
 	}
 
+	/**
+	 * Join Group
+	 *
+	 * @param int $group_id
+	 **/
 	public function joinGroup($group_id=0) {
 		if (!$group_id) {
 			return false;
 		}
-		$this->setCurrentGroup($group_id);
 		$this->db->insert('group_users', array(
 			'user_id' => $this->user_model->getCurrentUser()->user_id,
 			'group_id' => $group_id,
 			'role' => 'member'
 		));
+		$this->setCurrentGroup($group_id);
+		return true;
 	}
+
+	/**
+	 * Leave Group
+	 *
+	 * @param int $group_id
+	 **/
+	public function leaveGroup($group_id=0) {
+		if (!$group_id) {
+			return false;
+		}
+		$this->db->where('role', 'member');
+		$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
+		$this->db->where('group_id', $group_id);
+		$this->db->delete('group_users');
+		if ($this->db->affected_rows() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 
 	/* Private Metods */
 
+	/**
+	 * Generate Invitation Code
+	 **/
 	private function generateInvitationCode() {
 		    $characters = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
 			$randomString = '';
