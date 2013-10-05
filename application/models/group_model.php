@@ -261,8 +261,8 @@ class Group_Model extends CI_Model {
 			// Un-assign tickets
 			$this->db->select('*');
 			$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
-			$query = $this->db->get('tickets');
 			$this->db->where('group_id', $group_id);
+			$query = $this->db->get('tickets');
 			$tickets = $query->result();
 			foreach ($tickets as $ticket) {
 				$this->ticket_model->unassignTicket($ticket->ticket_id);
