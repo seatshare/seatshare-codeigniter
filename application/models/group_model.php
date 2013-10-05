@@ -251,6 +251,7 @@ class Group_Model extends CI_Model {
 			// Remove owned tickets
 			$this->db->select('*');
 			$this->db->where('owner_id', $this->user_model->getCurrentUser()->user_id);
+			$this->db->where('group_id', $group_id);
 			$query = $this->db->get('tickets');
 			$tickets = $query->result();
 			foreach ($tickets as $ticket) {
@@ -261,6 +262,7 @@ class Group_Model extends CI_Model {
 			$this->db->select('*');
 			$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
 			$query = $this->db->get('tickets');
+			$this->db->where('group_id', $group_id);
 			$tickets = $query->result();
 			foreach ($tickets as $ticket) {
 				$this->ticket_model->unassignTicket($ticket->ticket_id);
