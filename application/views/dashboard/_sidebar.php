@@ -11,7 +11,7 @@
 
 <ul class="list-unstyled">
 	<?php foreach ($group_users as $row): ?>
-	<li><img src="http://gravatar.com/avatar/<?php echo md5($row->email); ?>?s=32"> <a href="<?php echo site_url('profile/view/' . $row->username); ?>"><?php echo $row->first_name; ?> <?php echo $row->last_name; ?></a></li>
+	<li><?php echo gravatar($row->email, 32); ?> <a href="<?php echo site_url('user/' . $row->username); ?>"><?php echo $row->first_name; ?> <?php echo $row->last_name; ?></a></li>
 	<?php endforeach; ?>
 </ul>
 

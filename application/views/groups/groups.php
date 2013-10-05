@@ -12,11 +12,11 @@
 		<ul class="list-inline">
 			<?php foreach ($this->group_model->getGroupUsersByGroupId($group->group_id) as $row): ?>
 			<li>
-				<img src="http://gravatar.com/avatar/<?php echo md5($row->email); ?>?s=32">
+				<?php echo gravatar($row->email, 25); ?>
 				<?php if ($row->role=='admin'): ?>
 				<span class="glyphicon glyphicon-star"></span>
 				<?php endif; ?>
-				<a href="<?php echo site_url('profile/view/' . $row->username); ?>"><?php echo $row->first_name; ?> <?php echo $row->last_name; ?></a>
+				<a href="<?php echo site_url('user/' . $row->username); ?>"><?php echo $row->first_name; ?> <?php echo $row->last_name; ?></a>
 			</li>
 			<?php endforeach; ?>
 		</ul>

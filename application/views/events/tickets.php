@@ -27,11 +27,11 @@
 				</a>
 			</td>
 			<td>
-				<a href="<?php echo site_url('profile/view/' . $ticket->owner->username); ?>"><?php echo $ticket->owner->name; ?></a>
+				<a href="<?php echo site_url('user/' . $ticket->owner->username); ?>"><?php echo $ticket->owner->name; ?></a>
 			</td>
 			<td>
 				<?php if ($ticket->assigned): ?>
-				<a href="<?php echo site_url('profile/view/' . $ticket->assigned->username); ?>"><?php echo $ticket->assigned->name; ?></a>
+				<a href="<?php echo site_url('user/' . $ticket->assigned->username); ?>"><?php echo $ticket->assigned->name; ?></a>
 				<?php else: ?>
 				<span class="badge badge-lg">Available</span>
 				<?php endif; ?>

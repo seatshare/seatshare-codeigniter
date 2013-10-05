@@ -41,6 +41,7 @@
 
 // Miscellaneous
 $route['logout'] = 'login_controller/logout'; 
+$route['user/([a-zA-z0-9_\-\.]+)'] = 'profile_controller/view/$1';
 
 // Patches routing to allow for *_controller naming convention
 $route['([a-z]+)'] = '$1_controller/index';
