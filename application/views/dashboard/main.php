@@ -3,7 +3,7 @@
 		<img src="<?php echo $entity->logo; ?>" class="img-responsive" />
 	</div>
 	<div class="col-md-10">
-		<p>Your group is administered by <?php echo $group->administrator->name; ?></p>
+		<p>Your <strong><?php echo $entity->entity; ?></strong> group is administered by <?php echo $group->administrator->name; ?></p>
 		<h2>Upcoming Events</h2>
 	</div>
 </div>
