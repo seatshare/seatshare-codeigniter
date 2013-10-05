@@ -23,7 +23,7 @@ class Register_Controller extends MY_Controller {
 		if ($this->input->post()) {
 
 			// Validate rules
-			$this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
+			$this->form_validation->set_rules('username', 'Username', 'required|alpha_dash|is_unique[users.username]');
 			$this->form_validation->set_rules('password', 'Password', 'required|matches[password_confirm]');
 			$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
