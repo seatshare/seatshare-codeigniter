@@ -48,5 +48,9 @@
     <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>
     <script src="<?php echo site_url('/assets/js/seatshare.js'); ?>"> </script>
 
+    <?php include_once '_analytics.php'; ?>
+
+    <?php include_once '_growl.php'; ?>
+
   </body>
 </html>

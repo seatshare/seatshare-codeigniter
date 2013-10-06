@@ -80,7 +80,7 @@ $autoload['helper'] = array('url', 'file', 'form', 'gravatar');
 |
 */
 
-$autoload['config'] = array('application');
+$autoload['config'] = array('application', 'api_keys');
 
 
 /*

@@ -16,7 +16,6 @@ class Register_Controller extends MY_Controller {
 
 		// MailChimp
 		require_once APPPATH . 'third_party/mailchimp.php';
-		$this->load->config('api_keys');
 		$this->mailchimp = new MailChimp($this->config->item('mailchimp_api'));
 	}
 
