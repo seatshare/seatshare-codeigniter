@@ -8,6 +8,11 @@
 		</p>
 	</div>
 	<div class="col-md-9">
+		<?php if ($this->user_model->getCurrentUser()->user_id == $profile->user_id): ?>
+		<p class="text-right">
+			<a href="<?php echo site_url('profile/edit'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</a>
+		</p>
+		<?php endif; ?>
 		<h2><?php echo $profile->first_name; ?> <?php echo $profile->last_name; ?></h2>
 		<ul class="list-unstyled">
 			<li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:<?php echo $profile->email; ?>"><?php echo $profile->email; ?></a></li>

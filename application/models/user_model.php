@@ -89,20 +89,21 @@ class User_Model extends CI_Model {
 	 *
 	 * @param string $user_id 
 	 */
-	public function updateUserFromPost($user_id) {
+	public function updateUserFromPost() {
+		$user_id = $this->getCurrentUser()->user_id;
 		$update_user_data = array(
-			'display_name' => $this->input->post('first_name') . ' ' . $this->input->post('last_name'),
 			'first_name' => $this->input->post('first_name'),
 			'last_name' => $this->input->post('last_name'),
-			'email' => $this->input->post('email')
+			'email' => $this->input->post('email'),
+			'username' => $this->input->post('username')
 		);
 		$this->db->where('user_id', $user_id);
 		$update = $this->db->update('users', $update_user_data);
 		
 		// Update session information
-		if ($update):
+		if ($update) {
 			$this->resetSessionData($user_id);
-		endif;
+		}
 		
 		return $update;
 	}
@@ -113,7 +114,8 @@ class User_Model extends CI_Model {
 	 * @param string $user_id 
 	 * @return boolean
 	 */
-	public function updatePasswordFromPost($user_id) {
+	public function updatePasswordFromPost() {
+		$user_id = $this->getCurrentUser()->user_id;
 		$update_user_data = array(
 			'password' => md5($this->input->post('password') . $this->config->item('encryption_key'))
 		);
