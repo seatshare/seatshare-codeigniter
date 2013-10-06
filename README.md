@@ -26,4 +26,5 @@ If all went well, you should now be able to navigate to the project URL and regi
 
 1. Send me a public key to add to the server
 2. Deployments use `whiskey_disk`
-3. `wd deploy --to=production --path=application/config/deploy.yml`
+3. `wd deploy --to=staging --path=application/config/deploy.yml` for seatshare.yearg.in
+3. `wd deploy --to=production --path=application/config/deploy.yml` for seatsha.re
