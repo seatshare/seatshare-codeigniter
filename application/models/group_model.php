@@ -42,6 +42,7 @@ class Group_Model extends CI_Model {
 		$this->db->where('g.status', 1);
 		$this->db->where('gu.user_id', $this->user_model->getCurrentUser()->user_id);
 		$this->db->group_by('group_id');
+		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('group_users gu');
 		$groups = $query->result();
 		return $groups;
@@ -72,6 +73,8 @@ class Group_Model extends CI_Model {
 		$this->db->from('group_users gu');
 		$this->db->join('users u', 'u.user_id = gu.user_id');
 		$this->db->where('gu.group_id', $group_id);
+		$this->db->order_by('u.last_name', 'ASC');
+		$this->db->order_by('u.first_name', 'ASC');
 		$query = $this->db->get();
 		$group_users = $query->result();
 		return $group_users;
