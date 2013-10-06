@@ -4,8 +4,11 @@
 
 <ul>
 	<li>Join an existing group or create your own</li>
-	<li>List your seat location and price</li>
-	<li>Request another person's seats</li>
+	<li>List your seat location and price for a single game or an entire season</li>
+	<li>Request another group member's available seats</li>
+	<li>Invite users to join your group</li>
+	<li>Easily switch between groups</li>
+	<li>Contact other group members</li>
 </ul>
 
 <p>To get started, <a href="<?php echo site_url('register'); ?>">register for an account</a> or <a href="<?php echo site_url('login'); ?>">login</a>.</p>
