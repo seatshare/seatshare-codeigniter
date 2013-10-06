@@ -33,6 +33,20 @@
 
       {yield}
 
+      <br />
+
+      <div class="alert alert-info">
+        <p>
+          Need to <a href="<?php echo site_url('register'); ?>" class="alert-link">register for an account</a>?
+        </p>
+      </div>
+
     </div>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+    <script src="<?php echo site_url('/assets/libraries/bootstrap/js/bootstrap.js'); ?>"> </script>
+    <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>
+    <script src="<?php echo site_url('/assets/js/seatshare.js'); ?>"> </script>
+
   </body>
 </html>

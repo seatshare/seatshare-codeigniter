@@ -47,9 +47,11 @@
 </div>
 
 <div class="row">
-	<div style="text-align:right;">
-		<?php echo form_hidden(array('invitation_code' => $invitation_code)); ?>
-		<?php echo form_submit(array('value'=>'Create Account', 'class'=>'btn btn-primary')); ?>
+	<div class="col-md-12">
+		<p style="text-align:right;">
+			<?php echo form_hidden(array('invitation_code' => $invitation_code)); ?>
+			<?php echo form_submit(array('value'=>'Create Account', 'class'=>'btn btn-primary')); ?>
+		</p>
 	</div>
 </div>
 

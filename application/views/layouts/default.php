@@ -21,9 +21,13 @@
 
 {yield}
 
-<footer>
-	<hr />
-	<p><em>Provided by <?php echo $this->config->item('application_name'); ?></em></p>
+<footer class="row">
+	<div class="col-md-12">
+		<hr />
+		<p>
+			<em>Provided by <?php echo $this->config->item('application_name'); ?></em>
+		</p>
+	</div>
 </footer>
 
 </div>

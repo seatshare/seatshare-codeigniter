@@ -30,9 +30,14 @@
 			<?php echo (isset($sidebar)) ? $sidebar : ''; ?>
 		</nav>
 	</div>
+
 	<footer class="row">
-		<hr />
-		<p><em>Provided by <?php echo $this->config->item('application_name'); ?></em></p>
+		<div class="col-md-12">
+			<hr />
+			<p>
+				<em>Provided by <?php echo $this->config->item('application_name'); ?></em>
+			</p>
+		</div>
 	</footer>
 
 </div>
