@@ -42,7 +42,6 @@ class Events_Controller extends MY_Controller {
 		$data['tickets'] = $tickets;
 		$data['title'] = $event->event;
 		$this->load->view('events/event_detail', $data);
-		$this->load->view('events/tickets', $data);
 	}
 
 }

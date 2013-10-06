@@ -1,7 +1,8 @@
 <div class="row well">
 	<div class="col-md-7">
 		<p><?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
-		<h2><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h2>
+		<h3><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h3>
+		<p><?php echo $event->description; ?></p>
 		<?php if (isset($ticket)): ?>
 		<ul class="list-inline">
 			<li>Section: <?php echo $ticket->section; ?></li>
