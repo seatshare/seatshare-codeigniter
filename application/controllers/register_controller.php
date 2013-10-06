@@ -13,6 +13,11 @@ class Register_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 		$this->load->library('form_validation');
+
+		// MailChimp
+		require_once APPPATH . 'third_party/mailchimp.php';
+		$this->load->config('api_keys');
+		$this->mailchimp = new MailChimp($this->config->item('mailchimp_api'));
 	}
 
 	/**
@@ -34,6 +39,20 @@ class Register_Controller extends MY_Controller {
 				$this->user_model->createNewUserFromPost();
 				$this->user_model->login($this->input->post('username'), $this->input->post('password'));
 				$this->growl('Your account has been created!');
+
+				// This should be available now post-login
+				$profile = $this->user_model->getCurrentUser();
+
+				// Newsletter Signup
+				$signup = $this->mailchimp->call('lists/subscribe', array(
+					'id'                => $this->config->item('mailchimp_list'),
+					'email'             => array('email'=>$profile->email),
+					'merge_vars'        => array('FNAME'=>$profile->first_name, 'LNAME'=>$profile->last_name),
+					'double_optin'      => false,
+					'update_existing'   => true,
+					'replace_interests' => false,
+					'send_welcome'      => false,
+				));
 
 				// If from an invitation email, redirect to accept it.
 				if ($this->input->post('invitation_code') != '') {
