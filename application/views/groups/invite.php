@@ -6,8 +6,8 @@
 	<div class="col-md-12">
 		<?php echo form_fieldset('Invite members'); ?>
 		<div class="form-group">
-			<?php echo form_label('Email Address', 'email', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Email Address', 'email', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'placeholder'=>'someone@example.com', 'value'=>$this->input->post('email'))); ?>
 			</div>
 		</div>

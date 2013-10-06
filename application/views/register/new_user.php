@@ -6,39 +6,39 @@
 	<div class="col-md-12">
 		<?php echo form_fieldset('Your details'); ?>
 		<div class="form-group">
-			<?php echo form_label('First Name', 'first_name', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('First Name', 'first_name', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'first_name', 'class'=>'form-control', 'placeholder'=>'John', 'value'=>$this->input->post('first_name'))); ?>
 			</div>
 		</div>
 		<div class="form-group">
-			<?php echo form_label('Last Name', 'last_name', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Last Name', 'last_name', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'last_name', 'class'=>'form-control', 'placeholder'=>'Doe', 'value'=>$this->input->post('last_name'))); ?>
 			</div>
 		</div>
 		<div class="form-group">
-			<?php echo form_label('Email', 'email', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Email', 'email', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'placeholder'=>'someone@example.com', 'value'=>$this->input->post('email'))); ?>
 			</div>
 		</div>
 		<hr />
 		<div class="form-group">
-			<?php echo form_label('Username', 'username', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Username', 'username', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'username', 'class'=>'form-control', 'placeholder'=>'johndoe', 'value'=>$this->input->post('username'))); ?>
 			</div>
 		</div>
 		<div class="form-group">
-			<?php echo form_label('Password', 'password', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Password', 'password', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_password(array('name'=>'password', 'class'=>'form-control')); ?>
 			</div>
 		</div>
 		<div class="form-group">
-			<?php echo form_label('Confirm Password', 'password_confirm', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Confirm Password', 'password_confirm', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_password(array('name'=>'password_confirm', 'class'=>'form-control')); ?>
 			</div>
 		</div>

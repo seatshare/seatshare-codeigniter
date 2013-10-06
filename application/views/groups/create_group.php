@@ -9,14 +9,14 @@
 		<p class="lead">Groups of users exchange tickets among its membership. You can assign tickets to other users, or request their available tickets.</p> 
 
 		<div class="form-group">
-			<?php echo form_label('Group Name', 'group', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Group Name', 'group', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 				<?php echo form_input(array('name'=>'group', 'class'=>'form-control', 'placeholder'=>'Cellblock 303', 'value'=>$this->input->post('group'))); ?>
 			</div>
 		</div>
 		<div class="form-group">
-			<?php echo form_label('Team / Venue', 'entity_id', array('class'=>'col-lg-3 control-label')); ?>
-			<div class="col-lg-9">
+			<?php echo form_label('Team / Venue', 'entity_id', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
 			<?php echo form_dropdown('entity_id', $entities, null, 'class="form-control"'); ?>
 			<p class="help-block"><strong>Choose carefully!</strong> You cannot change your team / venue after the group is created.</p>
 			</div>
