@@ -32,6 +32,7 @@ class Email_Model extends CI_Model {
 
 		$data['recipient'] = $recipient;
 		$data['group'] = $group;
+		$data['event'] = $this->event_model->getEventById($ticket->event_id);
 		$data['ticket'] = $ticket;
 		$data['user'] = $user;
 		$data['personalized'] = $personalized;

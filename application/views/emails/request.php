@@ -10,6 +10,8 @@
 <dl> 
 	<dt>Group</dt>
 	<dd><?php echo $group->group; ?></dd>
+	<dt>Event</dt>
+	<dd><?php echo $event->event; ?> : <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></dd>
 	<dt>Section</dt>
 	<dd><?php echo $ticket->section; ?></dd>
 	<dt>Row</dt>
