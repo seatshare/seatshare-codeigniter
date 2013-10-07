@@ -4,7 +4,7 @@
 
 This project is a mock SaaS to allow a group of people to manage a pool of tickets to events. The most common use case is to share season tickets to a sports team.
 
-## Installation Instructions
+## [Installation](./wiki/Installation)
 
 1. You need to have a working PHP/MySQL stack available.
 2. Clone the project into a working directory and connect the relevant virtual hosts
@@ -19,12 +19,12 @@ This project is a mock SaaS to allow a group of people to manage a pool of ticke
 
 If all went well, you should now be able to navigate to the project URL and register for an account. You will want to select 'Create a New Group' for the first user.
 
-## Database Migrations
+## [Database Migrations](./wiki/Database-Migrations)
 
 1. Run from the project directory root: `php index.php migration`
 2. You can compare code versions in `application/config/migration.php` and the `migrations.version` database field.
 
-## Deploying
+## [Deploying](./wiki/Deploying)
 
 1. Send me a public key to add to the server
 2. Deployments use `whiskey_disk`
