@@ -1,21 +1,30 @@
 
-<?php echo $personalized; ?>
- 
----
- 
-<?php echo $recipient->first_name; ?>,
+<p><?php echo nl2br($personalized); ?></p>
 
-<?php echo $user->first_name; ?> (<?php echo $user->email; ?>) has requested ticket(s) for the following event in your group <?php echo $group->group; ?> 
+<hr />
  
-	Group: <?php echo $group->group; ?> 
-	Section: <?php echo $ticket->section; ?> 
-	Row: <?php echo $ticket->row; ?> 
-	Seat: <?php echo $ticket->seat; ?> 
+<p><?php echo $recipient->first_name; ?>,</p>
+
+<p><?php echo $user->first_name; ?> (<?php echo $user->email; ?>) has requested ticket(s) for the following event in your group <?php echo $group->group; ?> </p>
+
+<dl> 
+	<dt>Group</dt>
+	<dd><?php echo $group->group; ?></dd>
+	<dt>Section</dt>
+	<dd><?php echo $ticket->section; ?></dd>
+	<dt>Row</dt>
+	<dd><?php echo $ticket->row; ?></dd>
+	<dt>Seat</dt>
+	<dd><?php echo $ticket->seat; ?></dd>
+</dl>
+
+<p>You can accept the request here: <a href="<?php echo site_url('events/event/' . $ticket->event_id); ?>"><?php echo site_url('events/event/' . $ticket->event_id); ?></a></p>
  
-You can accept the request here: <?php echo site_url('events/event/' . $ticket->event_id); ?>
+<p>Thank you!</p>
  
-Thank you!
- 
----
-<?php $this->config->item('application_name'); ?>
-<?php echo site_url('/'); ?>
+<p>
+	---<br />
+	<a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>, on behalf of
+	<?php echo $user->first_name; ?> <?php echo $user->last_name; ?><br />
+	<a href="mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a>
+</p>

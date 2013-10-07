@@ -46,6 +46,7 @@ class Email_Model extends CI_Model {
 
 		// Outbound email settings
 		if (file_exists(APPPATH . 'config/email.php')) {
+			$config['mailtype'] = 'html';
 			require (APPPATH . 'config/email.php');
 			$this->email->initialize($config);
 		}
@@ -54,11 +55,15 @@ class Email_Model extends CI_Model {
 			return false;
 		}
 
+		$data['subject'] = $subject;
+		$data['content'] = $message;
+		$html_template = $this->load->view('emails/html_email_template', $data, true);
+
 		$this->email->from('no-reply@' . $_SERVER['HTTP_HOST'], $this->config->item('application_name'));
 		$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
 		$this->email->to($to);
 		$this->email->subject($subject);
-		$this->email->message($message);
+		$this->email->message($html_template);
 
 		return $this->email->send();
 	}
