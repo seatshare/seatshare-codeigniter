@@ -8,7 +8,7 @@ You have been invited to join our group on <?php echo $this->config->item('appli
 Once you have signed up, your access code to join our group is below.
 
 	Group Name: <?php echo $group->group; ?> 
-	Invitation Code: <?php echo $group->invitation_code; ?> 
+	Invitation Code: <?php echo $invitation_code; ?> 
 
 If you have already registered, you will be able to join the group at: 
  
