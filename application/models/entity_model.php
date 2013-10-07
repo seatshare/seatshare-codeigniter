@@ -10,8 +10,7 @@ class Entity_Model extends CI_Model {
 		$this->load->model('group_model');
 	}
 
-	public function getEntityByCurrentGroup() {
-		$group_id = $this->group_model->getCurrentGroupId();
+	public function getEntityByGroupId($group_id=0) {
 		$this->db->select('n.*');
 		$this->db->join('groups g', 'n.entity_id = g.entity_id');
 		$this->db->where('g.group_id', $group_id);
@@ -19,6 +18,11 @@ class Entity_Model extends CI_Model {
 		$this->db->where('n.status', 1);
 		$query = $this->db->get('entities n');
 		return $query->row();
+	}
+
+	public function getEntityByCurrentGroup() {
+		$group_id = $this->group_model->getCurrentGroupId();
+		return $this->getEntityByGroupId($group_id);
 	}
 
 	public function getEntities() {

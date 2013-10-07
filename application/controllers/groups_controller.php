@@ -58,8 +58,53 @@ class Groups_Controller extends MY_Controller {
 			$this->growl('Could not load specified group.', 'error');
 			redirect('groups');
 		}
+		$entity = $this->entity_model->getEntityByGroupId($group->group_id);
+		$group_users = $this->group_model->getGroupUsersByGroupId($group->group_id);
+		$group_admin = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
+
+		$data['group'] = $group;
+		$data['entity'] = $entity;
+		$data['group_users'] = $group_users;
+		$data['group_admin'] = $group_admin;
 		$data['title'] = $group->group;
-		$this->load->view('groups/group_detail', $data);
+		$this->load->view('groups/view_group', $data);
+	}
+
+	/**
+	 * Edit Group
+	 *
+	 * @param int $group_id
+	 **/
+	public function edit($group_id=0) {
+		$group = $this->group_model->getGroupById($group_id);
+		if (!is_object($group) || !$group->group_id) {
+			$this->growl('Could not load specified group.', 'error');
+			redirect('groups');
+		}
+		$group_admin = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
+		if ($this->user_model->getCurrentUser()->user_id != $group_admin->user_id) {
+			$this->growl('Access denied', 'error');
+			redirect('dashboard');
+		}
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('group', 'Group Name', 'required');
+			if ($this->form_validation->run() != false) {
+				$this->group_model->updateGroup(array(
+					'group_id'=>$group->group_id,
+					'group'=>$this->input->post('group'),
+				));
+				if ($this->input->post('reset_invitation_code')) {
+					$this->group_model->resetInvitationCode($group->group_id);
+				}
+				$this->growl('Group updated!');
+				redirect('groups/group/' . $group->group_id);
+			}
+		}
+
+		$data['group'] = $group;
+		$data['title'] = $group->group;
+		$this->load->view('groups/edit_group', $data);
 	}
 
 	/**

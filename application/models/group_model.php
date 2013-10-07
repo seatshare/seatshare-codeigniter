@@ -97,18 +97,29 @@ class Group_Model extends CI_Model {
 	}
 
 	/**
+	 * Get Group Administrator By Group Id
+	 *
+	 * @param int $group_id
+	 * @return object $admin
+	 **/
+	public function getGroupAdministratorByGroupId($group_id=0) {
+		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email');
+		$this->db->join('users u', 'u.user_id = gu.user_id');
+		$this->db->where('gu.group_id', $group_id);
+		$this->db->where('gu.role', 'admin');
+		$query = $this->db->get('group_users gu');
+		$admin = $query->row();
+		$admin->name = $admin->first_name . ' ' . substr($admin->last_name,0,1) . '.';
+		return $admin;
+	}
+
+	/**
 	 * Get Current Group Administrator
 	 *
 	 * @return object $admin
 	 **/
 	public function getCurrentGroupAdministrator() {
-		$this->db->select('u.user_id, u.first_name, u.last_name, u.username, u.email');
-		$this->db->join('users u', 'u.user_id = gu.user_id');
-		$this->db->where('gu.group_id', $this->getCurrentGroupId());
-		$this->db->where('gu.role', 'admin');
-		$query = $this->db->get('group_users gu');
-		$admin = $query->row();
-		$admin->name = $admin->first_name . ' ' . substr($admin->last_name,0,1) . '.';
+		$admin = $this->getGroupAdministratorByGroupId($this->getCurrentGroupId());
 		return $admin;
 	}
 
@@ -276,6 +287,40 @@ class Group_Model extends CI_Model {
 			
 			return true;
 		}
+	}
+
+	/**
+	 * Update Group
+	 *
+	 * @param array $group
+	 * @return boolean
+	 **/
+	public function updateGroup($group=array()) {
+		if (!is_array($group) || !$group['group_id']) {
+			return false;
+		}
+		$record = new StdClass();
+		$record->group = $group['group'];
+		$this->db->where('group_id', $group['group_id']);
+		$this->db->update('groups', $record);
+		return true;
+	}
+
+	/**
+	 * Reset Invitation Code
+	 *
+	 * @param int $group_id
+	 * @return boolean
+	 **/
+	public function resetInvitationCode($group_id=0) {
+		if (!$group_id) {
+			return false;
+		}
+		$record = new StdClass();
+		$record->invitation_code = $this->generateInvitationCode();
+		$this->db->where('group_id', $group_id);
+		$this->db->update('groups', $record);
+		return true;
 	}
 
 
