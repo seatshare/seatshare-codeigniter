@@ -116,7 +116,9 @@ class Tickets_Controller extends MY_Controller {
 	 **/
 	public function create_season() {
 		$group_users = $this->group_model->getCurrentGroupUsersAsArray();
-		$events = $this->event_model->getEventsAsArray();
+		$events = $this->event_model->getEvents(array(
+			'after' => date('c', strtotime('+1 hour'))
+		));
 
 		// Process submitted ticket
 		if ($this->input->post()) {
