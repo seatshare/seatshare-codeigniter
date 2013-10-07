@@ -12,4 +12,4 @@ As bugs are encountered and reported, submit patches to address them.
 
 Both technical documentation ("How do I get this up and running on a new server?") and user facing documentation ("How do I rename my group?") are both important.
 
-## [Contributing Guidelines](./wiki/Contributing)
+## [Contributing Guidelines](https://github.com/stephenyeargin/seatshare/wiki/Contributing)
