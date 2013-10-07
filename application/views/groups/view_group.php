@@ -31,6 +31,10 @@
 		</ul>
 		<div class="well">
 			<h4>Group Invitation Code <small><?php echo $group->invitation_code; ?></small></h4>
+			<p>
+				<?php echo form_label('Invitation Link'); ?>
+				<?php echo form_input(array('class'=>'form-control', 'value'=>site_url('register/?invitation_code=' . $group->invitation_code), 'readonly'=>true)); ?>
+			</p>
 		</div>
 	</div>
 </div>
