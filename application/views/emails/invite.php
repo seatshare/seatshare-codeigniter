@@ -3,7 +3,7 @@ Hi!
  
 You have been invited to join our group on <?php echo $this->config->item('application_name'); ?>, a service that helps manage our season tickets.
  
-	You can register here: <?php echo site_url('register/?invitation_code=' . $group->invitation_code); ?> 
+	You can register here: <?php echo site_url('register/?invitation_code=' . $invitation_code); ?> 
  
 Once you have signed up, your access code to join our group is below.
 

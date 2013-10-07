@@ -19,7 +19,7 @@
  *
  */
 
-if ($_SERVER['HTTP_HOST'] == 'seatsha.re') {
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'seatsha.re') {
 	define('ENVIRONMENT', 'production');
 } else {
 	define('ENVIRONMENT', 'development');

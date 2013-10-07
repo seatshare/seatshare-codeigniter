@@ -193,11 +193,29 @@ class Group_Model extends CI_Model {
 	 * @return object $group
 	 **/
 	public function getGroupByInvitationCode($invitation_code='') {
+		// Lookup the group's primary invitation code
 		$this->db->select('*');
 		$this->db->where('invitation_code', trim($invitation_code));
 		$query = $this->db->get('groups');
 		$group = $query->row();
-		return $group;
+		if (is_object($group)) {
+			return $group;
+		}
+
+		// Lookup the sent invitation codes
+		$this->db->select('*');
+		$this->db->where('invitation_code', trim($invitation_code));
+		$query = $this->db->get('group_invitations');
+		$invitation = $query->row();
+		if (is_object($invitation)) {
+			$this->db->select('*');
+			$this->db->where('group_id', $invitation->group_id);
+			$this->db->where('status', 1);
+			$query = $this->db->get('groups');
+			$group = $query->row();
+			return $group;
+		}
+		return false;
 	}
 
 	/**
@@ -323,6 +341,20 @@ class Group_Model extends CI_Model {
 		return true;
 	}
 
+	public function createAndSendInvite($email='') {
+		$invitation_code = $this->generateInvitationCode();
+
+		$record = new StdClass();
+		$record->user_id = $this->user_model->getCurrentUser()->user_id;
+		$record->group_id = $this->group_model->getCurrentGroupId();
+		$record->email = $email;
+		$record->invitation_code = $invitation_code;
+		$record->inserted_ts = date('Y-m-d h:i:s');
+
+		$this->db->insert('group_invitations', $record);
+		$this->email_model->sendInvite($email, $invitation_code);
+		return true;
+	}
 
 	/* Private Metods */
 

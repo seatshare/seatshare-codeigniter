@@ -195,7 +195,7 @@ class Groups_Controller extends MY_Controller {
 		if ($this->input->post()) {
 			$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
 			if ($this->form_validation->run() != false) {
-				$this->email_model->sendInvite($this->input->post('email'));
+				$this->group_model->createAndSendInvite($this->input->post('email'));
 				$this->growl('Invitation sent!');
 			} else {
 				$this->growl(form_error('email'), 'error');

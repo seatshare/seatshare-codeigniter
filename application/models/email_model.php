@@ -7,14 +7,15 @@ class Email_Model extends CI_Model {
 		$this->load->model('group_model');
 	}
 
-	public function sendInvite($email='') {
+	public function sendInvite($email='', $invitation_code='') {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
-		if (!$email || !is_object($group) || !$group->group_id) {
+		if (!$email || !is_object($group) || !$invitation_code || !$group->group_id) {
 			return false;
 		}
 
 		$data['group'] = $group;
+		$data['invitation_code'] = $invitation_code;
 		$data['user'] = $user;
 		$message = $this->load->view('emails/invite', $data, true);
 		$subject = 'You have been invited to join ' . $group->group;
