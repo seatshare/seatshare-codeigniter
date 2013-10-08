@@ -66,6 +66,7 @@ class Tickets_Controller extends MY_Controller {
 		$data['can_edit'] = $can_edit;
 
 		$data['sidebar'] = $this->load->view('tickets/_history', $data, true);
+		$data['title'] = sprintf('%s - %s %s %s', $event->event, $ticket->section, $ticket->row, $ticket->seat);
 		$this->load->view('tickets/ticket_detail', $data);
 
 	}
@@ -108,6 +109,7 @@ class Tickets_Controller extends MY_Controller {
 		$data['event'] = $event;
 		$data['group_users'] = $group_users;
 		$data['assigned'] = $this->user_model->getCurrentUser();
+		$data['title'] = 'Add Ticket - ' . $event->event;
 		$this->load->view('tickets/new_ticket', $data);
 	}
 
@@ -146,6 +148,7 @@ class Tickets_Controller extends MY_Controller {
 		$data['group_users'] = $group_users;
 		$data['assigned'] = $this->user_model->getCurrentUser();
 		$data['events'] = $events;
+		$data['title'] = 'Add Season Ticket';
 		$this->load->view('tickets/new_season_ticket', $data);
 	}
 

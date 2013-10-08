@@ -8,6 +8,7 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap-theme.css'); ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/css/login.css'); ?>">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
