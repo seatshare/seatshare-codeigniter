@@ -41,4 +41,22 @@ class Events_Controller extends MY_Controller {
 		$this->load->view('events/event_detail', $data);
 	}
 
+	/**
+	 * AJAX Calendar Data Source
+	 **/
+	public function ajax_calendar_data_source() {
+		$event_objects = $this->event_model->getEvents();
+		if (!is_array($event_objects)) {
+			$this->echoJSON(array());
+			return false;
+		}
+		foreach ($event_objects as $i => $event) {
+			$events[$i] = $event;
+			$events[$i]->date = date('Y-m-d', strtotime($event->start_time));
+			$events[$i]->title = $event->event;
+			$events[$i]->url = site_url('events/event/' . $event->event_id);
+		}
+		$this->echoJSON($events);
+	}
+
 }

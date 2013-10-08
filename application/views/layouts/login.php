@@ -50,7 +50,6 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script src="<?php echo site_url('/assets/libraries/bootstrap/js/bootstrap.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>
-<script src="<?php echo site_url('/assets/js/seatshare.js'); ?>"> </script>
 
 <?php include_once '_analytics.php'; ?>
 
