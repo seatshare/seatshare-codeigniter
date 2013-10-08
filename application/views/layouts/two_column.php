@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap-theme.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/clndr/clndr.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/css/seatshare.css'); ?>">
 
@@ -44,6 +45,9 @@
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script src="<?php echo site_url('/assets/libraries/bootstrap/js/bootstrap.js'); ?>"> </script>
+<script src="<?php echo site_url('/assets/libraries/momentjs/moment.js'); ?>"> </script>
+<script src="<?php echo site_url('/assets/libraries/underscorejs/underscore.js'); ?>"> </script>
+<script src="<?php echo site_url('/assets/libraries/clndr/clndr.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/js/seatshare.js'); ?>"> </script>
 

@@ -7,6 +7,10 @@
 </div>
 <?php endif; ?>
 
+<?php echo form_fieldset('Calendar'); ?>
+<div id="sidebar_calendar"></div>
+<?php echo form_fieldset_close(); ?>
+
 <?php echo form_fieldset('Group members'); ?>
 
 <ul class="list-unstyled">
