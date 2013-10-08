@@ -11,7 +11,9 @@ class Welcome_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 		$data['sidebar'] = $this->load->view('public/_sidebar', null, true);
-		$data['title'] = $this->config->item('application_name');
+		$data['head'] = sprintf('<meta name="title" content="%s" />', $this->config->item('application_name'));
+		$data['head'] .= sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name'));
+		$data['title'] = 'Welcome to ' . $this->config->item('application_name');
 		$this->load->view('public/home', $data);
 	}
 }

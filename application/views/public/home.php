@@ -1,6 +1,6 @@
 <h1>Welcome to <?php echo $this->config->item('application_name'); ?> </h1>
 
-<p><?php echo $this->config->item('application_name'); ?> is a web based that utility helps manage a shared ticket pool for recurring events.</p>
+<p><?php echo $this->config->item('application_name'); ?> is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue.</p>
 
 <ul>
 	<li>Join an existing group or create your own</li>
