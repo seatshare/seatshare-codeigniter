@@ -9,9 +9,7 @@ class Dashboard_Controller extends MY_Controller {
 	 **/
 	public function __construct() {
 		parent::__construct();
-		if (!$this->user_model->isLoggedIn()) {
-			redirect('welcome');
-		}
+		$this->requireLogin();
 		$this->load->model('group_model');
 		$this->load->model('event_model');
 		$this->load->model('entity_model');
