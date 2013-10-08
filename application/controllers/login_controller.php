@@ -11,13 +11,24 @@ class Login_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 
+		if ($this->input->get('return')) {
+			$this->session->set_userdata('return', $this->input->get('return'));
+		}
+
 		if ($this->input->post('username') && $this->input->post('password')) {
 			$status = $this->user_model->login(
 				$this->input->post('username'),
 				$this->input->post('password')
 			);
 			if ($status) {
-				redirect('dashboard');
+				if ($this->session->userdata('return')) {
+					$redirect = urldecode($this->session->userdata('return'));
+					$this->session->unset_userdata('return');
+					redirect($redirect);
+				} else {
+					redirect('dashboard');
+				}
+				
 			} else {
 				$this->growl('Login failed. Please try again.', 'error');
 				redirect('login');

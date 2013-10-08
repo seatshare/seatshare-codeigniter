@@ -20,6 +20,15 @@ class MY_Controller extends CI_Controller {
 	}
 
 	/**
+	 * Require Login
+	 **/
+	public function requireLogin() {
+		if (!$this->user_model->isLoggedIn()) {
+			redirect('login/?return=' . urlencode($_SERVER['REQUEST_URI']));
+		}
+	}
+
+	/**
 	 * Growl
 	 *
 	 * @return string $message

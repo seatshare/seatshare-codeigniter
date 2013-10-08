@@ -5,9 +5,7 @@ class Profile_Controller extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->layout = 'two_column';
-		if (!$this->user_model->isLoggedIn()) {
-			$this->growl('You must be logged in.', 'error');
-		}
+		$this->requireLogin();
 		$this->load->library('form_validation');
 	}
 

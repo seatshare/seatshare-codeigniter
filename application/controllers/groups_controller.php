@@ -7,10 +7,7 @@ class Groups_Controller extends MY_Controller {
 	 **/
 	public function __construct() {
 		parent::__construct();
-		if (!$this->user_model->isLoggedIn()) {
-			$this->growl('You must be logged in.', 'error');
-			redirect('login');
-		}
+		$this->requireLogin();
 		$this->load->library('form_validation');
 		$this->load->model('entity_model');
 		$this->load->model('email_model');
