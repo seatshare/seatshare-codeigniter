@@ -40,16 +40,40 @@ class Tickets_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 
+		// Updating a ticket
 		if ($this->input->post()) {
-			$ticket->user_id = $this->input->post('assigned');
-			$cost = (float) $this->input->post('cost');
-			$this->ticket_model->updateTicket(array(
-				'ticket_id' => $ticket->ticket_id,
-				'user_id' => $ticket->user_id,
-				'cost' => $cost
-			));
-			$this->ticket_model->log('updated', $ticket);
-			redirect('events/event/' . $ticket->event_id);
+
+			$this->form_validation->set_rules('cost', 'Cost', 'decimal');
+
+			if ($this->form_validation->run() == true) {
+
+				$this->ticket_model->updateTicket(array(
+					'ticket_id' => $ticket->ticket_id,
+					'user_id' => $this->input->post('assigned'),
+					'cost' => (float) $this->input->post('cost')
+				));
+				
+				// Send email if assignee changed
+				if ($ticket->user_id != $this->input->post('assigned') && $this->input->post('assigned') != '0' && $this->input->post('assigned') != $this->user_model->getCurrentUser()->user_id) {
+					$ticket->user_id = $this->input->post('assigned');
+					$this->ticket_model->log('assigned', $ticket);
+					$recipient = $this->user_model->getUserById($this->input->post('assigned'));
+					$this->email_model->sendAssign($recipient, $ticket);
+					$this->growl('Ticket assigned!');
+				// Show that ticket was unassigned
+				} elseif ($ticket->user_id != $this->input->post('assigned') && $this->input->post('assigned') == '0') {
+					$ticket->user_id = $this->input->post('assigned');
+					$this->ticket_model->log('unassigned', $ticket);
+					$this->growl('Ticket unassigned!');
+				// Show an update to the ticket
+				} else {
+					$this->ticket_model->log('updated', $ticket);
+					$ticket->user_id = $this->input->post('assigned');
+					$this->growl('Ticket updated!');
+				}
+
+				redirect('events/event/' . $ticket->event_id);
+			}
 		}
 
 		$group_users['0'] = 'Unassigned';

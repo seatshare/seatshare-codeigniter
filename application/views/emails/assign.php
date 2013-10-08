@@ -1,11 +1,6 @@
+ <p><?php echo $recipient->first_name; ?>,</p>
 
-<p><?php echo nl2br($personalized); ?></p>
-
-<hr />
- 
-<p><?php echo $recipient->first_name; ?>,</p>
-
-<p><?php echo $user->first_name; ?> (<?php echo $user->email; ?>) has requested a ticket from you for the following event in your group <?php echo $group->group; ?> </p>
+<p><?php echo $user->first_name; ?> (<?php echo $user->email; ?>) has assigned a ticket to you for the following event in your group <?php echo $group->group; ?> </p>
 
 <dl> 
 	<dt>Group</dt>

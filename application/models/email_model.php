@@ -37,7 +37,25 @@ class Email_Model extends CI_Model {
 		$data['user'] = $user;
 		$data['personalized'] = $personalized;
 		$message = $this->load->view('emails/request', $data, true);
-		$subject = $user->first_name . ' has requested your tikets via ' . $group->group;
+		$subject = $user->first_name . ' has requested your tickets via ' . $group->group;
+
+		$this->sendEmail($recipient->email, $subject, $message, $user);
+	}
+
+	public function sendAssign($recipient, $ticket) {
+		$group = $this->group_model->getCurrentGroup();
+		$user = $this->user_model->getCurrentUser();
+		if (!$recipient->email || !is_object($group) || !$group->group_id) {
+			return false;
+		}
+
+		$data['recipient'] = $recipient;
+		$data['group'] = $group;
+		$data['event'] = $this->event_model->getEventById($ticket->event_id);
+		$data['ticket'] = $ticket;
+		$data['user'] = $user;
+		$message = $this->load->view('emails/assign', $data, true);
+		$subject = $user->first_name . ' has assigned you tickets via ' . $group->group;
 
 		$this->sendEmail($recipient->email, $subject, $message, $user);
 	}
