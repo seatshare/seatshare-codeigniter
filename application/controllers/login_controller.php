@@ -25,7 +25,9 @@ class Login_Controller extends MY_Controller {
 		}
 
 		$this->layout = 'login';
-		$this->load->view('login/form');
+		$data['head'] = sprintf('<meta name="description" content="Sign in to %s to manage your tickets and groups." />', $this->config->item('application_name'));
+		$data['title'] = 'User Login';
+		$this->load->view('login/form', $data);
 	}
 
 	/**
