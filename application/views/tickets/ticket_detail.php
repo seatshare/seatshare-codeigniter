@@ -3,6 +3,9 @@
 <?php if ($can_edit): ?>
 
 <?php echo form_open('', array('role'=>'form', 'class' => 'form-horizontal')); ?>
+
+<?php echo (validation_errors()) ? '<div class="alert alert-danger">' . validation_errors() . '</div>' : ''; ?>
+
 	<div class="form-group">
 		<?php echo form_label('Ticket Purchaser', 'owner', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
