@@ -3,9 +3,11 @@ production:
   deploy_to: "/home/79646/users/.home/domains/seatsha.re/html"
   repository: "https://github.com/stephenyeargin/seatshare.git"
   branch: "master"
+  post_deploy_script: "application/bin/run_migrations.sh"
 
 staging:
   domain: "yearg.in@s79646.gridserver.com"
   deploy_to: "/home/79646/users/.home/domains/seatshare.yearg.in/html"
   repository: "https://github.com/stephenyeargin/seatshare.git"
   branch: "master"
+  post_deploy_script: "application/bin/run_migrations.sh"
