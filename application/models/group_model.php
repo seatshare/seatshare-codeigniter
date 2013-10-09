@@ -196,6 +196,7 @@ class Group_Model extends CI_Model {
 		// Lookup the group's primary invitation code
 		$this->db->select('*');
 		$this->db->where('invitation_code', trim($invitation_code));
+		$this->db->where('status', 1);
 		$query = $this->db->get('groups');
 		$group = $query->row();
 		if (is_object($group)) {
@@ -205,6 +206,7 @@ class Group_Model extends CI_Model {
 		// Lookup the sent invitation codes
 		$this->db->select('*');
 		$this->db->where('invitation_code', trim($invitation_code));
+		$this->db->where('status', 1);
 		$query = $this->db->get('group_invitations');
 		$invitation = $query->row();
 		if (is_object($invitation)) {
@@ -259,6 +261,18 @@ class Group_Model extends CI_Model {
 			'role' => 'member'
 		));
 		$this->setCurrentGroup($group_id);
+		return true;
+	}
+
+	/**
+	 * Expire Invitation Code
+	 *
+	 * @param string $invitation_code
+	 * @return boolean 
+	 **/
+	public function exipireInvitationCode($invitation_code='') {
+		$this->db->where('invitation_code', $invitation_code);
+		$this->db->update('group_invitations', array('status'=>0));
 		return true;
 	}
 
@@ -349,6 +363,7 @@ class Group_Model extends CI_Model {
 		$record->group_id = $this->group_model->getCurrentGroupId();
 		$record->email = $email;
 		$record->invitation_code = $invitation_code;
+		$record->status = 1;
 		$record->inserted_ts = date('Y-m-d h:i:s');
 
 		$this->db->insert('group_invitations', $record);
