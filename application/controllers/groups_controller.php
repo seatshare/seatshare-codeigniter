@@ -140,6 +140,7 @@ class Groups_Controller extends MY_Controller {
 			if ($this->form_validation->run() == true) {
 				$group = $this->group_model->getGroupByInvitationCode($this->input->post('invitation_code'));
 				$this->group_model->joinGroup($group->group_id);
+				$this->group_model->exipireInvitationCode($this->input->post('invitation_code'));
 				$this->growl('You have joined the group!');
 				redirect('dashboard');
 			}
