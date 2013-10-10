@@ -95,8 +95,6 @@
 			.headerContent{
 				color:#505050;
 				font-family:Helvetica;
-				font-size:20px;
-				font-weight:bold;
 				line-height:100%;
 				padding-top:0;
 				padding-right:0;
@@ -215,6 +213,7 @@
                 	<td align="center" valign="top" id="bodyCell">
                     	<!-- BEGIN TEMPLATE // -->
                     	<table border="0" cellpadding="0" cellspacing="0" id="templateContainer">
+                    		<?php if (isset($header)): ?>
                         	<tr>
                             	<td align="center" valign="top">
                                 	<!-- BEGIN HEADER // -->
@@ -228,6 +227,7 @@
                                     <!-- // END HEADER -->
                                 </td>
                             </tr>
+                        	<?php endif; ?>
                         	<tr>
                             	<td align="center" valign="top">
                                 	<!-- BEGIN BODY // -->
