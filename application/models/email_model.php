@@ -29,7 +29,7 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/invite', $data, true);
 		$subject = 'You have been invited to join ' . $group->group;
 
-		$this->sendEmail('invite_user', $email, $subject, $message, $user);
+		$this->sendEmail('InviteUser', $email, $subject, $message, $user);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/request', $data, true);
 		$subject = $user->first_name . ' has requested your tickets via ' . $group->group;
 
-		$this->sendEmail('request_ticket', $recipient->email, $subject, $message, $user);
+		$this->sendEmail('RequestTicket', $recipient->email, $subject, $message, $user);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/assign', $data, true);
 		$subject = $user->first_name . ' has assigned you tickets via ' . $group->group;
 
-		$this->sendEmail('asign_ticket', $recipient->email, $subject, $message, $user);
+		$this->sendEmail('AssignTicket', $recipient->email, $subject, $message, $user);
 	}
 
 	/**
