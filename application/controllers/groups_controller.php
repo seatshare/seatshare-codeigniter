@@ -172,21 +172,6 @@ class Groups_Controller extends MY_Controller {
 	}
 
 	/**
-	 * Invite Code Lookup
-	 *
-	 * @param string $invite_code
-	 **/
-	public function inviteCodeLookup($invite_code='') {
-		$this->form_validation->set_message('inviteCodeLookup', 'Your %s does not match an existing group.');
-		$group = $this->group_model->getGroupByInvitationCode($invite_code);
-		if (is_object($group) && $group->group_id) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * Invite User
 	 **/
 	public function invite() {
@@ -203,6 +188,52 @@ class Groups_Controller extends MY_Controller {
 		$data['title'] = 'Invite';
 		$this->load->view('groups/invite', $data);
 
+	}
+
+	/**
+	 * Group Message
+	 **/
+	public function new_message() {
+		$group = $this->group_model->getCurrentGroup();
+		$group_users = $this->group_model->getGroupUsersByGroupId($group->group_id);
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('subject', 'Subject', 'required');
+			$this->form_validation->set_rules('message', 'Message', 'required');
+			$this->form_validation->set_rules('recipients', 'Recipients', 'required');
+
+			if ($this->form_validation->run() == true) {
+				foreach ($this->input->post('recipients') as $user_id) {
+					$recipients[] = $this->user_model->getUserById($user_id);
+				}
+				$subject = $this->input->post('subject');
+				$message = $this->input->post('message');
+
+				$this->email_model->sendGroupMessage($recipients, $subject, $message);
+				$this->growl('Message sent!');
+				redirect('dashboard');
+			}
+		}
+
+		$data['group'] = $group;
+		$data['group_users'] = $group_users;
+		$data['title'] = 'New Group Message';
+		$this->load->view('groups/new_message', $data);
+	}
+
+	/**
+	 * Invite Code Lookup
+	 *
+	 * @param string $invite_code
+	 **/
+	public function inviteCodeLookup($invite_code='') {
+		$this->form_validation->set_message('inviteCodeLookup', 'Your %s does not match an existing group.');
+		$group = $this->group_model->getGroupByInvitationCode($invite_code);
+		if (is_object($group) && $group->group_id) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

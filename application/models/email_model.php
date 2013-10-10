@@ -8,6 +8,7 @@ class Email_Model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('group_model');
+		$this->load->library('email');
 	}
 
 	/**
@@ -100,6 +101,52 @@ class Email_Model extends CI_Model {
 	}
 
 	/**
+	 * Send Group Message
+	 *
+	 * @param array $recipients
+	 * @param string $subject
+	 * @param string $message
+	 **/
+	public function sendGroupMessage($recipients, $subject, $personalized) {
+		$group = $this->group_model->getCurrentGroup();
+		$user = $this->user_model->getCurrentUser();
+		if (!is_array($recipients) || !count($recipients) || !$recipients[0]->email) {
+			return false;
+		}
+
+		$subject = sprintf('[%s] %s', $group->group, $subject);
+		foreach($recipients as $recipient) {
+			$recipient_list[] = $recipient->first_name . ' ' . $recipient->last_name;
+		}
+
+		// Special email header for group messages
+		$data['header'] = '<div style="padding:10px;">';
+		$data['header'] .= sprintf(
+			'<h2>%s <span style="font-weight:normal;">from <a href="mailto:%s">%s %s</a></span></h2>',
+			$group->group,
+			$user->email,
+			$user->first_name,
+			$user->last_name
+		);
+		$data['header'] .= sprintf(
+			'<p>Sent to %s</p>',
+			implode(', ', $recipient_list)
+		);
+		$data['header'] .= '</div>';
+		
+		$data['personalized'] = nl2br($personalized);
+		$data['user'] = $user;
+		$data['group'] = $group;
+
+		foreach ($recipients as $recipient) {
+			$data['recipient'] = $recipient;
+			$message = $this->load->view('emails/group_message', $data, true);
+
+			$this->sendEmail('GroupMessage', $recipient->email, $subject, $message, $user);
+		}
+	}
+
+	/**
 	 * Send Email
 	 *
 	 * @param string $type
@@ -109,7 +156,9 @@ class Email_Model extends CI_Model {
 	 * @param object $from
 	 **/
 	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null) {
-		$this->load->library('email');
+
+		// Clear previous message attributes
+		$this->email->clear();
 
 		// Outbound email settings
 		if (file_exists(APPPATH . 'config/email.php')) {
