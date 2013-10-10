@@ -84,6 +84,10 @@ class Email_Model extends CI_Model {
 		$this->email->subject($subject);
 		$this->email->message($html_template);
 
+		// Headers for Mandrill
+		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
+		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
+
 		return $this->email->send();
 	}
 
