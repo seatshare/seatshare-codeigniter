@@ -40,7 +40,7 @@ class Profile_Controller extends MY_Controller {
 			if ($valid != false) {
 				$this->user_model->updateUserFromPost();
 				if ($this->input->post('password')) {
-					$this->user_model->updatePasswordFromPost();
+					$this->user_model->updatePassword($profile->user_id, $this->input->post('password'));
 				}
 				// Grab it again
 				$profile = $this->user_model->getCurrentUser();

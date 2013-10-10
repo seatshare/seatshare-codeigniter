@@ -5,3 +5,9 @@
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
 <?php form_close(); ?>
+
+<div class="help-block">
+	<p class="text-center">
+		<a href="<?php echo site_url('login/forgot_password'); ?>">I forgot my password</a>
+	</p>
+</div>
