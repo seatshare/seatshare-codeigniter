@@ -6,3 +6,7 @@ body {
 th.action {
 	width: 40px;
 }
+
+ul.group-members li {
+	margin-bottom: 0.25em;
+}

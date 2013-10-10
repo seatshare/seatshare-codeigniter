@@ -18,7 +18,7 @@
 		<h2><?php echo $group->group; ?></h2>
 		<p>A <strong><?php echo $entity->entity; ?></strong> group administered by <a href="<?php echo site_url('user/' . $group_admin->username); ?>"><?php echo $group_admin->name; ?></a></p>
 
-		<ul class="list-unstyled">
+		<ul class="list-unstyled group-members">
 			<?php foreach ($group_users as $row): ?>
 			<li>
 				<?php echo gravatar($row->email, 25); ?>
