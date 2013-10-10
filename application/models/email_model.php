@@ -2,11 +2,20 @@
 
 class Email_Model extends CI_Model {
 	
+	/**
+	 * Constructor
+	 **/
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('group_model');
 	}
 
+	/**
+	 * Send Invite
+	 *
+	 * @param string $email
+	 * @param string $invitation_code
+	 **/
 	public function sendInvite($email='', $invitation_code='') {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
@@ -20,9 +29,16 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/invite', $data, true);
 		$subject = 'You have been invited to join ' . $group->group;
 
-		$this->sendEmail($email, $subject, $message, $user);
+		$this->sendEmail('invite_user', $email, $subject, $message, $user);
 	}
 
+	/**
+	 * Send Request
+	 *
+	 * @param object $recipient
+	 * @param object $ticket
+	 * @param string $personalized
+	 **/
 	public function sendRequest($recipient, $ticket, $personalized) {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
@@ -39,9 +55,15 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/request', $data, true);
 		$subject = $user->first_name . ' has requested your tickets via ' . $group->group;
 
-		$this->sendEmail($recipient->email, $subject, $message, $user);
+		$this->sendEmail('request_ticket', $recipient->email, $subject, $message, $user);
 	}
 
+	/**
+	 * Send Assign
+	 *
+	 * @param object $recipient
+	 * @param object $ticket
+	 **/
 	public function sendAssign($recipient, $ticket) {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
@@ -57,10 +79,19 @@ class Email_Model extends CI_Model {
 		$message = $this->load->view('emails/assign', $data, true);
 		$subject = $user->first_name . ' has assigned you tickets via ' . $group->group;
 
-		$this->sendEmail($recipient->email, $subject, $message, $user);
+		$this->sendEmail('asign_ticket', $recipient->email, $subject, $message, $user);
 	}
 
-	public function sendEmail($to, $subject, $message, $from) {
+	/**
+	 * Send Request
+	 *
+	 * @param string $type
+	 * @param object $to
+	 * @param string $subject
+	 * @param string $message
+	 * @param object $from
+	 **/
+	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null) {
 		$this->load->library('email');
 
 		// Outbound email settings
@@ -85,6 +116,7 @@ class Email_Model extends CI_Model {
 		$this->email->message($html_template);
 
 		// Headers for Mandrill
+		$this->email->set_header('X-MC-Tags', $type ? $type : 'general');
 		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
 		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
 
