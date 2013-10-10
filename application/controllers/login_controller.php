@@ -3,6 +3,15 @@
 class Login_Controller extends MY_Controller {
 
 	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->layout = 'login';
+		$this->load->library('form_validation');
+	}
+
+	/**
 	 * Login
 	 **/
 	public function index() {
@@ -35,20 +44,71 @@ class Login_Controller extends MY_Controller {
 			}
 		}
 
-		$this->layout = 'login';
 		$data['head'] = sprintf('<meta name="description" content="Sign in to %s to manage your tickets and groups." />', $this->config->item('application_name'));
 		$data['title'] = 'User Login';
-		$this->load->view('login/form', $data);
+		$this->load->view('login/login_form', $data);
 	}
 
 	/**
 	 * Logout
 	 **/
 	public function logout() {
-
 		$this->session->sess_destroy();
 		$this->user_model->logout();
 		redirect('login');
+
+	}
+
+	/**
+	 * Forgot Password
+	 *
+	 * @param string $activation_key
+	 **/
+	public function forgot_password($activation_key='') {
+
+		if ($this->user_model->isLoggedIn()) {
+			redirect('dashboard');
+		}
+
+		if ($activation_key) {
+			$user = $this->user_model->getUserByActivationKey($activation_key);
+			if (!$user->user_id) {
+				$this->growl('Invalid password token. Please try again.', 'error');
+				redirect('login');
+			} else {
+				if ($this->input->post()) {
+					$this->form_validation->set_rules('password', 'Password', 'required|matches[password_confirm]');
+					$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
+
+					if ($this->form_validation->run() == true) {
+						$this->user_model->updatePassword($user->user_id, $this->input->post('password'));
+						$this->user_model->login($user->username, $this->input->post('password'));
+						$this->growl('Your password has been changed.');
+						redirect('dashboard');
+					}
+				}
+			}
+
+			$data['title'] = 'Change Password';
+			$this->load->view('login/change_password', $data);
+
+		} else {
+
+			if ($this->input->post()) {
+				$user = $this->user_model->getUserByEmailAddress($this->input->post('email'));
+				if (!$user->user_id) {
+					$this->growl('Could not find a user with that email address.');
+					redirect('login');
+				}
+				$this->user_model->setPasswordResetKey($user->user_id);
+				$this->growl('Your password reset email has been sent.');
+				redirect('login');
+			}
+
+			$data['title'] = 'Forgot Password';
+			$data['head'] = sprintf('<meta name="description" content="Provide your email address or username to %s to reset your password." />', $this->config->item('application_name'));
+			$this->load->view('login/forgot_password', $data);
+		}
 
 	}
 

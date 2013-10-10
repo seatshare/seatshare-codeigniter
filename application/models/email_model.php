@@ -60,6 +60,18 @@ class Email_Model extends CI_Model {
 		$this->sendEmail($recipient->email, $subject, $message, $user);
 	}
 
+	public function sendPasswordReset($recipient) {
+		if (!is_object($recipient) || !$recipient->email) {
+			return false;
+		}
+
+		$data['recipient'] = $recipient;
+		$message = $this->load->view('emails/password_reset', $data, true);
+		$subject = 'Your password has been reset for ' . $this->config->item('application_name');
+
+		$this->sendEmail($recipient->email, $subject, $message, false);
+	}
+
 	public function sendEmail($to, $subject, $message, $from) {
 		$this->load->library('email');
 
@@ -70,7 +82,7 @@ class Email_Model extends CI_Model {
 			$this->email->initialize($config);
 		}
 
-		if (!$to || !is_object($from) || !$from->email || !$subject || !$message) {
+		if (!$to || !$subject || !$message) {
 			return false;
 		}
 
@@ -79,7 +91,9 @@ class Email_Model extends CI_Model {
 		$html_template = $this->load->view('emails/html_email_template', $data, true);
 
 		$this->email->from('no-reply@' . $_SERVER['HTTP_HOST'], $this->config->item('application_name'));
-		$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
+		if (is_object($from) && $from->email) {
+			$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
+		}
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($html_template);
