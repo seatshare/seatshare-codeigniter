@@ -11,7 +11,8 @@
 	</div>
 	<div class="col-md-8">
 		<h3><a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a></h3>
-		<ul class="list-inline">
+		<p>A <strong><?php echo $group->entity; ?></strong> group.</p>
+		<ul class="list-inline group-members">
 			<?php foreach ($this->group_model->getGroupUsersByGroupId($group->group_id) as $row): ?>
 			<li>
 				<?php echo gravatar($row->email, 25); ?>
@@ -24,16 +25,15 @@
 		</ul>
 	</div>
 	<div class="col-md-2">
-		<a href="<?php echo site_url('groups/switch_groups/' . $group->group_id); ?>" class="btn btn-default">Switch to Group</a>
+		<a href="<?php echo site_url('groups/switch_groups/' . $group->group_id); ?>" class="btn btn-default"><span class="glyphicon glyphicon-link"></span> Switch to Group</a>
 	</div>
 </div>
 <hr />
 <?php endforeach; ?>
 <div class="row">
-	<div class="col-md-2">
-		&nbsp;
-	</div>
-	<div class="col-md-10">
-		<a href="<?php echo site_url('groups/join'); ?>" class="btn btn-primary">Join a Group</a> or <a href="<?php echo site_url('groups/create'); ?>" class="btn btn-primary">Create a Group</a>
+	<div class="col-md-12">
+		<p class="text-right">
+			<a href="<?php echo site_url('groups/join'); ?>" class="btn btn-primary">Join a Group</a> or <a href="<?php echo site_url('groups/create'); ?>" class="btn btn-primary">Create a Group</a>
+		</p>
 	</div>
 </div>

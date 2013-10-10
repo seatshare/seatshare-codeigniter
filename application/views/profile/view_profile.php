@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-3">
 		<p>
-			<?php echo gravatar($profile->email, 250, 'img-responsive'); ?>
+			<?php echo gravatar($profile->email, 250, 'img-thumbnail img-responsive'); ?>
 		</p>
 		<p>
 			<small>Joined <?php echo date('n/j/Y', strtotime($profile->inserted_ts)); ?></small>

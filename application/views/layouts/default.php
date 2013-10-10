@@ -26,7 +26,7 @@
 	<div class="col-md-12">
 		<hr />
 		<p>
-			<em>Provided by <?php echo $this->config->item('application_name'); ?></em>
+			<em>Provided by <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a></em>
 		</p>
 	</div>
 </footer>
