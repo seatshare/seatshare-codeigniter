@@ -30,10 +30,9 @@
 <hr />
 <?php endforeach; ?>
 <div class="row">
-	<div class="col-md-2">
-		&nbsp;
-	</div>
-	<div class="col-md-10">
-		<a href="<?php echo site_url('groups/join'); ?>" class="btn btn-primary">Join a Group</a> or <a href="<?php echo site_url('groups/create'); ?>" class="btn btn-primary">Create a Group</a>
+	<div class="col-md-12">
+		<p class="text-right">
+			<a href="<?php echo site_url('groups/join'); ?>" class="btn btn-primary">Join a Group</a> or <a href="<?php echo site_url('groups/create'); ?>" class="btn btn-primary">Create a Group</a>
+		</p>
 	</div>
 </div>

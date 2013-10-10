@@ -13,8 +13,12 @@
 </div>
 <?php echo form_fieldset_close(); ?>
 
-<div style="text-align:right;">
-	<?php echo form_submit(array('value'=>'Join the Group', 'class'=>'btn btn-primary')); ?>
+<div class="row">
+	<div class="col-md-12">
+		<p class="text-right">
+			<?php echo form_submit(array('value'=>'Join the Group', 'class'=>'btn btn-primary')); ?>
+		</p>
+	</div>
 </div>
 
 <?php echo form_close(); ?>

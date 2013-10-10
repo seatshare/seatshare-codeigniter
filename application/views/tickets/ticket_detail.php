@@ -24,9 +24,11 @@
 			<?php echo form_input(array('name'=>'cost', 'class'=>'form-control', 'placeholder'=>'25.00', 'value'=>number_format($ticket->cost,2))); ?>
 		</div>
 	</div>
-	<div class="form-group">
-		<div style="text-align:right;">
-			<?php echo form_submit(array('value'=>'Update Ticket', 'class'=>'btn btn-primary')); ?>
+	<div class="row">
+		<div class="col-md-12">
+			<p class="text-right">
+				<?php echo form_submit(array('value'=>'Update Ticket', 'class'=>'btn btn-primary')); ?>
+			</p>
 		</div>
 	</div>
 <?php echo form_close(); ?>
@@ -58,10 +60,11 @@
 			<?php echo form_textarea(array('name'=>'message', 'class'=>'form-control', 'placeholder'=>'You can include additional notes here for this request. We will already include the ticket details.', 'value'=>'')); ?>
 		</div>
 	</div>
-	<div class="form-group">
-		<hr />
-		<div style="text-align:right;">
-			<?php echo form_submit(array('value'=>'Request Ticket', 'class'=>'btn btn-primary')); ?>
+	<div class="row">
+		<div class="col-md-12">
+			<p class="text-right">
+				<?php echo form_submit(array('value'=>'Request Ticket', 'class'=>'btn btn-primary')); ?>
+			</p>
 		</div>
 	</div>
 <?php echo form_close(); ?>

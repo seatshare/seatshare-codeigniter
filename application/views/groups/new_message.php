@@ -44,7 +44,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<p style="text-align:right;">
+		<p class="text-right">
 			<?php echo form_submit(array('value'=>'Send Message', 'class'=>'btn btn-primary')); ?>
 		</p>
 	</div>

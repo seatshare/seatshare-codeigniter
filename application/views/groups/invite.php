@@ -16,8 +16,10 @@
 </div>
 
 <div class="row">
-	<div style="text-align:right;">
-		<?php echo form_submit(array('value'=>'Send Invite', 'class'=>'btn btn-primary')); ?>
+	<div class="col-md-12">
+		<p class="text-right">
+			<?php echo form_submit(array('value'=>'Send Invite', 'class'=>'btn btn-primary')); ?>
+		</p>
 	</div>
 </div>
 
