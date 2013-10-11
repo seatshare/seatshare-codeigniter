@@ -10,7 +10,7 @@ class Migration_event_tba_details extends CI_Migration {
 		}
 
 		// New Columns
-		$this->db->query("ALTER TABLE `events` ADD `description` text NOT NULL DEFAULT '' AFTER `event` ");
+		$this->db->query("ALTER TABLE `events` ADD `description` text NOT NULL AFTER `event` ");
 		$this->db->query("ALTER TABLE `events` ADD `date_tba` tinyint(1)  NOT NULL  DEFAULT '0' AFTER `start_time` ");
 		$this->db->query("ALTER TABLE `events` ADD `time_tba` tinyint(1)  NOT NULL  DEFAULT '0' AFTER `date_tba` ");
 
