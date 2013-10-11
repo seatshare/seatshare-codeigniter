@@ -1,6 +1,15 @@
 <h1>Welcome to <?php echo $this->config->item('application_name'); ?> </h1>
 <p class="lead"><?php echo $this->config->item('application_name'); ?> is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue.</p>
 
+<div class="visible-xs">
+	<div class="well text-center">
+		<ul class="list-inline" style="margin-bottom:0;">
+			<li><a href="<?php echo site_url('register'); ?>" class="btn btn-primary">Register</a></li>
+			<li><a href="<?php echo site_url('login'); ?>" class="btn btn-primary">Login</a></li>
+		</ul>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col-md-4">
 		<h2>Groups</h2>
