@@ -146,6 +146,18 @@ class Email_Model extends CI_Model {
 		}
 	}
 
+	public function sendWelcome($recipient) {
+		if (!is_object($recipient) || !$recipient->email) {
+			return false;
+		}
+
+		$data['recipient'] = $recipient;
+		$message = $this->load->view('emails/create_account', $data, true);
+		$subject = 'Welcome to ' . $this->config->item('application_name') . '!';
+
+		$this->sendEmail('NewUser', $recipient->email, $subject, $message, false);
+	}
+
 	/**
 	 * Send Email
 	 *
