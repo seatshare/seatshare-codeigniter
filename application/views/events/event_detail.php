@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-2">
-		<img src="<?php echo $entity->logo; ?>" class="img-responsive" />
+		<img src="<?php echo $entity->logo; ?>" class="img-responsive img-thumbnail" />
 	</div>
 	<div class="col-md-6">
 		<p><span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>

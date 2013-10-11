@@ -1,10 +1,19 @@
+<div class="row visible-xs" style="margin-top:-20px;">
+	<div class="well well-sm text-center">
+		<ul class="list-inline" style="margin:0;">
+			<li><a href="<?php echo site_url('tickets/create_season'); ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-calendar"></span> Add Season Tickets</a></li>
+			<li><a href="<?php echo site_url('groups/new_message'); ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-bullhorn"></span> Group Message</a></li>
+		</ul>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col-md-2">
-		<img src="<?php echo $entity->logo; ?>" class="img-responsive" />
+		<img src="<?php echo $entity->logo; ?>" class="img-responsive img-thumbnail hidden-xs" />
 	</div>
 	<div class="col-md-10">
 		<p>Your <strong><?php echo $entity->entity; ?></strong> group is administered by <a href="<?php echo site_url('user/' . $group->administrator->username); ?>"><?php echo $group->administrator->first_name; ?> <?php echo $group->administrator->last_name; ?></a></p>
-		<h2>Upcoming Events</h2>
+		<h2 style="margin-top:0">Upcoming Events</h2>
 	</div>
 </div>
 
