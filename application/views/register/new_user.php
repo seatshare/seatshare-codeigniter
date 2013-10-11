@@ -50,6 +50,14 @@
 				<?php echo form_password(array('name'=>'password_confirm', 'class'=>'form-control')); ?>
 			</div>
 		</div>
+		<div class="form-group">
+			<?php echo form_label('', 'tos', array('class'=>'col-md-3 control-label')); ?>
+			<div class="col-md-9">
+				<div class="checkbox">
+					<label><?php echo form_checkbox(array('name'=>'tos', 'class'=>'', 'value'=>'features', 'checked'=>false)); ?> I agree to the <a href="<?php echo site_url('tos'); ?>">terms of service</a>.<label>
+				</div>
+			</div>
+		</div>
 		<?php echo form_fieldset_close(); ?>
 	</div>
 </div>

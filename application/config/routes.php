@@ -43,12 +43,16 @@
 $route['logout'] = 'login_controller/logout'; 
 $route['user/([a-zA-z0-9_\-\.]+)'] = 'profile_controller/view/$1';
 
+// Public routes
+$route['tos'] = 'public_controller/tos';
+$route['privacy'] = 'public_controller/privacy';
+
 // Patches routing to allow for *_controller naming convention
 $route['([a-z]+)'] = '$1_controller/index';
 $route['([a-z_\-]+)/([a-z_\-]+)'] = '$1_controller/$2';
 $route['([a-z_\-]+)/([a-z_\-]+)/([a-zA-z0-9_\-\.]+)'] = '$1_controller/$2/$3';
 
-$route['default_controller'] = "welcome_controller";
+$route['default_controller'] = "public_controller";
 $route['404_override'] = '';
 
 /* End of file routes.php */
