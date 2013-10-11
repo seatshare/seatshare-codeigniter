@@ -12,11 +12,14 @@ class Register_Controller extends MY_Controller {
 			$this->growl('You are already registered.', 'error');
 			redirect('dashboard');
 		}
+		$this->load->model('email_model');
 		$this->load->library('form_validation');
 
 		// MailChimp
-		require_once APPPATH . 'third_party/mailchimp.php';
-		$this->mailchimp = new MailChimp($this->config->item('mailchimp_api'));
+		if ($this->config->item('mailchimp_api') && $this->config->item('mailchimp_list')) {
+			require_once APPPATH . 'third_party/mailchimp.php';
+			$this->mailchimp = new MailChimp($this->config->item('mailchimp_api'));
+		}
 	}
 
 	/**
@@ -45,15 +48,20 @@ class Register_Controller extends MY_Controller {
 				$profile = $this->user_model->getCurrentUser();
 
 				// Newsletter Signup
-				$signup = $this->mailchimp->call('lists/subscribe', array(
-					'id'                => $this->config->item('mailchimp_list'),
-					'email'             => array('email'=>$profile->email),
-					'merge_vars'        => array('FNAME'=>$profile->first_name, 'LNAME'=>$profile->last_name),
-					'double_optin'      => false,
-					'update_existing'   => true,
-					'replace_interests' => false,
-					'send_welcome'      => false,
-				));
+				if (is_object($this->mailchimp) && $this->input->post('newsletter') == 'features') {
+					$signup = $this->mailchimp->call('lists/subscribe', array(
+						'id'                => $this->config->item('mailchimp_list'),
+						'email'             => array('email'=>$profile->email),
+						'merge_vars'        => array('FNAME'=>$profile->first_name, 'LNAME'=>$profile->last_name),
+						'double_optin'      => false,
+						'update_existing'   => true,
+						'replace_interests' => false,
+						'send_welcome'      => false,
+					));
+				}
+
+				// Send a welcome email
+				$this->email_model->sendWelcome($profile);
 
 				// If from an invitation email, redirect to accept it.
 				if ($this->input->post('invitation_code') != '') {
