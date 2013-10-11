@@ -1,5 +1,7 @@
 <h1>Terms of Service</h1>
 
+<p><em>Effective October 11, 2013</em></p>
+
 <p class="lead">Before using <?php echo $application; ?>, you must agree to the following terms and conditions. If you do not agree to these terms, you must discontinue use of <?php echo $application; ?> immediately.</p>
 
 <h3>Parties</h3>
