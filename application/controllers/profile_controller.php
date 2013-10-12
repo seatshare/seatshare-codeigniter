@@ -36,9 +36,15 @@ class Profile_Controller extends MY_Controller {
 				$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
 			}
 
-			$valid = $this->form_validation->run();
-			if ($valid != false) {
-				$this->user_model->updateUserFromPost();
+			if ($this->form_validation->run() != false) {
+				$update_user_data = array(
+					'first_name' => $this->input->post('first_name'),
+					'last_name' => $this->input->post('last_name'),
+					'email' => strtolower($this->input->post('email')),
+					'username' => $this->input->post('username'),
+					'activation_key' => ''
+				);
+				$this->user_model->updateUser($update_user_data);
 				if ($this->input->post('password')) {
 					$this->user_model->updatePassword($profile->user_id, $this->input->post('password'));
 				}
