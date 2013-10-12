@@ -46,6 +46,7 @@ $route['user/([a-zA-z0-9_\-\.]+)'] = 'profile_controller/view/$1';
 // Public routes
 $route['tos'] = 'public_controller/tos';
 $route['privacy'] = 'public_controller/privacy';
+$route['contact'] = 'public_controller/contact';
 
 // Patches routing to allow for *_controller naming convention
 $route['([a-z]+)'] = '$1_controller/index';
