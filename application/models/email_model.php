@@ -196,11 +196,57 @@ class Email_Model extends CI_Model {
 		$this->email->message($html_template);
 
 		// Headers for Mandrill
-		$this->email->set_header('X-MC-Tags', $type ? $type : 'general');
+		$this->email->set_header('X-MC-Tags', $type ? $type : 'General');
 		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
 		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
 
 		return $this->email->send();
+	}
+
+	/**
+	 * Send Contact Email
+	 *
+	 * @param string $subject
+	 * @param string $message
+	 * @param string $name
+	 * @param string $email
+	 */
+	public function sendContactEmail($subject='', $message='', $name='', $email='') {
+
+		// Clear previous message attributes
+		$this->email->clear();
+
+		// Outbound email settings
+		if (file_exists(APPPATH . 'config/email.php')) {
+			$config['mailtype'] = 'html';
+			require (APPPATH . 'config/email.php');
+			$this->email->initialize($config);
+		}
+
+		if (!$subject || !$message || !$name || !$email) {
+			return false;
+		}
+
+		// For easier filtering
+		$subject = sprintf('[%s] %s', $this->config->item('application_name'), $subject);
+
+		$data['header'] = sprintf('<div style="padding:1.5em;"><strong>From:</strong> %s &lt;%s&gt;<br /><strong>Subject:</strong> %s</div>', $name, $email, $subject);
+		$data['subject'] = $subject;
+		$data['content'] = $message;
+		$html_template = $this->load->view('emails/html_email_template', $data, true);
+
+		$this->email->to($this->config->item('application_email'));
+		$this->email->from($email, $name);
+		$this->email->subject($subject);
+		$this->email->message($html_template);
+
+		// Headers for Mandrill
+		$this->email->set_header('X-MC-Tags', 'ContactForm');
+		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
+		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
+
+		return $this->email->send();
+
 	}
 
 }

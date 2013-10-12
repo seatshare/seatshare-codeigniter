@@ -3,6 +3,15 @@
 class Public_Controller extends MY_Controller {
 
 	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->load->library('form_validation');
+		$this->load->model('email_model');
+	}
+
+	/**
 	 * Welcome
 	 **/
 	public function index() {
@@ -42,6 +51,36 @@ class Public_Controller extends MY_Controller {
 		$data['address'] = $this->config->item('application_address');
 		$data['email'] = $this->config->item('application_email');
 		$this->load->view('public/privacy', $data);
+	}
+
+	/**
+	 * Contact
+	 */
+	public function contact() {
+		$this->layout = 'two_column';
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('name', 'Name', 'required');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+			$this->form_validation->set_rules('message', 'Message', 'required');
+			if ($this->form_validation->run() == true) {
+				$this->email_model->sendContactEmail(
+					$this->input->post('subject'),
+					$this->input->post('message'),
+					$this->input->post('name'),
+					$this->input->post('email')
+				);
+				$data['sent'] = true;
+				$this->growl('Message sent!');
+			}
+		}
+		$data['subjects'] = array(
+			'Support Question'=>'I have a question about ' . $this->config->item('application_name'),
+			'Feature Request'=>'I have an idea for a feature request'
+		);
+		$data['head'] = sprintf('<meta name="title" content="Contact %s" />', $this->config->item('application_name'));
+		$data['head'] .= sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name'));
+		$data['title'] = 'Contact Us';
+		$this->load->view('public/contact_form', $data);
 	}
 
 }
