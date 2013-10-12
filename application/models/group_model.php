@@ -361,7 +361,7 @@ class Group_Model extends CI_Model {
 		$record = new StdClass();
 		$record->user_id = $this->user_model->getCurrentUser()->user_id;
 		$record->group_id = $this->group_model->getCurrentGroupId();
-		$record->email = $email;
+		$record->email = strtolower($email);
 		$record->invitation_code = $invitation_code;
 		$record->status = 1;
 		$record->inserted_ts = date('Y-m-d h:i:s');
