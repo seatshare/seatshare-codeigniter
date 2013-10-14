@@ -62,6 +62,11 @@
 	</div>
 </div>
 
+<div style="display:none;">
+	This field is left blank on purpose. :)
+	<input type="text" name="url" value="" />
+</div>
+
 <div class="row">
 	<div class="col-md-12">
 		<p class="text-right">

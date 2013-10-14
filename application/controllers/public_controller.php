@@ -59,12 +59,18 @@ class Public_Controller extends MY_Controller {
 	public function contact() {
 		$this->layout = 'two_column';
 		if ($this->input->post()) {
+
+			// Spam honeypot field
+			if ($this->input->post('url') != '') {
+				return;
+			}
+
 			$this->form_validation->set_rules('name', 'Name', 'required');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 			$this->form_validation->set_rules('message', 'Message', 'required');
 			if ($this->form_validation->run() == true) {
 				$this->email_model->sendContactEmail(
-					$this->input->post('subject'),
+					'Message from ' . $this->input->post('name'),
 					$this->input->post('message'),
 					$this->input->post('name'),
 					$this->input->post('email')
@@ -73,10 +79,6 @@ class Public_Controller extends MY_Controller {
 				$this->growl('Message sent!');
 			}
 		}
-		$data['subjects'] = array(
-			'Support Question'=>'I have a question about ' . $this->config->item('application_name'),
-			'Feature Request'=>'I have an idea for a feature request'
-		);
 		$data['head'] = sprintf('<meta name="title" content="Contact %s" />', $this->config->item('application_name'));
 		$data['head'] .= sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name'));
 		$data['title'] = 'Contact Us';

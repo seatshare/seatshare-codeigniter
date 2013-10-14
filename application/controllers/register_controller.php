@@ -29,6 +29,11 @@ class Register_Controller extends MY_Controller {
 
 		if ($this->input->post()) {
 
+			// Spam honeypot field
+			if ($this->input->post('url') != '') {
+				return;
+			}
+
 			// Validate rules
 			$this->form_validation->set_rules('first_name', 'First Name', 'required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'required');

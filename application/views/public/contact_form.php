@@ -6,12 +6,6 @@
 
 <?php echo form_fieldset('Contact Us'); ?>
 <div class="form-group">
-	<?php echo form_label('Subject', 'subject', array('class'=>'col-md-3 control-label')); ?>
-	<div class="col-md-9">
-		<?php echo form_dropdown('subject', $subjects, $this->input->post('subject'), 'class="form-control"'); ?>
-	</div>
-</div>
-<div class="form-group">
 	<?php echo form_label('Your Name', 'name', array('class'=>'col-md-3 control-label')); ?>
 	<div class="col-md-9">
 		<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'placeholder'=>'John Doe', 'value'=>$this->input->post('name'))); ?>
@@ -29,6 +23,12 @@
 		<?php echo form_textarea(array('name'=>'message', 'class'=>'form-control', 'placeholder'=>'', 'value'=>$this->input->post('message'))); ?>
 	</div>
 </div>
+
+<div style="display:none;">
+	This field is left blank on purpose. :)
+	<input type="text" name="url" value="" />
+</div>
+
 <?php echo form_fieldset_close(); ?>
 
 <div class="row">
