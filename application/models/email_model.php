@@ -146,6 +146,11 @@ class Email_Model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Send Welcome
+	 *
+	 * @param object $recipient
+	 */
 	public function sendWelcome($recipient) {
 		if (!is_object($recipient) || !$recipient->email) {
 			return false;
@@ -159,6 +164,64 @@ class Email_Model extends CI_Model {
 	}
 
 	/**
+	 * Send Weekly Reminder
+	 *
+	 * @param object $recipient
+	 * @param object $group
+	 * @param array $events
+	 *
+	 */
+	public function sendWeeklyReminder($recipient, $group, $events) {
+		if (!is_object($recipient) || !$recipient->email) {
+			return false;
+		}
+
+		if (!count($events)) {
+			return false;
+		}
+
+		// Break out each event by day of week
+		foreach($events as $row) {
+			$events_by_day[date('l', strtotime($row->start_time))][] = $row;
+		}
+
+		$subject = 'The week ahead for ' . $group->group;
+		$data['days_of_week'] = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+		$data['group'] = $group;
+		$data['events'] = $events_by_day;
+		$data['recipient'] = $recipient;
+		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
+		$message = $this->load->view('emails/weekly_reminder', $data, true);
+		$this->sendEmail('WeeklyReminder', $recipient->email, $subject, $message, false);
+	}
+
+	/**
+	 * Send Daily Reminder
+	 *
+	 * @param object $recipient
+	 * @param object $group
+	 * @param array $events
+	 *
+	 */
+	public function sendDailyReminder($recipient, $group, $events) {
+		if (!is_object($recipient) || !$recipient->email) {
+			return false;
+		}
+
+		if (!count($events)) {
+			return false;
+		}
+
+		$subject = 'Today\'s events for ' . $group->group;
+		$data['group'] = $group;
+		$data['events'] = $events;
+		$data['recipient'] = $recipient;
+		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
+		$message = $this->load->view('emails/daily_reminder', $data, true);
+		$this->sendEmail('DailyReminder', $recipient->email, $subject, $message, false, $data);
+	}
+
+	/**
 	 * Send Email
 	 *
 	 * @param string $type
@@ -166,8 +229,9 @@ class Email_Model extends CI_Model {
 	 * @param string $subject
 	 * @param string $message
 	 * @param object $from
+	 * @param array $data
 	 **/
-	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null) {
+	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null, $data=array()) {
 
 		// Clear previous message attributes
 		$this->email->clear();
@@ -187,7 +251,7 @@ class Email_Model extends CI_Model {
 		$data['content'] = $message;
 		$html_template = $this->load->view('emails/html_email_template', $data, true);
 
-		$this->email->from('no-reply@' . $_SERVER['HTTP_HOST'], $this->config->item('application_name'));
+		$this->email->from('no-reply@' . $this->config->item('application_domain'), $this->config->item('application_name'));
 		if (is_object($from) && $from->email) {
 			$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
 		}
@@ -198,7 +262,7 @@ class Email_Model extends CI_Model {
 		// Headers for Mandrill
 		$this->email->set_header('X-MC-Tags', $type ? $type : 'General');
 		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
-		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
+		$this->email->set_header('X-MC-SigningDomain', $this->config->item('application_domain'));
 
 		return $this->email->send();
 	}
@@ -210,8 +274,9 @@ class Email_Model extends CI_Model {
 	 * @param string $message
 	 * @param string $name
 	 * @param string $email
+	 * @param array $data
 	 */
-	public function sendContactEmail($subject='', $message='', $name='', $email='') {
+	public function sendContactEmail($subject='', $message='', $name='', $email='', $data=array()) {
 
 		// Clear previous message attributes
 		$this->email->clear();
@@ -243,7 +308,7 @@ class Email_Model extends CI_Model {
 		// Headers for Mandrill
 		$this->email->set_header('X-MC-Tags', 'ContactForm');
 		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
-		$this->email->set_header('X-MC-SigningDomain', $_SERVER['HTTP_HOST']);
+		$this->email->set_header('X-MC-SigningDomain', $this->config->item('application_domain'));
 
 		return $this->email->send();
 

@@ -15,6 +15,8 @@ class Event_Model extends CI_Model {
 	 **/
 	public function getEventById($event_id=0) {
 		$group_id = $this->group_model->getCurrentGroupId();
+		$user_id = $this->user_model->getCurrentUser()->user_id;
+
 		$this->db->select('e.*');
 		$this->db->join('entities n', 'e.entity_id = n.entity_id');
 		$this->db->join('groups g', 'n.entity_id = g.entity_id');
@@ -23,7 +25,7 @@ class Event_Model extends CI_Model {
 		$this->db->order_by('e.start_time', 'ASC');
 		$query = $this->db->get('events e');
 		$row = $query->row();
-		$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id);
+		$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id, $group_id, $user_id);
 		return $row;
 	}
 
@@ -31,8 +33,9 @@ class Event_Model extends CI_Model {
 	 * Get Events
 	 */
 	public function getEvents($options=array()) {
-
 		$group_id = $this->group_model->getCurrentGroupId();
+		$user_id = $this->user_model->getCurrentUser()->user_id;
+
 		$this->db->select('e.*');
 		$this->db->join('entities n', 'e.entity_id = n.entity_id');
 		$this->db->join('groups g', 'n.entity_id = g.entity_id');
@@ -45,7 +48,7 @@ class Event_Model extends CI_Model {
 		$results = $query->result();
 		$events = array();
 		foreach ($results as $i => $row) {
-			$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id);
+			$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id, $group_id, $user_id);
 			$events[$i] = $row;
 		}
 		return $events;

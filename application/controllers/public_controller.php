@@ -35,7 +35,7 @@ class Public_Controller extends MY_Controller {
 		$data['head'] .= sprintf('<meta name="description" content="The Terms of Service %s are the rules that govern access and use of the website." />', $this->config->item('application_name'));
 		$data['title'] = 'Welcome to ' . $this->config->item('application_name');
 		$data['company'] = $this->config->item('application_name');
-		$data['application'] = $this->config->item('application_name') . ' (http://' . $_SERVER['HTTP_HOST'] . ')';
+		$data['application'] = $this->config->item('application_name') . ' (http://' . $this->config->item('application_domain') . ')';
 		$this->load->view('public/tos', $data);
 	}
 

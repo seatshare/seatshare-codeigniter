@@ -10,6 +10,20 @@ class Group_Model extends CI_Model {
 	}
 
 	/**
+	 * Get Groups
+	 */
+	public function getGroups() {
+		$this->db->select('g.group_id, g.group, n.entity, n.logo');
+		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
+		$this->db->where('g.status', 1);
+		$this->db->group_by('group_id');
+		$this->db->order_by('g.group', 'ASC');
+		$query = $this->db->get('groups g');
+		$groups = $query->result();
+		return $groups;
+	}
+
+	/**
 	 * Get By Group Id
 	 *
 	 * @param int $group_id
@@ -17,9 +31,6 @@ class Group_Model extends CI_Model {
 	 **/
 	public function getGroupById($group_id=0) {
 		if (!$group_id) {
-			return false;
-		}
-		if (!$this->checkAllowedGroupById($group_id)) {
 			return false;
 		}
 		$this->db->select('*');
@@ -35,12 +46,17 @@ class Group_Model extends CI_Model {
 	 *
 	 * @return array $groups
 	 **/
-	public function getUserGroups() {
+	public function getUserGroups($user_id=0) {
+
+		if (!$user_id) {
+			return false;
+		}
+
 		$this->db->select('g.group_id, g.group, n.entity, n.logo, gu.role');
 		$this->db->join('groups g', 'gu.group_id = g.group_id', 'INNER');
 		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
 		$this->db->where('g.status', 1);
-		$this->db->where('gu.user_id', $this->user_model->getCurrentUser()->user_id);
+		$this->db->where('gu.user_id', $user_id);
 		$this->db->group_by('group_id');
 		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('group_users gu');
@@ -53,8 +69,8 @@ class Group_Model extends CI_Model {
 	 *
 	 * @return array $groups
 	 **/
-	public function getUserGroupsAsArray() {
-		$result = $this->getUserGroups();
+	public function getUserGroupsAsArray($user_id=0) {
+		$result = $this->getUserGroups($user_id);
 		$groups = array();
 		foreach ($result as $row) {
 			$groups[$row->group_id] = $row->group;
@@ -76,7 +92,11 @@ class Group_Model extends CI_Model {
 		$this->db->order_by('u.last_name', 'ASC');
 		$this->db->order_by('u.first_name', 'ASC');
 		$query = $this->db->get();
-		$group_users = $query->result();
+		$result = $query->result();
+		foreach ($result as $row) {
+			$group_users[$row->user_id] = $row;
+			$group_users[$row->user_id]->name = $row->first_name . ' ' . substr($row->last_name,0,1) . '.';
+		}
 		return $group_users;
 	}
 
@@ -87,13 +107,7 @@ class Group_Model extends CI_Model {
 	 **/
 	public function getCurrentGroupUsers() {
 		$group_id = $this->getCurrentGroupId();
-		$result = $this->getGroupUsersByGroupId($group_id);
-		$group_users = array();
-		foreach ($result as $row) {
-			$group_users[$row->user_id] = $row;
-			$group_users[$row->user_id]->name = $row->first_name . ' ' . substr($row->last_name,0,1) . '.';
-		}
-		return $group_users;
+		return $this->getGroupUsersByGroupId($group_id);
 	}
 
 	/**
@@ -114,28 +128,12 @@ class Group_Model extends CI_Model {
 	}
 
 	/**
-	 * Get Current Group Administrator
-	 *
-	 * @return object $admin
-	 **/
-	public function getCurrentGroupAdministrator() {
-		$admin = $this->getGroupAdministratorByGroupId($this->getCurrentGroupId());
-		return $admin;
-	}
-
-	/**
 	 * Get Current Group
 	 *
 	 * @return object $group
 	 **/
 	public function getCurrentGroup() {
-		$group_id = $this->getCurrentGroupId();
-		$this->db->select('*');
-		$this->db->where('group_id', $group_id);
-		$this->db->where('status', 1);
-		$query = $this->db->get('groups');
-		$group = $query->row();
-		return $group;
+		return $this->getGroupById($this->getCurrentGroupId());
 	}
 
 	/**
@@ -144,9 +142,10 @@ class Group_Model extends CI_Model {
 	 * @return int $group_id
 	 **/
 	public function getCurrentGroupId() {
+		$user_id = $this->user_model->getCurrentUser()->user_id;
 		$current_group = $this->session->userdata('current_group') ? $this->session->userdata('current_group') : false;
 		if (!$current_group) {
-			$groups = $this->getUserGroupsAsArray();
+			$groups = $this->getUserGroupsAsArray($user_id);
 			reset($groups);
 			$group_id = $this->setCurrentGroup(key($groups));
 			return $group_id;
@@ -177,8 +176,8 @@ class Group_Model extends CI_Model {
 	 *
 	 * @return array $group_users
 	 **/
-	public function getCurrentGroupUsersAsArray() {
-		$group_users_objects = $this->getCurrentGroupUsers();
+	public function getGroupUsersAsArray($group_id=0) {
+		$group_users_objects = $this->getGroupUsersByGroupId($group_id);
 		$group_users['0'] = 'Unassigned';
 		foreach ($group_users_objects as $row) {
 			$group_users[$row->user_id] = $row->name;
@@ -225,11 +224,16 @@ class Group_Model extends CI_Model {
 	 *
 	 * @param array $group
 	 **/
-	public function createGroup($group=array()) {
+	public function createGroup($group=array(), $user_id=0) {
+
+		if (!$user_id) {
+			$user_id = $this->user_model->getCurrentUser()->user_id;
+		}
+
 		$record = new StdClass();
 		$record->entity_id = $group['entity_id'];
 		$record->group = $group['group'];
-		$record->creator_id = $this->user_model->getCurrentUser()->user_id;
+		$record->creator_id = $user_id;
 		$record->invitation_code = $this->generateInvitationCode();
 		$record->status = 1;
 		$record->inserted_ts = date('Y-m-d h:i:s');
@@ -239,7 +243,7 @@ class Group_Model extends CI_Model {
 
 		// Join group just created, switch to it
 		$this->db->insert('group_users', array(
-			'user_id' => $this->user_model->getCurrentUser()->user_id,
+			'user_id' => $user_id,
 			'group_id' => $group_id,
 			'role' => 'admin'
 		));
@@ -355,6 +359,12 @@ class Group_Model extends CI_Model {
 		return true;
 	}
 
+	/**
+	 * Create and Send Invite
+	 *
+	 * @param string $email
+	 * @return boollean
+	 */
 	public function createAndSendInvite($email='') {
 		$invitation_code = $this->generateInvitationCode();
 
@@ -368,6 +378,138 @@ class Group_Model extends CI_Model {
 
 		$this->db->insert('group_invitations', $record);
 		$this->email_model->sendInvite($email, $invitation_code);
+		return true;
+	}
+
+	/**
+	 * Get Weekly Events by Group Id
+	 *
+	 * @param int $group_id
+	 */
+	public function getWeeklyEventsByGroupId($group_id=0) {
+		$this->db->select('*');
+		$this->db->join('events e', 'e.entity_id = g.entity_id');
+		$this->db->where('`g`.`group_id`', $group_id);
+		$this->db->where('WEEK(`e`.`start_time`,1) = WEEK(NOW(),1)');
+		$this->db->order_by('start_time', 'ASC');
+		$query = $this->db->get('groups g');
+		$events = $query->result();
+		return $events;
+	}
+
+	/**
+	 * Get Daily Events by Group Id
+	 *
+	 * @param int $group_id
+	 */
+	public function getDailyEventsByGroupId($group_id=0) {
+		$this->db->select('*');
+		$this->db->join('events e', 'e.entity_id = g.entity_id');
+		$this->db->where('`g`.`group_id`', $group_id);
+		$this->db->where('DATE(`e`.`start_time`) = DATE(NOW())');
+		$this->db->order_by('start_time', 'ASC');
+		$query = $this->db->get('groups g');
+		$events = $query->result();
+		return $events;
+	}
+
+	/**
+	 * Send Weekly Reminders By Group Id
+	 *
+	 * @param int $group_id
+	 */
+	public function sendWeeklyRemindersByGroupId($group_id=0) {
+		$count = 0;
+		$group = $this->getGroupById($group_id);
+		$events = $this->getWeeklyEventsByGroupId($group_id);
+		if (!count($events)) {
+			return;
+		}
+		$users = $this->getReminderSubscribersByGroupId('weekly', $group_id);
+		foreach ($users as $row) {
+			$user = $this->user_model->getUserById($row->user_id);
+			foreach ($events as &$event) {
+				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
+			}
+			$this->email_model->sendWeeklyReminder($user, $group, $events);
+			sleep(3);
+			$count++;
+		}
+		return $count;
+	}
+
+	/**
+	 * Send Daily Reminders By Group Id
+	 *
+	 * @param int $group_id
+	 */
+	public function sendDailyRemindersByGroupId($group_id=0) {
+		$count = 0;
+		$group = $this->getGroupById($group_id);
+		$events = $this->getDailyEventsByGroupId($group_id);
+		if (!count($events)) {
+			return;
+		}
+		$users = $this->getReminderSubscribersByGroupId('daily', $group_id);
+		foreach ($users as $row) {
+			$user = $this->user_model->getUserById($row->user_id);
+			foreach ($events as &$event) {
+				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
+			}
+			$status = $this->email_model->sendDailyReminder($user, $group, $events);
+			sleep(3);
+			$count++;
+		}
+		return $count;
+	}
+
+	/**
+	 * Get Reminder Types
+	 */
+	public function getReminderTypes() {
+		$this->db->select('*');
+		$query = $this->db->get('reminder_types');
+		return $query->result();
+	}
+
+	/**
+	 * Get Reminders By User Id
+	 *
+	 * @param int $user_id
+	 * @param int $group_id
+	 */
+	public function getRemindersByUserId($user_id=0, $group_id=0) {
+		$this->db->select('*');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', $group_id);
+		$query = $this->db->get('user_reminders');
+		return $query->result();
+	}
+
+	/**
+	 * Update Reminders
+	 *
+	 * @param int $user_id
+	 * @param int $group_id
+	 * @param array $reminders
+	 * @return boolean
+	 */
+	public function updateReminders($user_id=0, $group_id=0, $reminders=array()) {
+
+		// Delete existing settings
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', $group_id);
+		$this->db->delete('user_reminders');
+
+		// Add new settings
+		foreach ($reminders as $reminder) {
+			$record = new StdClass();
+			$record->user_id = $user_id;
+			$record->group_id = $group_id;
+			$record->reminder_type_id = $reminder;
+			$this->db->insert('user_reminders', $record);
+		}
+
 		return true;
 	}
 
@@ -399,6 +541,18 @@ class Group_Model extends CI_Model {
 				$randomString .= $characters[rand(0, strlen($characters) - 1)];
 			}
 			return $randomString;
+	}
+
+	/**
+	 * Get Reminder Subscribers by Group Id
+	 */
+	private function getReminderSubscribersByGroupId($type='', $group_id=0) {
+		$this->db->select('*');
+		$this->db->where('ur.group_id', $group_id);
+		$this->db->join('reminder_types rt', 'rt.reminder_type_id = ur.reminder_type_id');
+		$this->db->where('reminder_type', $type);
+		$query = $this->db->get('user_reminders ur');
+		return $query->result();
 	}
 
 }

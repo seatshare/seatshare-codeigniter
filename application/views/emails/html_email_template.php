@@ -247,7 +247,11 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                         <tr>
                                             <td class="footerContent" style="padding-top:15px; text-align:center;">
+                                            	<?php if (isset($footer)): ?>
+												<?php echo $footer; ?>
+                                            	<?php else: ?>
                                             	Sent through <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>.
+                                            	<?php endif; ?>
                                             </td>
                                         </tr>
                                     </table>

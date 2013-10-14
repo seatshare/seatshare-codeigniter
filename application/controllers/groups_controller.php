@@ -18,7 +18,8 @@ class Groups_Controller extends MY_Controller {
 	 * Group List
 	 **/
 	public function index() {
-		$groups = $this->group_model->getUserGroups();
+		$user_id = $this->user_model->getCurrentUser()->user_id;
+		$groups = $this->group_model->getUserGroups($user_id);
 		if (is_array($groups) && count($groups)) {
 			$data['groups'] = $groups;
 			$data['title'] = 'Groups';
@@ -50,6 +51,8 @@ class Groups_Controller extends MY_Controller {
 	 * @param int $group_id
 	 **/
 	public function group($group_id=0) {
+		$this->layout = 'two_column';
+		$user = $this->user_model->getCurrentUser();
 		$group = $this->group_model->getGroupById($group_id);
 		if (!is_object($group) || !$group->group_id) {
 			$this->growl('Could not load specified group.', 'error');
@@ -59,10 +62,24 @@ class Groups_Controller extends MY_Controller {
 		$group_users = $this->group_model->getGroupUsersByGroupId($group->group_id);
 		$group_admin = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
 
+		if ($this->input->post('reminders')) {
+			$this->group_model->updateReminders($user->user_id, $group->group_id, $this->input->post('reminders'));
+			$this->growl('Reminder settings updated!');
+		}
+
+		$reminder_subscriptions = $this->group_model->getRemindersByUserId($user->user_id, $group->group_id);
+		$subscribed = array();
+		foreach($reminder_subscriptions as $row) {
+			$subscribed[] = $row->reminder_type_id;
+		}
+
 		$data['group'] = $group;
 		$data['entity'] = $entity;
 		$data['group_users'] = $group_users;
 		$data['group_admin'] = $group_admin;
+		$data['reminders'] = $this->group_model->getReminderTypes();
+		$data['subscribed'] = $subscribed;
+		$data['sidebar'] = $this->load->view('groups/_reminders', $data, true);
 		$data['title'] = $group->group;
 		$this->load->view('groups/view_group', $data);
 	}
@@ -234,6 +251,46 @@ class Groups_Controller extends MY_Controller {
 		} else {
 			return false;
 		}
+	}
+
+	/** Cron Jobs **/
+
+	/**
+	 * Weekly Reminders
+	 */
+	public function weekly_reminders() {
+		if (!$this->input->is_cli_request()) {
+			die('Must run from command line.' . PHP_EOL);
+		}
+		$this->layout = false;
+		printf('[%s] Starting the weekly reminders ... ' . PHP_EOL, date('c'));
+		$groups = $this->group_model->getGroups();
+		foreach ($groups as $group) {
+			printf('Group %d - %s ', $group->group_id, str_pad($group->group.' ',40,'.'));
+			$count = $this->group_model->sendWeeklyRemindersByGroupId($group->group_id);
+			printf('Sent %d reminders' . PHP_EOL, $count);
+		}
+		printf('[%s] Complete! ' . PHP_EOL, date('c'));
+	}
+
+	/**
+	 * Daily Reminders
+	 *
+	 * @param int $limit
+	 */
+	public function daily_reminders() {
+		if (!$this->input->is_cli_request()) {
+			die('Must run from command line.' . PHP_EOL);
+		}
+		$this->layout = false;
+		printf('[%s] Starting the daily reminders ... ' . PHP_EOL, date('c'));
+		$groups = $this->group_model->getGroups();
+		foreach ($groups as $group) {
+			printf('Group %d - %s ', $group->group_id, str_pad($group->group.' ',40,'.'));
+			$count = $this->group_model->sendDailyRemindersByGroupId($group->group_id);
+			printf('Sent %d reminders' . PHP_EOL, $count);
+		}
+		printf('[%s] Complete! ' . PHP_EOL, date('c'));
 	}
 
 }

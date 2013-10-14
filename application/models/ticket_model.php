@@ -14,24 +14,30 @@ class Ticket_Model extends CI_Model {
 	 * Get Ticket Status By Event Id
 	 *
 	 * @param int $event_id
+	 * @param int $group_id
+	 * @param int $user_id
 	 **/
-	public function getTicketStatusByEventId($event_id=0) {
+	public function getTicketStatusByEventId($event_id=0, $group_id=0, $user_id=0) {
+
+		if (!$event_id || !$group_id || !$user_id) {
+			return array();
+		}
 
 		$this->db->select('*');
 		$this->db->where('event_id', $event_id);
-		$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
-		$this->db->where('group_id', $this->group_model->getCurrentGroupId());
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', $group_id);
 		$tickets_user = $this->db->get('tickets');
 
 		$this->db->select('*');
 		$this->db->where('event_id', $event_id);
-		$this->db->where('group_id', $this->group_model->getCurrentGroupId());
+		$this->db->where('group_id', $group_id);
 		$tickets_group = $this->db->get('tickets');
 
 		$this->db->select('*');
 		$this->db->where('event_id', $event_id);
 		$this->db->where('user_id', '');
-		$this->db->where('group_id', $this->group_model->getCurrentGroupId());
+		$this->db->where('group_id', $group_id);
 		$tickets_available = $this->db->get('tickets');
 
 		$return = array(
@@ -52,11 +58,8 @@ class Ticket_Model extends CI_Model {
 	 */
 	public function getTicketsByEventId($event_id=0) {
 
-		$group_users = $this->group_model->getCurrentGroupUsers();
-
 		$this->db->select('*');
 		$this->db->where('event_id', $event_id);
-		$this->db->where('group_id', $this->group_model->getCurrentGroupId());
 		$this->db->order_by('section', 'ASC');
 		$this->db->order_by('row', 'ASC');
 		$this->db->order_by('seat', 'ASC');
@@ -65,8 +68,8 @@ class Ticket_Model extends CI_Model {
 		$tickets = array();
 		foreach ($result as $i => $row) {
 			$tickets[$i] = $row;
-			$tickets[$i]->owner = $group_users[$row->owner_id];
-			$tickets[$i]->assigned = ($row->user_id) ? $group_users[$row->user_id] : 0;
+			$tickets[$i]->owner = $this->user_model->getUserById($tickets[$i]->owner_id);
+			$tickets[$i]->assigned = ($tickets[$i]->user_id) ? $this->user_model->getUserById($tickets[$i]->user_id) : 0;
 		}
 		return $tickets;
 	}
@@ -77,19 +80,15 @@ class Ticket_Model extends CI_Model {
 	 * @param int $ticket_id
 	 **/
 	public function getTicketById($ticket_id=0) {
-
-		$group_users = $this->group_model->getCurrentGroupUsers();
-
 		$this->db->select('*');
 		$this->db->where('ticket_id', $ticket_id);
-		$this->db->where('group_id', $this->group_model->getCurrentGroupId());
 		$this->db->order_by('section', 'ASC');
 		$this->db->order_by('row', 'ASC');
 		$this->db->order_by('seat', 'ASC');
 		$query = $this->db->get('tickets');
 		$ticket = $query->row();
-		$ticket->owner = $group_users[$ticket->owner_id];
-		$ticket->assigned = ($ticket->user_id) ? $group_users[$ticket->user_id] : 0;
+		$ticket->owner = $this->user_model->getUserById($ticket->owner_id);
+		$ticket->assigned = ($ticket->user_id) ? $this->user_model->getUserById($ticket->user_id) : 0;
 		return $ticket;
 	}
 

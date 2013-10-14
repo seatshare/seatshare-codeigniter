@@ -8,6 +8,11 @@ class MY_Controller extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		// Clean up CLI-based routes to use proper base_url
+		if ($this->input->is_cli_request()) {
+			$this->config->set_item('base_url', 'http://' . $this->config->item('application_domain') . '/');
+			$this->layout = false;
+		}
 	}
 
 	/**
@@ -23,6 +28,9 @@ class MY_Controller extends CI_Controller {
 	 * Require Login
 	 **/
 	public function requireLogin() {
+		if ($this->input->is_cli_request()) {
+			return;
+		}
 		if (!$this->user_model->isLoggedIn()) {
 			redirect('login/?return=' . urlencode($_SERVER['REQUEST_URI']));
 		}

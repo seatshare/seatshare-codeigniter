@@ -37,14 +37,16 @@ class Profile_Controller extends MY_Controller {
 			}
 
 			if ($this->form_validation->run() != false) {
-				$update_user_data = array(
-					'first_name' => $this->input->post('first_name'),
-					'last_name' => $this->input->post('last_name'),
-					'email' => strtolower($this->input->post('email')),
-					'username' => $this->input->post('username'),
-					'activation_key' => ''
-				);
-				$this->user_model->updateUser($update_user_data);
+				
+				$record = new StdClass();
+				$record->user_id = $profile->user_id;
+				$record->first_name = $this->input->post('first_name');
+				$record->last_name = $this->input->post('last_name');
+				$record->email = strtolower($this->input->post('email'));
+				$record->username = $this->input->post('username');
+				$record->activation_key = '';
+
+				$this->user_model->updateUser($record);
 				if ($this->input->post('password')) {
 					$this->user_model->updatePassword($profile->user_id, $this->input->post('password'));
 				}
