@@ -327,9 +327,12 @@ class Group_Model extends CI_Model {
 		if (!$group_id) {
 			return false;
 		}
+		
+		$user = $this->user_model->getCurrentUser();
+
 		// Only 'member' roles can leave.
 		$this->db->where('role', 'member');
-		$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
+		$this->db->where('user_id', $user->user_id);
 		$this->db->where('group_id', $group_id);
 		$this->db->delete('group_users');
 		if ($this->db->affected_rows() == 0) {
@@ -337,7 +340,7 @@ class Group_Model extends CI_Model {
 		} else {
 			// Remove owned tickets
 			$this->db->select('*');
-			$this->db->where('owner_id', $this->user_model->getCurrentUser()->user_id);
+			$this->db->where('owner_id', $user->user_id);
 			$this->db->where('group_id', $group_id);
 			$query = $this->db->get('tickets');
 			$tickets = $query->result();
@@ -347,13 +350,16 @@ class Group_Model extends CI_Model {
 
 			// Un-assign tickets
 			$this->db->select('*');
-			$this->db->where('user_id', $this->user_model->getCurrentUser()->user_id);
+			$this->db->where('user_id', $user->user_id);
 			$this->db->where('group_id', $group_id);
 			$query = $this->db->get('tickets');
 			$tickets = $query->result();
 			foreach ($tickets as $ticket) {
 				$this->ticket_model->unassignTicket($ticket->ticket_id);
 			}
+
+			// Remove reminder subscriptions
+			$this->updateReminders($user->user_id, $group_id, array());
 
 			// If current group equals this one, unset it
 			$this->session->unset_userdata('current_group');
