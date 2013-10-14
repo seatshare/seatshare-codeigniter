@@ -51,6 +51,8 @@ class Groups_Controller extends MY_Controller {
 	 * @param int $group_id
 	 **/
 	public function group($group_id=0) {
+		$this->layout = 'two_column';
+		$user = $this->user_model->getCurrentUser();
 		$group = $this->group_model->getGroupById($group_id);
 		if (!is_object($group) || !$group->group_id) {
 			$this->growl('Could not load specified group.', 'error');
@@ -60,10 +62,23 @@ class Groups_Controller extends MY_Controller {
 		$group_users = $this->group_model->getGroupUsersByGroupId($group->group_id);
 		$group_admin = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
 
+		if ($this->input->post('reminders')) {
+			$this->group_model->updateReminders($user->user_id, $group->group_id, $this->input->post('reminders'));
+			$this->growl('Reminder settings updated!');
+		}
+
+		$reminder_subscriptions = $this->group_model->getRemindersByUserId($user->user_id, $group->group_id);
+		foreach($reminder_subscriptions as $row) {
+			$subscribed[] = $row->reminder_type_id;
+		}
+
 		$data['group'] = $group;
 		$data['entity'] = $entity;
 		$data['group_users'] = $group_users;
 		$data['group_admin'] = $group_admin;
+		$data['reminders'] = $this->group_model->getReminderTypes();
+		$data['subscribed'] = $subscribed;
+		$data['sidebar'] = $this->load->view('groups/_reminders', $data, true);
 		$data['title'] = $group->group;
 		$this->load->view('groups/view_group', $data);
 	}

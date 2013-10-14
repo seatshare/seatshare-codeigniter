@@ -15,7 +15,7 @@
 			<?php echo form_label('Reset Invitation Code', 'reset_invitation_code', array('class'=>'col-md-3 control-label')); ?>
 			<div class="col-md-9">
 				<div class="checkbox">
-					<label><?php echo form_checkbox(array('name'=>'reset_invitation_code', 'class'=>'', 'value'=>'1', 'checked'=>false)); ?> <strong>Warning!</strong> Invalidates all existing invitation emails.<label>
+					<label><?php echo form_checkbox(array('name'=>'reset_invitation_code', 'class'=>'', 'value'=>'1', 'checked'=>false)); ?> <strong>Warning!</strong> Invalidates all existing invitation emails.</label>
 				</div>
 			</div>
 		</div>

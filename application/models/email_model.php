@@ -176,6 +176,10 @@ class Email_Model extends CI_Model {
 			return false;
 		}
 
+		if (!count($events)) {
+			return;
+		}
+
 		// Break out each event by day of week
 		foreach($events as $row) {
 			$events_by_day[date('l', strtotime($row->start_time))][] = $row;

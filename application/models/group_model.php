@@ -359,6 +359,12 @@ class Group_Model extends CI_Model {
 		return true;
 	}
 
+	/**
+	 * Create and Send Invite
+	 *
+	 * @param string $email
+	 * @return boollean
+	 */
 	public function createAndSendInvite($email='') {
 		$invitation_code = $this->generateInvitationCode();
 
@@ -377,6 +383,8 @@ class Group_Model extends CI_Model {
 
 	/**
 	 * Get Weekly Events by Group Id
+	 *
+	 * @param int $group_id
 	 */
 	public function getWeeklyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
@@ -389,6 +397,8 @@ class Group_Model extends CI_Model {
 
 	/**
 	 * Get Daily Events by Group Id
+	 *
+	 * @param int $group_id
 	 */
 	public function getDailyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
@@ -419,6 +429,56 @@ class Group_Model extends CI_Model {
 			$count++;
 		}
 		return $count;
+	}
+
+	/**
+	 * Get Reminder Types
+	 */
+	public function getReminderTypes() {
+		$this->db->select('*');
+		$query = $this->db->get('reminder_types');
+		return $query->result();
+	}
+
+	/**
+	 * Get Reminders By User Id
+	 *
+	 * @param int $user_id
+	 * @param int $group_id
+	 */
+	public function getRemindersByUserId($user_id=0, $group_id=0) {
+		$this->db->select('*');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', $group_id);
+		$query = $this->db->get('user_reminders');
+		return $query->result();
+	}
+
+	/**
+	 * Update Reminders
+	 *
+	 * @param int $user_id
+	 * @param int $group_id
+	 * @param array $reminders
+	 * @return boolean
+	 */
+	public function updateReminders($user_id=0, $group_id=0, $reminders=array()) {
+
+		// Delete existing settings
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', $group_id);
+		$this->db->delete('user_reminders');
+
+		// Add new settings
+		foreach ($reminders as $reminder) {
+			$record = new StdClass();
+			$record->user_id = $user_id;
+			$record->group_id = $group_id;
+			$record->reminder_type_id = $reminder;
+			$this->db->insert('user_reminders', $record);
+		}
+
+		return true;
 	}
 
 	/* Private Metods */
