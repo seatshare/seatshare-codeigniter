@@ -247,6 +247,19 @@ class Group_Model extends CI_Model {
 			'group_id' => $group_id,
 			'role' => 'admin'
 		));
+		
+		// Subscribe new user to reminders
+		$this->db->insert('user_reminders', array(
+			'user_id' => $user_id,
+			'group_id' => $group_id,
+			'reminder_type_id' => 1
+		));
+		$this->db->insert('user_reminders', array(
+			'user_id' => $user_id,
+			'group_id' => $group_id,
+			'reminder_type_id' => 2
+		));
+
 		$this->setCurrentGroup($group_id);
 	}
 
@@ -259,12 +272,36 @@ class Group_Model extends CI_Model {
 		if (!$group_id) {
 			return false;
 		}
+
+		$user = $this->user_model->getCurrentUser();
+
+		// See if user is already a member
+		$group_users = $this->getGroupUsersAsArray($group_id);
+		if (in_array($user->user_id, array_keys($group_users))) {
+			return false;
+		}
+
 		$this->db->insert('group_users', array(
-			'user_id' => $this->user_model->getCurrentUser()->user_id,
+			'user_id' => $user->user_id,
 			'group_id' => $group_id,
 			'role' => 'member'
 		));
+
+		// Subscribe new user to reminders
+		$this->db->insert('user_reminders', array(
+			'user_id' => $user->user_id,
+			'group_id' => $group_id,
+			'reminder_type_id' => 1
+		));
+		$this->db->insert('user_reminders', array(
+			'user_id' => $user->user_id,
+			'group_id' => $group_id,
+			'reminder_type_id' => 2
+		));
+
+		// Switch to new group
 		$this->setCurrentGroup($group_id);
+
 		return true;
 	}
 
@@ -432,6 +469,7 @@ class Group_Model extends CI_Model {
 				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
 			}
 			$this->email_model->sendWeeklyReminder($user, $group, $events);
+			$this->logReminder(1, $user, $group, $events);
 			sleep(3);
 			$count++;
 		}
@@ -457,6 +495,7 @@ class Group_Model extends CI_Model {
 				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
 			}
 			$status = $this->email_model->sendDailyReminder($user, $group, $events);
+			$this->logReminder(2, $user, $group, $events);
 			sleep(3);
 			$count++;
 		}
@@ -555,4 +594,19 @@ class Group_Model extends CI_Model {
 		return $query->result();
 	}
 
+	/**
+	 * Log Sent Reminder
+	 */
+	public function logReminder($reminder_type_id=0, $user, $group, $events=array()) {
+  		$record = new StdClass();
+  		$record->reminder_type_id = $reminder_type_id;
+  		$record->user_id = $user->user_id;
+  		$record->entry = json_encode(array(
+  			'user' => $user,
+  			'group' => $group,
+  			'events' => $events
+  		));
+  		$record->inserted_ts =  date('Y-m-d h:i:s');
+  		$this->db->insert('reminders', $record);
+	}
 }
