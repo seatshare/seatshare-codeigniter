@@ -388,9 +388,11 @@ class Group_Model extends CI_Model {
 	 */
 	public function getWeeklyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
-		$this->db->where(sprintf('`e`.`entity_id` = %d', $group_id));
+		$this->db->join('events e', 'e.entity_id = g.entity_id');
+		$this->db->where('`g`.`group_id`', $group_id);
 		$this->db->where('WEEK(`e`.`start_time`,1) = WEEK(NOW(),1)');
-		$query = $this->db->get('events e');
+		$this->db->order_by('start_time', 'ASC');
+		$query = $this->db->get('groups g');
 		$events = $query->result();
 		return $events;
 	}
@@ -402,9 +404,11 @@ class Group_Model extends CI_Model {
 	 */
 	public function getDailyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
-		$this->db->where(sprintf('`e`.`entity_id` = %d', $group_id));
+		$this->db->join('events e', 'e.entity_id = g.entity_id');
+		$this->db->where('`g`.`group_id`', $group_id);
 		$this->db->where('DATE(`e`.`start_time`) = DATE(NOW())');
-		$query = $this->db->get('events e');
+		$this->db->order_by('start_time', 'ASC');
+		$query = $this->db->get('groups g');
 		$events = $query->result();
 		return $events;
 	}
@@ -418,6 +422,9 @@ class Group_Model extends CI_Model {
 		$count = 0;
 		$group = $this->getGroupById($group_id);
 		$events = $this->getWeeklyEventsByGroupId($group_id);
+		if (!count($events)) {
+			return;
+		}
 		$users = $this->getReminderSubscribersByGroupId('weekly', $group_id);
 		foreach ($users as $row) {
 			$user = $this->user_model->getUserById($row->user_id);
@@ -425,6 +432,31 @@ class Group_Model extends CI_Model {
 				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
 			}
 			$this->email_model->sendWeeklyReminder($user, $group, $events);
+			sleep(3);
+			$count++;
+		}
+		return $count;
+	}
+
+	/**
+	 * Send Daily Reminders By Group Id
+	 *
+	 * @param int $group_id
+	 */
+	public function sendDailyRemindersByGroupId($group_id=0) {
+		$count = 0;
+		$group = $this->getGroupById($group_id);
+		$events = $this->getDailyEventsByGroupId($group_id);
+		if (!count($events)) {
+			return;
+		}
+		$users = $this->getReminderSubscribersByGroupId('daily', $group_id);
+		foreach ($users as $row) {
+			$user = $this->user_model->getUserById($row->user_id);
+			foreach ($events as &$event) {
+				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
+			}
+			$status = $this->email_model->sendDailyReminder($user, $group, $events);
 			sleep(3);
 			$count++;
 		}

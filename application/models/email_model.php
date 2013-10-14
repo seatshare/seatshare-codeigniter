@@ -177,7 +177,7 @@ class Email_Model extends CI_Model {
 		}
 
 		if (!count($events)) {
-			return;
+			return false;
 		}
 
 		// Break out each event by day of week
@@ -192,6 +192,31 @@ class Email_Model extends CI_Model {
 		$data['recipient'] = $recipient;
 		$message = $this->load->view('emails/weekly_reminder', $data, true);
 		$this->sendEmail('WeeklyReminder', $recipient->email, $subject, $message, false);
+	}
+
+	/**
+	 * Send Daily Reminder
+	 *
+	 * @param object $recipient
+	 * @param object $group
+	 * @param array $events
+	 *
+	 */
+	public function sendDailyReminder($recipient, $group, $events) {
+		if (!is_object($recipient) || !$recipient->email) {
+			return false;
+		}
+
+		if (!count($events)) {
+			return false;
+		}
+
+		$subject = 'Today\'s events for ' . $group->group;
+		$data['group'] = $group;
+		$data['events'] = $events;
+		$data['recipient'] = $recipient;
+		$message = $this->load->view('emails/daily_reminder', $data, true);
+		$this->sendEmail('DailyReminder', $recipient->email, $subject, $message, false);
 	}
 
 	/**

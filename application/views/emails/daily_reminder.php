@@ -1,16 +1,9 @@
 <p><?php echo $recipient->first_name; ?>,</p>
 
-<p>This is your week ahead for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every Monday morning if there are events that week. You can update your settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
+<p>This is your daily summary for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every morning if there are events that week. You can update your settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
 
-<?php foreach ($days_of_week as $dow): ?>
+<?php foreach ($events as $event): ?>
 <hr />
-<?php if ($dow == 'Monday'): ?>
-<h2>Today</h2>
-<?php else: ?>
-<h2><?php echo $dow; ?></h2>
-<?php endif; ?>
-<?php if (isset($events[$dow]) && is_array($events[$dow]) && count($events[$dow])): ?>
-<?php foreach ($events[$dow] as $event): ?>
 <dl>
 	<dt>Event</dt>
 	<dd><a href="<?php echo site_url('events/event/' . $event->event_id); ?>"><?php echo $event->event; ?></a></dd>
@@ -18,8 +11,8 @@
 	<dd><?php echo date('F j, Y g:i a', strtotime($event->start_time)); ?></dd>
 	<?php if ($event->description): ?>
 	<dt>Description</dt>
-	<?php endif; ?>
 	<dd><?php echo $event->description; ?></dd>
+	<?php endif; ?>
 	<dt>Tickets</dt>
 	<dd>
 		<ul>
@@ -29,8 +22,4 @@
 		</ul>
 	</dd>
 </dl>
-<?php endforeach; ?>
-<?php else: ?>
-<p>No events.</p>
-<?php endif; ?>
 <?php endforeach; ?>

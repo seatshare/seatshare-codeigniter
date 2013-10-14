@@ -68,6 +68,7 @@ class Groups_Controller extends MY_Controller {
 		}
 
 		$reminder_subscriptions = $this->group_model->getRemindersByUserId($user->user_id, $group->group_id);
+		$subscribed = array();
 		foreach($reminder_subscriptions as $row) {
 			$subscribed[] = $row->reminder_type_id;
 		}
@@ -270,7 +271,6 @@ class Groups_Controller extends MY_Controller {
 			printf('Sent %d reminders' . PHP_EOL, $count);
 		}
 		printf('[%s] Complete! ' . PHP_EOL, date('c'));
-
 	}
 
 	/**
@@ -278,8 +278,19 @@ class Groups_Controller extends MY_Controller {
 	 *
 	 * @param int $limit
 	 */
-	public function daily_reminders($limit=100) {
-
+	public function daily_reminders() {
+		if (!$this->input->is_cli_request()) {
+			die('Must run from command line.' . PHP_EOL);
+		}
+		$this->layout = false;
+		printf('[%s] Starting the daily reminders ... ' . PHP_EOL, date('c'));
+		$groups = $this->group_model->getGroups();
+		foreach ($groups as $group) {
+			printf('Group %d - %s ', $group->group_id, str_pad($group->group.' ',40,'.'));
+			$count = $this->group_model->sendDailyRemindersByGroupId($group->group_id);
+			printf('Sent %d reminders' . PHP_EOL, $count);
+		}
+		printf('[%s] Complete! ' . PHP_EOL, date('c'));
 	}
 
 }
