@@ -190,6 +190,7 @@ class Email_Model extends CI_Model {
 		$data['group'] = $group;
 		$data['events'] = $events_by_day;
 		$data['recipient'] = $recipient;
+		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
 		$message = $this->load->view('emails/weekly_reminder', $data, true);
 		$this->sendEmail('WeeklyReminder', $recipient->email, $subject, $message, false);
 	}
@@ -215,8 +216,9 @@ class Email_Model extends CI_Model {
 		$data['group'] = $group;
 		$data['events'] = $events;
 		$data['recipient'] = $recipient;
+		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
 		$message = $this->load->view('emails/daily_reminder', $data, true);
-		$this->sendEmail('DailyReminder', $recipient->email, $subject, $message, false);
+		$this->sendEmail('DailyReminder', $recipient->email, $subject, $message, false, $data);
 	}
 
 	/**
@@ -227,8 +229,9 @@ class Email_Model extends CI_Model {
 	 * @param string $subject
 	 * @param string $message
 	 * @param object $from
+	 * @param array $data
 	 **/
-	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null) {
+	public function sendEmail($type='', $to=null, $subject='', $message='', $from=null, $data=array()) {
 
 		// Clear previous message attributes
 		$this->email->clear();
@@ -271,8 +274,9 @@ class Email_Model extends CI_Model {
 	 * @param string $message
 	 * @param string $name
 	 * @param string $email
+	 * @param array $data
 	 */
-	public function sendContactEmail($subject='', $message='', $name='', $email='') {
+	public function sendContactEmail($subject='', $message='', $name='', $email='', $data=array()) {
 
 		// Clear previous message attributes
 		$this->email->clear();

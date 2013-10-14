@@ -1,6 +1,6 @@
 <p><?php echo $recipient->first_name; ?>,</p>
 
-<p>This is your week ahead for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every Monday morning if there are events that week. You can update your settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
+<p>This is your week ahead for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every Monday morning if there are events that week. You can update your reminder settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
 
 <?php foreach ($days_of_week as $dow): ?>
 <hr />

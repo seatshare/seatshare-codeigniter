@@ -1,6 +1,6 @@
 <p><?php echo $recipient->first_name; ?>,</p>
 
-<p>This is your daily summary for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every morning if there are events that week. You can update your settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
+<p>This is your daily summary for <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a>. We send these every morning if there are events that day. You can update your reminder settings on <a href="<?php echo site_url('groups/group/' . $group->group_id); ?>">the group page</a>.</p>
 
 <?php foreach ($events as $event): ?>
 <hr />
