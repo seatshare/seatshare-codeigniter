@@ -18,7 +18,8 @@ class Groups_Controller extends MY_Controller {
 	 * Group List
 	 **/
 	public function index() {
-		$groups = $this->group_model->getUserGroups();
+		$user_id = $this->user_model->getCurrentUser()->user_id;
+		$groups = $this->group_model->getUserGroups($user_id);
 		if (is_array($groups) && count($groups)) {
 			$data['groups'] = $groups;
 			$data['title'] = 'Groups';
@@ -234,6 +235,36 @@ class Groups_Controller extends MY_Controller {
 		} else {
 			return false;
 		}
+	}
+
+	/** Cron Jobs **/
+
+	/**
+	 * Weekly Reminders
+	 */
+	public function weekly_reminders() {
+		if (!$this->input->is_cli_request()) {
+			die('Must run from command line.' . PHP_EOL);
+		}
+		$this->layout = false;
+		printf('[%s] Starting the weekly reminders ... ' . PHP_EOL, date('c'));
+		$groups = $this->group_model->getGroups();
+		foreach ($groups as $group) {
+			printf('Group %d - %s ', $group->group_id, str_pad($group->group.' ',40,'.'));
+			$count = $this->group_model->sendWeeklyRemindersByGroupId($group->group_id);
+			printf('Sent %d reminders' . PHP_EOL, $count);
+		}
+		printf('[%s] Complete! ' . PHP_EOL, date('c'));
+
+	}
+
+	/**
+	 * Daily Reminders
+	 *
+	 * @param int $limit
+	 */
+	public function daily_reminders($limit=100) {
+
 	}
 
 }

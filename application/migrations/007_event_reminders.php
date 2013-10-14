@@ -49,8 +49,8 @@ class Migration_event_reminders extends CI_Migration {
 		$query = "
 			INSERT INTO `reminder_types` (`reminder_type_id`, `reminder_type`, `description`)
 			VALUES
-				(1, 'week_ahead', 'The week ahead (sent Monday mornings)'),
-				(2, 'morning', 'Today\'s events (sent on the morning of events)'
+				(1, 'weekly', 'The week ahead (sent Monday mornings)'),
+				(2, 'daily', 'Today\'s events (sent on the morning of events)'
 			);
 		";
 		$this->db->query($query);

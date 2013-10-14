@@ -78,7 +78,10 @@ class User_Model extends CI_Model {
 	public function getUserById( $user_id=0 ) {
 		$this->db->select( $this->public_fields );
 		$query = $this->db->get_where( 'users', array( 'user_id' => $user_id ), 1 );
-		return $query->row();
+		
+		$user = $query->row();
+		$user->name = $user->first_name . ' ' . $user->last_name;
+		return $user;
 	}
 
 	/**
@@ -90,7 +93,10 @@ class User_Model extends CI_Model {
 	public function getUserByUsername( $username='' ) {
 		$this->db->select( $this->public_fields );
 		$query = $this->db->get_where( 'users', array( 'username' => $username ), 1 );
-		return $query->row();
+		
+		$user = $query->row();
+		$user->name = $user->first_name . ' ' . $user->last_name;
+		return $user;
 	}
 
 
@@ -103,7 +109,10 @@ class User_Model extends CI_Model {
 	public function getUserByEmailAddress( $email='' ) {
 		$this->db->select( $this->public_fields );
 		$query = $this->db->get_where( 'users', array( 'email' => $email ), 1 );
-		return $query->row();
+		
+		$user = $query->row();
+		$user->name = $user->first_name . ' ' . $user->last_name;
+		return $user;
 	}
 
 	/**
@@ -115,23 +124,25 @@ class User_Model extends CI_Model {
 	public function getUserByActivationKey( $activation_key='' ) {
 		$this->db->select( $this->public_fields );
 		$query = $this->db->get_where( 'users', array( 'activation_key' => $activation_key ), 1 );
-		return $query->row();
+		
+		$user = $query->row();
+		$user->name = $user->first_name . ' ' . $user->last_name;
+		return $user;
 	}
 
 	/**
 	 * Update User
 	 *
-	 * @param mixed   $user
+	 * @param object $user
 	 * @return boolean
 	 */
 	public function updateUser( $user=null ) {
-		$user_id = $this->getCurrentUser()->user_id;
-		$this->db->where( 'user_id', $user_id );
+		$this->db->where( 'user_id', $user->id );
 		$update = $this->db->update( 'users', $user );
 
 		// Update session information
 		if ( $update ) {
-			$this->resetSessionData( $user_id );
+			$this->resetSessionData( $user->user_id );
 		}
 
 		return $update;

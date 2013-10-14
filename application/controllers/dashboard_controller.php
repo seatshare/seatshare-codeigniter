@@ -32,7 +32,7 @@ class Dashboard_Controller extends MY_Controller {
 			redirect('groups');
 		}
 
-		$group->administrator = $this->group_model->getCurrentGroupAdministrator();
+		$group->administrator = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
 
 		$data['group'] = $group;
 		$data['entity'] = $this->entity_model->getEntityByCurrentGroup();
@@ -40,7 +40,7 @@ class Dashboard_Controller extends MY_Controller {
 			'after' => date('c', strtotime('+1 hour'))
 		));
 		$data['summary'] = array();
-		$data['group_users'] = $this->group_model->getCurrentGroupUsers();
+		$data['group_users'] = $this->group_model->getGroupUsersByGroupId($group->group_id);
 
 		$data['title'] = 'Dashboard';
 		$data['sidebar'] = $this->load->view('dashboard/_sidebar', $data, true);
