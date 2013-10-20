@@ -28,7 +28,7 @@
 .clndr td.header-day {
 	font-weight: bold;
 	border: solid 1px #DDDDDD;
-	background: #DCDCDC;
+	background: #F5F5F5;
 	text-align: center;
 	padding: 4px;
 }
@@ -48,7 +48,7 @@
 }
 .clndr td.day.adjacent-month {
 	font-style: italic;
-	color: #DCDCDC;
+	color: #F5F5F5;
 }
 .clndr td.day.adjacent-month.event {
 	color: blue;

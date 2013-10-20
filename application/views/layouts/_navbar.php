@@ -18,16 +18,16 @@
       </form>
       <?php endif; ?>
       <ul class="nav navbar-nav">
-        <li><a href="<?php echo site_url('dashboard'); ?>">Dashboard</a></li>
-        <li><a href="<?php echo site_url('groups'); ?>">Groups</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'dashboard') ? 'active' : ''; ?>"><a href="<?php echo site_url('dashboard'); ?>">Dashboard</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'groups') ? 'active' : ''; ?>"><a href="<?php echo site_url('groups'); ?>">Groups</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right">
-        <li><a href="<?php echo site_url('profile'); ?>"><?php echo $this->user_model->getCurrentUser()->first_name; ?> <?php echo $this->user_model->getCurrentUser()->last_name; ?></a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'profile') ? 'active' : ''; ?>"><a href="<?php echo site_url('profile'); ?>"><?php echo $this->user_model->getCurrentUser()->first_name; ?> <?php echo $this->user_model->getCurrentUser()->last_name; ?></a></li>
         <li><a href="<?php echo site_url('logout'); ?>">Logout</a></li>
       </ul>
       <?php else: ?>
       <ul class="nav navbar-nav pull-right">
-        <li><a href="<?php echo site_url('register'); ?>">Register</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'logout') ? 'active' : ''; ?>"><a href="<?php echo site_url('register'); ?>">Register</a></li>
         <li><a href="<?php echo site_url('login'); ?>">Login</a></li>
       </ul>
       <?php endif; ?>
