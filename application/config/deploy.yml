@@ -1,13 +1,13 @@
 production:
-  domain: "yearg.in@s79646.gridserver.com"
-  deploy_to: "/home/79646/users/.home/domains/seatsha.re/html"
+  domain: "seatshare@linode.yearg.in"
+  deploy_to: "/srv/www/seatsha.re/public_html"
   repository: "https://github.com/stephenyeargin/seatshare.git"
   branch: "master"
   post_deploy_script: "application/bin/run_migrations.sh"
 
 staging:
-  domain: "yearg.in@s79646.gridserver.com"
-  deploy_to: "/home/79646/users/.home/domains/seatshare.yearg.in/html"
+  domain: "seatshare@linode.yearg.in"
+  deploy_to: "/srv/www/staging.seatsha.re/public_html"
   repository: "https://github.com/stephenyeargin/seatshare.git"
   branch: "master"
   post_deploy_script: "application/bin/run_migrations.sh"
