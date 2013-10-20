@@ -7,7 +7,6 @@
 <title><?php echo (isset($title)) ? $title : $this->config->item('application_name'); ?></title>
 
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap-theme.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/css/login.css'); ?>">
 
