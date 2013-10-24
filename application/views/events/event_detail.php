@@ -14,6 +14,7 @@
 
 <hr />
 
+<?php if (strtotime($event->start_time) > time()): ?>
 <?php if ($event->ticketStatus['tickets_available'] > 0): ?>
 <div class="alert alert-info">
 	<p><strong>There are tickets available for this event!</strong> Click on a ticket below to send a request.</p>
@@ -22,6 +23,7 @@
 <div class="alert alert-warning">
 	<p><strong>No tickets are available right now.</strong> You can still <a href="<?php echo site_url('groups/new_message'); ?>" class="alert-link">send a group message</a> to see if everyone is going.</p>
 </div>
+<?php endif; ?>
 <?php endif; ?>
 
 <div class="pull-right">
