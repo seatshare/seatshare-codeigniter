@@ -53,7 +53,7 @@
 				<?php if ($ticket->assigned): ?>
 				<a href="<?php echo site_url('user/' . $ticket->assigned->username); ?>"><?php echo $ticket->assigned->name; ?></a>
 				<?php else: ?>
-				<span class="badge badge-lg">Available</span>
+				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><span class="badge badge-lg">Available!</span></a>
 				<?php endif; ?>
 			</td>
 			<td class="text-right">
