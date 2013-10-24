@@ -14,6 +14,16 @@
 
 <hr />
 
+<?php if ($event->ticketStatus['tickets_available'] > 0): ?>
+<div class="alert alert-info">
+	<p><strong>There are tickets available for this event!</strong> Click on a ticket below to send a request.</p>
+</div>
+<?php else: ?>
+<div class="alert alert-warning">
+	<p><strong>No tickets are available right now.</strong> You can still <a href="<?php echo site_url('groups/new_message'); ?>" class="alert-link">send a group message</a> to see if everyone is going.</p>
+</div>
+<?php endif; ?>
+
 <div class="pull-right">
 	<ul class="list-inline">
 		<li><a href="<?php echo site_url('tickets/create/' . $event->event_id); ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Add Ticket for this Event</a></li>
@@ -53,7 +63,7 @@
 				<?php if ($ticket->assigned): ?>
 				<a href="<?php echo site_url('user/' . $ticket->assigned->username); ?>"><?php echo $ticket->assigned->name; ?></a>
 				<?php else: ?>
-				<span class="badge badge-lg">Available</span>
+				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><span class="badge badge-lg">Available!</span></a>
 				<?php endif; ?>
 			</td>
 			<td class="text-right">
