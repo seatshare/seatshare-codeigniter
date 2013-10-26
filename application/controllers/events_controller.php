@@ -25,7 +25,7 @@ class Events_Controller extends MY_Controller {
 	 * @param int $event_id
 	 **/
 	public function event($event_id=0) {
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
+		$group_id = $this->current_group->group_id;
 
 		$entity = $this->entity_model->getEntityByCurrentGroup();
 		$event = $this->event_model->getEventById($event_id);

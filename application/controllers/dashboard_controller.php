@@ -20,7 +20,7 @@ class Dashboard_Controller extends MY_Controller {
 	 **/
 	public function index() {
 
-		$group = $this->group_model->getCurrentGroup();
+		$group = $this->current_group;
 
 		// No group associated, take to group page
 		if (!is_object($group) || !$group->group_id) {

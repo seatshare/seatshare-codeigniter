@@ -18,7 +18,7 @@ class Groups_Controller extends MY_Controller {
 	 * Group List
 	 **/
 	public function index() {
-		$user_id = $this->user_model->getCurrentUser()->user_id;
+		$user_id = $this->current_user->user_id;
 		$groups = $this->group_model->getUserGroups($user_id);
 		if (is_array($groups) && count($groups)) {
 			$data['groups'] = $groups;
@@ -52,7 +52,7 @@ class Groups_Controller extends MY_Controller {
 	 **/
 	public function group($group_id=0) {
 		$this->layout = 'two_column';
-		$user = $this->user_model->getCurrentUser();
+		$user = $this->current_user;
 		$group = $this->group_model->getGroupById($group_id);
 		if (!is_object($group) || !$group->group_id) {
 			$this->growl('Could not load specified group.', 'error');
@@ -96,7 +96,7 @@ class Groups_Controller extends MY_Controller {
 			redirect('groups');
 		}
 		$group_admin = $this->group_model->getGroupAdministratorByGroupId($group->group_id);
-		if ($this->user_model->getCurrentUser()->user_id != $group_admin->user_id) {
+		if ($this->current_user->user_id != $group_admin->user_id) {
 			$this->growl('Access denied', 'error');
 			redirect('dashboard');
 		}
@@ -193,7 +193,8 @@ class Groups_Controller extends MY_Controller {
 	 **/
 	public function invite() {
 		if ($this->input->post()) {
-			$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
+
+			$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|callback_recentInviteCheck');
 			if ($this->form_validation->run() != false) {
 				$this->group_model->createAndSendInvite($this->input->post('email'));
 				$this->growl('Invitation sent!');
@@ -211,7 +212,7 @@ class Groups_Controller extends MY_Controller {
 	 * Group Message
 	 **/
 	public function new_message() {
-		$group = $this->group_model->getCurrentGroup();
+		$group = $this->current_group;
 		$group_users = $this->group_model->getGroupUsersByGroupId($group->group_id);
 
 		if ($this->input->post()) {
@@ -252,6 +253,22 @@ class Groups_Controller extends MY_Controller {
 			return false;
 		}
 	}
+
+	/**
+	 * Recent Invite Check
+	 *
+	 * @param string $invite_code
+	 **/
+	public function recentInviteCheck($email='') {
+		$this->form_validation->set_message('recentInviteCheck', 'That email has already been invited to this group.');
+		$check = $this->group_model->checkRecentInvite($email);
+		if (is_object($check)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 
 	/** Cron Jobs **/
 

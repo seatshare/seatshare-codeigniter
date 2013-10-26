@@ -28,20 +28,19 @@ class Tickets_Controller extends MY_Controller {
 	 * @param int $ticket_id
 	 **/
 	public function ticket($ticket_id=0) {
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
-
+		$group_id = $this->current_group->group_id;
 		$ticket = $this->ticket_model->getTicketById($ticket_id, $group_id);
 		$event = $this->event_model->getEventById($ticket->event_id);
 		$group_users_objects = $this->group_model->getGroupUsersByGroupId($group_id);
 		$history = $this->ticket_model->getTicketHistoryById($ticket_id);
-		$can_edit = (bool) ($ticket->owner_id == $this->user_model->getCurrentUser()->user_id || $ticket->user_id == $this->user_model->getCurrentUser()->user_id);
+		$can_edit = (bool) ($ticket->owner_id == $this->current_user->user_id || $ticket->user_id == $this->user_model->current_user->user_id);
 
 		if (!is_object($ticket) || !$ticket->event_id) {
 			$this->growl('Could not load specified ticket.', 'error');
 			redirect('dashboard');
 		}
 
-		if ($ticket->group_id != $this->group_model->getCurrentGroup()->group_id) {
+		if ($ticket->group_id != $this->current_group->group_id) {
 			$this->growl('Access denied.', 'error');
 			redirect('dashboard');
 		}
@@ -60,7 +59,7 @@ class Tickets_Controller extends MY_Controller {
 				));
 				
 				// Send email if assignee changed
-				if ($ticket->user_id != $this->input->post('assigned') && $this->input->post('assigned') != '0' && $this->input->post('assigned') != $this->user_model->getCurrentUser()->user_id) {
+				if ($ticket->user_id != $this->input->post('assigned') && $this->input->post('assigned') != '0' && $this->input->post('assigned') != $this->current_user->user_id) {
 					$ticket->user_id = $this->input->post('assigned');
 					$this->ticket_model->log('assigned', $ticket);
 					$recipient = $this->user_model->getUserById($this->input->post('assigned'));
@@ -132,12 +131,12 @@ class Tickets_Controller extends MY_Controller {
 			}
 		}
 
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
+		$group_id = $this->current_group->group_id;
 		$group_users = $this->group_model->getGroupUsersAsArray($group_id);
 
 		$data['event'] = $event;
 		$data['group_users'] = $group_users;
-		$data['assigned'] = $this->user_model->getCurrentUser();
+		$data['assigned'] = $this->current_user;
 		$data['title'] = 'Add Ticket - ' . $event->event;
 		$this->load->view('tickets/new_ticket', $data);
 	}
@@ -146,7 +145,7 @@ class Tickets_Controller extends MY_Controller {
 	 * Create Season Ticket
 	 **/
 	public function create_season() {
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
+		$group_id = $this->current_group->group_id;
 		$group_users = $this->group_model->getGroupUsersAsArray($group_id);
 		$events = $this->event_model->getEvents(array(
 			'after' => date('c', strtotime('+1 hour'))
@@ -178,7 +177,7 @@ class Tickets_Controller extends MY_Controller {
 		}
 
 		$data['group_users'] = $group_users;
-		$data['assigned'] = $this->user_model->getCurrentUser();
+		$data['assigned'] = $this->current_user;
 		$data['events'] = $events;
 		$data['title'] = 'Add Season Ticket';
 		$this->load->view('tickets/new_season_ticket', $data);
@@ -188,7 +187,7 @@ class Tickets_Controller extends MY_Controller {
 	 * Unassign a Ticket
 	 **/
 	public function unassign($ticket_id=0) {
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
+		$group_id = $this->current_group->group_id;
 		$ticket = $this->ticket_model->getTicketById($ticket_id, $group_id);
 
 		if (!is_object($ticket) || !$ticket->event_id) {
@@ -225,7 +224,7 @@ class Tickets_Controller extends MY_Controller {
 	 * @param int $ticket_id
 	 **/
 	public function request($ticket_id=0) {
-		$group_id = $this->group_model->getCurrentGroup()->group_id;
+		$group_id = $this->current_group->group_id;
 		$ticket = $this->ticket_model->getTicketById($ticket_id, $group_id);
 		$event = $this->event_model->getEventById($ticket->event_id);
 		$history = $this->ticket_model->getTicketHistoryById($ticket_id);
