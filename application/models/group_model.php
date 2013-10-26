@@ -425,6 +425,25 @@ class Group_Model extends CI_Model {
 	}
 
 	/**
+	 * Check Recent Invites
+	 *
+	 * @param string $email
+	 * @return boollean
+	 */
+	public function checkRecentInvite($email='', $group_id=0) {
+		
+		if (!$group_id) {
+			$group_id = $this->group_model->getCurrentGroupId();
+		}
+
+		$this->db->where('email', $email);
+		$this->db->where('group_id', $group_id);
+		$this->db->where('inserted_ts >= DATE_SUB( NOW(),INTERVAL 3 DAY )');
+		$query = $this->db->get('group_invitations');
+		return $query->row();
+	}
+
+	/**
 	 * Get Weekly Events by Group Id
 	 *
 	 * @param int $group_id
@@ -558,6 +577,22 @@ class Group_Model extends CI_Model {
 		return true;
 	}
 
+	/**
+	 * Log Sent Reminder
+	 */
+	public function logReminder($reminder_type_id=0, $user, $group, $events=array()) {
+  		$record = new StdClass();
+  		$record->reminder_type_id = $reminder_type_id;
+  		$record->user_id = $user->user_id;
+  		$record->entry = json_encode(array(
+  			'user' => $user,
+  			'group' => $group,
+  			'events' => $events
+  		));
+  		$record->inserted_ts =  date('Y-m-d h:i:s');
+  		$this->db->insert('reminders', $record);
+	}
+
 	/* Private Metods */
 
 	/**
@@ -598,21 +633,5 @@ class Group_Model extends CI_Model {
 		$this->db->where('reminder_type', $type);
 		$query = $this->db->get('user_reminders ur');
 		return $query->result();
-	}
-
-	/**
-	 * Log Sent Reminder
-	 */
-	public function logReminder($reminder_type_id=0, $user, $group, $events=array()) {
-  		$record = new StdClass();
-  		$record->reminder_type_id = $reminder_type_id;
-  		$record->user_id = $user->user_id;
-  		$record->entry = json_encode(array(
-  			'user' => $user,
-  			'group' => $group,
-  			'events' => $events
-  		));
-  		$record->inserted_ts =  date('Y-m-d h:i:s');
-  		$this->db->insert('reminders', $record);
 	}
 }

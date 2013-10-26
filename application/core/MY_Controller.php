@@ -2,6 +2,9 @@
 
 class MY_Controller extends CI_Controller {
 
+	public $current_user;
+	public $current_group;
+
 	/**
 	 * Constructor
 	 **/
@@ -12,6 +15,9 @@ class MY_Controller extends CI_Controller {
 		if ($this->input->is_cli_request()) {
 			$this->config->set_item('base_url', 'http://' . $this->config->item('application_domain') . '/');
 			$this->layout = false;
+		} elseif ($this->user_model->isLoggedIn()) {
+			$this->current_user = $this->user_model->getCurrentUser();
+			$this->current_group = $this->group_model->getCurrentGroup();
 		}
 	}
 

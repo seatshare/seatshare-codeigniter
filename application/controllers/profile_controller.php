@@ -10,7 +10,7 @@ class Profile_Controller extends MY_Controller {
 	}
 
 	public function index() {
-		$profile = $this->user_model->getCurrentUser();
+		$profile = $this->current_user;
 
 		$data['profile'] = $profile;
 		$data['title'] = 'View Profile';

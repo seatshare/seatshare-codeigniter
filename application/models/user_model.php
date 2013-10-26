@@ -137,7 +137,11 @@ class User_Model extends CI_Model {
 	 * @return boolean
 	 */
 	public function updateUser( $user=null ) {
-		$this->db->where( 'user_id', $user->id );
+		if (!is_object($user)) {
+			return false;
+		}
+
+		$this->db->where( 'user_id', $user->user_id );
 		$update = $this->db->update( 'users', $user );
 
 		// Update session information

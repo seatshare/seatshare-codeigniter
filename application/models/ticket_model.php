@@ -189,6 +189,7 @@ class Ticket_Model extends CI_Model {
 		}
 
 		// Log entry
+		$entry = new StdClass();
 		$entry->text = $action;
 		$entry->user = $this->user_model->getCurrentUser();
 		$entry->ticket = $ticket;
