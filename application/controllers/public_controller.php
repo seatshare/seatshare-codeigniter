@@ -20,7 +20,7 @@ class Public_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 		$data['sidebar'] = $this->load->view('public/_sidebar', null, true);
-		$data['head'] .= sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name'));
+		$data['head'] = sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name'));
 		$data['title'] = 'Welcome to ' . $this->config->item('application_name');
 		$this->load->view('public/home', $data);
 	}
@@ -30,7 +30,7 @@ class Public_Controller extends MY_Controller {
 	 */
 	public function tos() {
 		$this->layout = 'two_column';
-		$data['head'] .= sprintf('<meta name="description" content="The Terms of Service %s are the rules that govern access and use of the website." />', $this->config->item('application_name'));
+		$data['head'] = sprintf('<meta name="description" content="The Terms of Service %s are the rules that govern access and use of the website." />', $this->config->item('application_name'));
 		$data['title'] = 'Terms of Service - ' . $this->config->item('application_name');
 		$data['company'] = $this->config->item('application_name');
 		$data['application'] = $this->config->item('application_name') . ' (http://' . $this->config->item('application_domain') . ')';
@@ -42,7 +42,7 @@ class Public_Controller extends MY_Controller {
 	 */
 	public function privacy() {
 		$this->layout = 'two_column';
-		$data['head'] .= sprintf('<meta name="description" content="%s  values your privacy and will not sell or share your information." />', $this->config->item('application_name'));
+		$data['head'] = sprintf('<meta name="description" content="%s  values your privacy and will not sell or share your information." />', $this->config->item('application_name'));
 		$data['title'] = 'Privacy Policy - ' . $this->config->item('application_name');
 		$data['company'] = $this->config->item('application_name');
 		$data['address'] = $this->config->item('application_address');
@@ -76,7 +76,7 @@ class Public_Controller extends MY_Controller {
 				$this->growl('Message sent!');
 			}
 		}
-		$data['head'] .= sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name'));
+		$data['head'] = sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name'));
 		$data['title'] = 'Contact - ' . $this->config->item('application_name');
 		$this->load->view('public/contact_form', $data);
 	}
