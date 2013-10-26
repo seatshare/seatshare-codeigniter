@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-md-2">
-		<img src="<?php echo $entity->logo; ?>" class="img-responsive img-thumbnail hidden-xs" />
+		<img src="<?php echo $entity->logo; ?>" alt="<?php echo $entity->entity; ?>" class="img-responsive img-thumbnail hidden-xs" />
 	</div>
 	<div class="col-md-10">
 		<p>Your <strong><?php echo $entity->entity; ?></strong> group is administered by <a href="<?php echo site_url('user/' . $group->administrator->username); ?>"><?php echo $group->administrator->first_name; ?> <?php echo $group->administrator->last_name; ?></a></p>
