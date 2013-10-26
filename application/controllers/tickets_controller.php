@@ -28,8 +28,7 @@ class Tickets_Controller extends MY_Controller {
 	 * @param int $ticket_id
 	 **/
 	public function ticket($ticket_id=0) {
-		$group_id = $this->group_model->current_group->group_id;
-
+		$group_id = $this->current_group->group_id;
 		$ticket = $this->ticket_model->getTicketById($ticket_id, $group_id);
 		$event = $this->event_model->getEventById($ticket->event_id);
 		$group_users_objects = $this->group_model->getGroupUsersByGroupId($group_id);

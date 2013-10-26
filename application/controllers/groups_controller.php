@@ -194,12 +194,6 @@ class Groups_Controller extends MY_Controller {
 	public function invite() {
 		if ($this->input->post()) {
 
-			// Check for previous invitation in last 3 days
-			// if ($this->group_model->checkRecentInvite($this->input->post('email'), $this->current_group->group_id)) {
-			// 	$this->growl('This email has already been invited in the last three days.', 'error');
-			// 	redirect('groups/invite');
-			// }
-
 			$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|callback_recentInviteCheck');
 			if ($this->form_validation->run() != false) {
 				$this->group_model->createAndSendInvite($this->input->post('email'));
