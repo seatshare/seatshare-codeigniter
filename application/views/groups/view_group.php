@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-3">
 		<p>
-			<img src="<?php echo $entity->logo; ?>" class="img-responsive img-thumbnail" />
+			<img src="<?php echo $entity->logo; ?>" alt="<?php echo $entity->entity; ?>" class="img-responsive img-thumbnail" />
 		</p>
 		<p>
 			<small>Created <?php echo date('n/j/Y', strtotime($group->inserted_ts)); ?></small>

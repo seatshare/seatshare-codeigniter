@@ -6,4 +6,4 @@
 	<li><span class="badge"><?php echo $event->ticketStatus['tickets_available']; ?></span> available in the group</li>
 	<li><span class="badge"><?php echo $event->ticketStatus['tickets_group']; ?></span> total in the group</li>
 	<li><span class="badge"><?php echo $event->ticketStatus['tickets_user']; ?></span> held by you</li>
-</p>
+</ul>

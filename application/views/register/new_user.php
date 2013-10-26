@@ -27,7 +27,7 @@
 			<?php echo form_label('Newsletter Signup', 'newsletter', array('class'=>'col-md-3 control-label')); ?>
 			<div class="col-md-9">
 				<div class="checkbox">
-					<label><?php echo form_checkbox(array('name'=>'newsletter', 'class'=>'', 'value'=>'features', 'checked'=>true)); ?> Ocassional new feature announcements for <?php echo $this->config->item('application_name'); ?>.<label>
+					<label><?php echo form_checkbox(array('name'=>'newsletter', 'class'=>'', 'value'=>'features', 'checked'=>true)); ?> Ocassional new feature announcements for <?php echo $this->config->item('application_name'); ?>.</label>
 				</div>
 			</div>
 		</div>

@@ -7,7 +7,7 @@
 <?php foreach ($groups as $group): ?>
 <div class="row">
 	<div class="col-md-2">
-		<img src="<?php echo $group->logo; ?>" class="img-responsive img-thumbnail" /> 
+		<img src="<?php echo $group->logo; ?>" alt="<?php echo $entity->entity; ?>" class="img-responsive img-thumbnail" /> 
 	</div>
 	<div class="col-md-8">
 		<h3><a href="<?php echo site_url('groups/group/' . $group->group_id); ?>"><?php echo $group->group; ?></a></h3>
