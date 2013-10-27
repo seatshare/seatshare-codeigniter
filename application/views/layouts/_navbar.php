@@ -6,7 +6,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>
+      <div class="logo">
+        <a class="navbar-brand" href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>
+      </div>
     </div>
     <div class="navbar-collapse collapse">
       <?php if ($this->user_model->isLoggedIn()): ?>

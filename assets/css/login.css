@@ -39,5 +39,19 @@ body {
 }
 
 div.logo {
+  background-image: url(../images/seatshare-330x114-transparent.png);
+  background-repeat: no-repeat;
+  width: 330px;
+  height: 114px;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: hidden;
 }
+
+div.logo a {
+  display: block;
+  width: 330px;
+  padding-top: 115px;
+}
+div.logo
