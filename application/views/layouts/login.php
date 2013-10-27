@@ -10,6 +10,12 @@
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/css/login.css'); ?>">
 
+<link rel="apple-touch-icon" href="<?php echo site_url('assets/images/touch-icon-iphone.png'); ?>">
+<link rel="apple-touch-icon" sizes="76x76" href="<?php echo site_url('assets/images/touch-icon-ipad.png'); ?>">
+<link rel="apple-touch-icon" sizes="120x120" href="<?php echo site_url('assets/images/touch-icon-iphone-retina.png'); ?>">
+<link rel="apple-touch-icon" sizes="152x152" href="<?php echo site_url('assets/images/touch-icon-ipad-retina.png'); ?>">
+<link rel="icon" type="image/png" href="<?php echo site_url('assets/images/favicon.png'); ?>">
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
   <script src="../../assets/js/html5shiv.js"></script>

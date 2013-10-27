@@ -93,6 +93,7 @@ class Group_Model extends CI_Model {
 		$this->db->order_by('u.first_name', 'ASC');
 		$query = $this->db->get();
 		$result = $query->result();
+		$group_users = array();
 		foreach ($result as $row) {
 			$group_users[$row->user_id] = $row;
 			$group_users[$row->user_id]->name = $row->first_name . ' ' . substr($row->last_name,0,1) . '.';

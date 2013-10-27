@@ -10,3 +10,29 @@ th.action {
 ul.group-members li {
 	margin-bottom: 0.25em;
 }
+
+.navbar-inverse {
+    background-color: #4963AE;
+    border-color: #4963AE;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+	color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand a {
+	color: #ffffff;
+}
+
+.navbar-inverse .logo {
+	background-image: url(../images/seatshare-150x50-inverted.png);
+	height: 50px;
+	width: 150px;
+	overflow-y: hidden;
+}
+
+.navbar-inverse .logo a {
+	display: block;
+	width: 150px;
+	padding-top: 50px;
+}
