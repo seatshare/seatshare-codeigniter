@@ -42,6 +42,7 @@ div.logo {
   background-image: url(../images/seatshare-300x100-transparent.png);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 300px 100px;
   width: 300px;
   height: 100px;
   text-align: center;

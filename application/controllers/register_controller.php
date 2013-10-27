@@ -19,6 +19,8 @@ class Register_Controller extends MY_Controller {
 		if ($this->config->item('mailchimp_api') && $this->config->item('mailchimp_list')) {
 			require_once APPPATH . 'third_party/mailchimp.php';
 			$this->mailchimp = new MailChimp($this->config->item('mailchimp_api'));
+		} else {
+			$this->mailchimp = null;
 		}
 	}
 
