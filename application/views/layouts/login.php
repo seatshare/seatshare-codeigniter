@@ -16,11 +16,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="<?php echo site_url('assets/images/touch-icon-ipad-retina.png'); ?>">
 <link rel="icon" type="image/png" href="<?php echo site_url('assets/images/favicon.png'); ?>">
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-  <script src="../../assets/js/html5shiv.js"></script>
-  <script src="../../assets/js/respond.min.js"></script>
-<![endif]-->
+<meta name="apple-mobile-web-app-title" content="<?php echo $this->config->item('application_name'); ?>">
 
 <?php echo (isset($head)) ? $head : ''; ?>
 
