@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<?php echo form_label('Email Address', 'email', array('class'=>'col-md-3 control-label')); ?>
 			<div class="col-md-9">
-				<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'placeholder'=>'someone@example.com', 'value'=>$this->input->post('email'))); ?>
+				<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'placeholder'=>'someone@example.com', 'autocapitalize'=>'off', 'autocorrect'=>'off', 'value'=>$this->input->post('email'))); ?>
 			</div>
 		</div>
 		<?php echo form_fieldset_close(); ?>

@@ -30,7 +30,7 @@
 		<?php echo form_fieldset('Invite members'); ?>
 		<div class="form-group">
 			<?php echo form_label('Email Address', 'email', array('class'=>'sr-only')); ?>
-			<?php echo form_input(array('name'=>'email', 'id'=>'email', 'class'=>'form-control', 'style'=>'width:240px;', 'placeholder'=>'someone@example.com', 'value'=>$this->input->post('email'))); ?>
+			<?php echo form_input(array('name'=>'email', 'id'=>'email', 'class'=>'form-control', 'style'=>'width:240px;', 'placeholder'=>'someone@example.com', 'autocapitalize'=>'off', 'autocorrect'=>'off', 'value'=>$this->input->post('email'))); ?>
 		</div>
 		<?php echo form_submit(array('value'=>'Send Invite', 'class'=>'btn btn-primary')); ?>
 		<?php echo form_fieldset_close(); ?>
