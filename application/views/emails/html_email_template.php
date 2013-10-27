@@ -227,6 +227,20 @@
                                     <!-- // END HEADER -->
                                 </td>
                             </tr>
+                        	<?php else: ?>
+                        	<tr>
+                            	<td align="center" valign="top">
+                                	<!-- BEGIN HEADER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
+                                        <tr>
+                                            <td valign="top" class="headerContent">
+                                            	<img src="<?php echo site_url('assets/images/email-header-600x100.png'); ?>" alt="<?php echo $this->config->item('application_name'); ?>" style="max-width:600px;" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END HEADER -->
+                                </td>
+                            </tr>
                         	<?php endif; ?>
                         	<tr>
                             	<td align="center" valign="top">

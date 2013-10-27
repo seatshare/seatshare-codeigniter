@@ -33,5 +33,6 @@ ul.group-members li {
 
 .navbar-inverse .logo a {
 	display: block;
+	width: 150px;
 	padding-top: 50px;
 }
