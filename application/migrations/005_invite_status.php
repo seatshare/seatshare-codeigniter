@@ -4,20 +4,28 @@ class Migration_invite_status extends CI_Migration {
 	
 	public function up() {
 
-		$exists = $this->db->query('SHOW COLUMNS IN `group_invitations` WHERE `Field` = "status";');
-		if ($exists->num_rows) {
+		$exists = $this->db->field_exists('status', 'group_invitations');
+		if ($exists) {
 			return;
 		}
 
 		// New Columns
-		$this->db->query("ALTER TABLE `group_invitations` ADD `status` tinyint(1)  NOT NULL  DEFAULT '1' AFTER `invitation_code` ");
-		$this->db->query("ALTER TABLE `group_invitations` ADD `updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `status` ");
-
+		$this->dbforge->add_column('group_invitations', array(
+			'status' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'null' => false,
+				'default' => '1'
+			),
+			'updated_ts' => array(
+				'type' => 'TIMESTAMP'
+			)
+		));
 	}
 
 	public function down() {
-		$this->db->query("ALTER TABLE `group_invitations` DROP `status` ");
-		$this->db->query("ALTER TABLE `group_invitations` DROP `updated_ts` ");
+		$this->dbforge->drop_column('group_invitations', 'status');
+		$this->dbforge->drop_column('group_invitations', 'updated_ts');
 	}
 
 }

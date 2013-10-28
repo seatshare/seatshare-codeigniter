@@ -6,7 +6,7 @@ This project is a mock SaaS to allow a group of people to manage a pool of ticke
 
 ## [Installation](https://github.com/stephenyeargin/seatshare/wiki/Installation)
 
-1. You need to have a working PHP/MySQL stack available.
+1. You need to have a working PHP and MySQL or PostgreSQL stack available.
 2. Clone the project into a working directory and connect the relevant virtual hosts
 3. Move a few configuration files around
   * Copy `application/config/config.php.dist` to `application/config/config.php` and make necessary edits

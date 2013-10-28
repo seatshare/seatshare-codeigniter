@@ -452,8 +452,8 @@ class Group_Model extends CI_Model {
 	public function getWeeklyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
 		$this->db->join('events e', 'e.entity_id = g.entity_id');
-		$this->db->where('`g`.`group_id`', $group_id);
-		$this->db->where('WEEK(`e`.`start_time`,1) = WEEK(NOW(),1)');
+		$this->db->where('g.group_id', $group_id);
+		$this->db->where('WEEK(e.start_time,1) = WEEK(NOW(),1)');
 		$this->db->order_by('start_time', 'ASC');
 		$query = $this->db->get('groups g');
 		$events = $query->result();
@@ -468,8 +468,8 @@ class Group_Model extends CI_Model {
 	public function getDailyEventsByGroupId($group_id=0) {
 		$this->db->select('*');
 		$this->db->join('events e', 'e.entity_id = g.entity_id');
-		$this->db->where('`g`.`group_id`', $group_id);
-		$this->db->where('DATE(`e`.`start_time`) = DATE(NOW())');
+		$this->db->where('g.group_id', $group_id);
+		$this->db->where('DATE(e.start_time) = DATE(NOW())');
 		$this->db->order_by('start_time', 'ASC');
 		$query = $this->db->get('groups g');
 		$events = $query->result();

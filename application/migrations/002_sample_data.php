@@ -4,14 +4,14 @@ class Migration_sample_data extends CI_Migration {
 	
 	public function up() {
 
-		$exists = $this->db->query("SELECT * FROM `entities`");
+		$exists = $this->db->query("SELECT * FROM entities");
 		if ($exists->num_rows) {
 			return;
 		}
 
 		// Sample Entities
 		$query = "
-			INSERT INTO `entities` (`entity_id`, `entity`, `logo`, `status`)
+			INSERT INTO entities (entity_id, entity, logo, status)
 			VALUES
 				(1, 'Nashville Predators', 'http://upload.wikimedia.org/wikipedia/en/9/9c/Nashville_Predators_Logo_%282011%29.svg', 1),
 				(2, 'Belmont Bruins', 'http://upload.wikimedia.org/wikipedia/en/3/3d/BelmontBruins.png', 1)
@@ -20,7 +20,7 @@ class Migration_sample_data extends CI_Migration {
 
 		// Sample events
 		$query = "
-			INSERT INTO `events` (`event_id`, `entity_id`, `event`, `start_time`)
+			INSERT INTO events (event_id, entity_id, event, start_time)
 			VALUES
 				(1, 2, 'Belmont Bruins vs. Brescia', '2013-11-26 00:00:00'),
 				(2, 2, 'Belmont Bruins vs. Lipscomb', '2013-11-20 00:00:00'),

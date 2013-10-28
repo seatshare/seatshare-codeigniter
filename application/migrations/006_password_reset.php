@@ -4,18 +4,24 @@ class Migration_password_reset extends CI_Migration {
 	
 	public function up() {
 
-		$exists = $this->db->query('SHOW COLUMNS IN `users` WHERE `Field` = "activation_key";');
-		if ($exists->num_rows) {
+		$exists = $this->db->field_exists('activation_key', 'users');
+		if ($exists) {
 			return;
 		}
 
 		// New Columns
-		$this->db->query("ALTER TABLE `users` ADD `activation_key` varchar(50)  NOT NULL  DEFAULT '' AFTER `email` ");
-
+		$this->dbforge->add_column('users', array(
+			'activation_key' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => false,
+				'default' => ''
+			)
+		));
 	}
 
 	public function down() {
-		$this->db->query("ALTER TABLE `users` DROP `activation_key` ");
+		$this->dbforge->drop_column('users', 'activation_key');
 	}
 
 }
