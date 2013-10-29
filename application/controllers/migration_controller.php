@@ -18,9 +18,23 @@ class Migration_Controller extends MY_Controller {
 	 * Run Migration
 	 **/
 	public function index() {
+		print 'Starting migration ...' . PHP_EOL;
 		if ( ! $this->migration->current()) {
 			show_error($this->migration->error_string());
 		}
+		exit(0);
 	}
+
+	/**
+	 * Version
+	 */
+	public function version($version='') {
+		if (!$version) {
+			die('No version set.' . PHP_EOL);
+		}
+		print 'Migrating to version ' . $version . ' ...' . PHP_EOL;
+		$this->migration->version($version);
+	}
+	
 
 }

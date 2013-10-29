@@ -57,6 +57,22 @@ $autoload['libraries'] = array('database', 'session');
 
 /*
 | -------------------------------------------------------------------
+|  Auto-load Drivers
+| -------------------------------------------------------------------
+| These classes are located in the system/libraries folder or in your
+| application/libraries folder within their own subdirectory. They
+| offer multiple interchangeable driver options.
+|
+| Prototype:
+|
+|	$autoload['drivers'] = array('session', 'cache');
+*/
+
+$autoload['drivers'] = array('session');
+
+
+/*
+| -------------------------------------------------------------------
 |  Auto-load Helper Files
 | -------------------------------------------------------------------
 | Prototype:
@@ -64,7 +80,7 @@ $autoload['libraries'] = array('database', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'file', 'form', 'gravatar');
+$autoload['helper'] = array('url', 'file', 'form', 'gravatar', 'date');
 
 
 /*

@@ -4,130 +4,303 @@ class Migration_initial_db extends CI_Migration {
 	
 	public function up() {
 
-		$exists = $this->db->query('SHOW TABLES LIKE "entities"');
-		if ($exists->num_rows) {
+		$exists = $this->db->table_exists('entities');
+		if ($exists) {
 			return;
 		}
 
 		// Entities
-		$query = "
-			CREATE TABLE `entities` (
-				`entity_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`entity` varchar(100) NOT NULL DEFAULT '',
-				`logo` varchar(255) DEFAULT NULL,
-				`status` int(1) DEFAULT 1,
-				PRIMARY KEY (`entity_id`)
+		$this->dbforge->add_field(array(
+			'entity_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'entity' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => false,
+				'default' => ''
+			),
+			'logo' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 255,
+				'null' => true
+			),
+			'status' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'default' => 1
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('entity_id', true);
+		$this->dbforge->create_table('entities', true);
 
 		// Events
-		$query = "
-			CREATE TABLE `events` (
-				`event_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`entity_id` int(11) NOT NULL,
-				`event` varchar(255) NOT NULL DEFAULT '',
-				`start_time` datetime DEFAULT NULL,
-				PRIMARY KEY (`event_id`)
+		$this->dbforge->add_field(array(
+			'event_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'entity_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'event' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 255,
+				'null' => false,
+				'default' => ''
+			),
+			'start_time' => array(
+				'type' => 'TIMESTAMP',
+				'null' => true
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('event_id', true);
+		$this->dbforge->create_table('events', true);
 
 		// Group Users
-		$query = "
-			CREATE TABLE `group_users` (
-				`group_id` int(11) NOT NULL,
-				`user_id` int(11) NOT NULL,
-				`role` enum('member','admin') NOT NULL DEFAULT 'member',
-				UNIQUE KEY `group_id` (`group_id`,`user_id`)
+		$this->dbforge->add_field(array(
+			'group_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'role' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 25,
+				'null' => false,
+				'default' => 'member'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key(array('group_id', 'user_id'));
+		$this->dbforge->create_table('group_users', true);
 
 		// Groups
-		$query = "
-			CREATE TABLE `groups` (
-				`group_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`entity_id` int(11) DEFAULT NULL,
-				`group` varchar(255) DEFAULT NULL,
-				`creator_id` int(11) DEFAULT NULL,
-				`invitation_code` varchar(50) DEFAULT NULL,
-				`status` tinyint(1) NOT NULL DEFAULT '1',
-				`updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				`inserted_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-				PRIMARY KEY (`group_id`),
-				UNIQUE KEY `invitation_code` (`invitation_code`)
+		$this->dbforge->add_field(array(
+			'group_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'entity_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'group' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 255,
+				'default' => ''
+			),
+			'creator_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'invitation_code' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'default' => '',
+				'unique' => true
+			),
+			'status' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'default' => 1,
+				'null' => false
+			),
+			'updated_ts' => array(
+				'type' => 'TIMESTAMP'
+			),
+			'inserted_ts' => array(
+				'type' => 'TIMESTAMP'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('group_id', true);
+		$this->dbforge->add_key('invitation_code');
+		$this->dbforge->create_table('groups', true);
 
 		// Tickets
-		$query = "
-			CREATE TABLE `tickets` (
-				`ticket_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`group_id` int(11) NOT NULL,
-				`event_id` int(11) NOT NULL,
-				`owner_id` int(11) NOT NULL,
-				`user_id` int(11) NOT NULL DEFAULT '0',
-				`section` varchar(50) DEFAULT NULL,
-				`row` varchar(50) DEFAULT NULL,
-				`seat` varchar(50) DEFAULT NULL,
-				`cost` decimal(10,2) NOT NULL DEFAULT '0.00',
-				`updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				`inserted_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-				PRIMARY KEY (`ticket_id`)
+		$this->dbforge->add_field(array(
+			'ticket_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'group_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'event_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'owner_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'section' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => false
+			),
+			'row' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => false
+			),
+			'seat' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => false
+			),
+			'cost' => array(
+				'type' => 'DECIMAL',
+				'constraint' => '10,2',
+				'default' => 0.00,
+				'null' => false
+			),
+			'updated_ts' => array(
+				'type' => 'TIMESTAMP'
+			),
+			'inserted_ts' => array(
+				'type' => 'TIMESTAMP'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('ticket_id', true);
+		$this->dbforge->create_table('tickets', true);
 
 		// Ticket History
-		$query = "
-			CREATE TABLE `ticket_history` (
-				`ticket_history_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`ticket_id` int(11) NOT NULL,
-				`group_id` int(11) NOT NULL,
-				`event_id` int(11) NOT NULL,
-				`user_id` int(11) NOT NULL DEFAULT '0',
-				`entry` mediumtext NOT NULL,
-				`updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				`inserted_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-				PRIMARY KEY (`ticket_history_id`)
+		$this->dbforge->add_field(array(
+			'ticket_history_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'ticket_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'group_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'event_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false
+			),
+			'entry' => array(
+				'type' => 'TEXT',
+				'null' => false
+			),
+			'updated_ts' => array(
+				'type' => 'TIMESTAMP'
+			),
+			'inserted_ts' => array(
+				'type' => 'TIMESTAMP'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('ticket_history_id', true);
+		$this->dbforge->create_table('ticket_history', true);
 
 		// Users
-		$query = "
-			CREATE TABLE `users` (
-				`user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`username` varchar(100) NOT NULL DEFAULT '',
-				`password` varchar(32) NOT NULL DEFAULT '',
-				`first_name` varchar(100) DEFAULT NULL,
-				`last_name` varchar(100) DEFAULT NULL,
-				`email` varchar(255) DEFAULT NULL,
-				`status` tinyint(1) NOT NULL DEFAULT '1',
-				`updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				`inserted_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-				PRIMARY KEY (`user_id`),
-				UNIQUE KEY `username` (`username`),
-				UNIQUE KEY `email` (`email`)
+		$this->dbforge->add_field(array(
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'username' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => false,
+				'unique' => true,
+			),
+			'password' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 32,
+				'null' => false,
+			),
+			'first_name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '100',
+				'null' => false
+			),
+			'last_name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '100',
+				'null' => false
+			),
+			'email' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '255',
+				'null' => false,
+				'unique' => true
+			),
+			'status' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'default' => 1,
+				'null' => false
+			),
+			'updated_ts' => array(
+				'type' => 'TIMESTAMP'
+			),
+			'inserted_ts' => array(
+				'type' => 'TIMESTAMP'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('user_id', true);
+		$this->dbforge->add_key('username');
+		$this->dbforge->add_key('email');
+		$this->dbforge->create_table('users', true);
 
 	}
 
 	public function down() {
-		$query = "
-			DROP TABLE IF EXISTS `entities`;
-			DROP TABLE IF EXISTS `events`;
-			DROP TABLE IF EXISTS `group_users`;
-			DROP TABLE IF EXISTS `groups`;
-			DROP TABLE IF EXISTS `tickets`;
-			DROP TABLE IF EXISTS `ticket_history`;
-			DROP TABLE IF EXISTS `users`;
-		";
-		$this->db->query($query);
+		$this->dbforge->drop_table('entities');
+		$this->dbforge->drop_table('events');
+		$this->dbforge->drop_table('group_users');
+		$this->dbforge->drop_table('groups');
+		$this->dbforge->drop_table('tickets');
+		$this->dbforge->drop_table('ticket_history');
+		$this->dbforge->drop_table('users');
 	}
-
 }

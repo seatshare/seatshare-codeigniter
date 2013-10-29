@@ -2,6 +2,8 @@
 
 <?php echo (validation_errors()) ? '<div class="alert alert-danger">' . validation_errors() . '</div>' : ''; ?>
 
+<?php echo (isset($sent)) ? '<div class="alert alert-success">Your message was sent!</div>' : ''; ?>
+
 <?php echo form_fieldset('Group message'); ?>
 <div class="form-group">
 	<?php echo form_label('Subject', 'subject', array('class'=>'col-md-3 control-label')); ?>
@@ -24,6 +26,7 @@
 		<?php echo form_label('Select Recipients', 'recipients', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
 				<?php foreach ($group_users as $user): ?>
+				<?php if ($user->user_id == $this->current_user->user_id) { continue; } ?>
 				<div class="checkbox">
 					<label>
 						<?php echo form_checkbox(array(

@@ -4,22 +4,37 @@ class Migration_event_tba_details extends CI_Migration {
 	
 	public function up() {
 
-		$exists = $this->db->query('SHOW COLUMNS IN `events` WHERE `Field` = "description";');
-		if ($exists->num_rows) {
+		$exists = $this->db->field_exists('description', 'events');
+		if ($exists) {
 			return;
 		}
 
 		// New Columns
-		$this->db->query("ALTER TABLE `events` ADD `description` text NOT NULL AFTER `event` ");
-		$this->db->query("ALTER TABLE `events` ADD `date_tba` tinyint(1)  NOT NULL  DEFAULT '0' AFTER `start_time` ");
-		$this->db->query("ALTER TABLE `events` ADD `time_tba` tinyint(1)  NOT NULL  DEFAULT '0' AFTER `date_tba` ");
+		$fields = array(
+			'description' => array(
+				'type' => 'TEXT',
+				'null' => false,
+				'default' => ''
+			),
+			'date_tba' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'default' => 0
+			),
+			'time_tba' => array(
+				'type' => 'INT',
+				'constraint' => 1,
+				'default' => 0
+			)
+		);
+		$this->dbforge->add_column('events', $fields);
 
 	}
 
 	public function down() {
-		$this->db->query("ALTER TABLE `events` DROP `description` ");
-		$this->db->query("ALTER TABLE `events` DROP `date_tba` ");
-		$this->db->query("ALTER TABLE `events` DROP `time_tba` ");
+		$this->dbforge->drop_column('events', 'description');
+		$this->dbforge->drop_column('events', 'date_tba');
+		$this->dbforge->drop_column('events', 'time_tba');
 	}
 
 }
