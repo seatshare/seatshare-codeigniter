@@ -218,7 +218,7 @@ class Groups_Controller extends MY_Controller {
 		if ($this->input->post()) {
 			$this->form_validation->set_rules('subject', 'Subject', 'required');
 			$this->form_validation->set_rules('message', 'Message', 'required');
-			$this->form_validation->set_rules('recipients', 'Recipients', 'required');
+			$this->form_validation->set_rules('recipients[]', 'Recipients', 'required');
 
 			if ($this->form_validation->run() == true) {
 				foreach ($this->input->post('recipients') as $user_id) {
@@ -229,7 +229,7 @@ class Groups_Controller extends MY_Controller {
 
 				$this->email_model->sendGroupMessage($recipients, $subject, $message);
 				$this->growl('Message sent!');
-				redirect('dashboard');
+				$data['sent'] = true;
 			}
 		}
 

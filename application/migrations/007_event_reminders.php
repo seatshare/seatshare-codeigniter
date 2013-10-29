@@ -10,50 +10,99 @@ class Migration_event_reminders extends CI_Migration {
 		}
 
 		// Reminder Types
-		$query = "
-			CREATE TABLE reminder_types (
-				reminder_type_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-				reminder_type varchar(50) NOT NULL DEFAULT '',
-				description varchar(255) NOT NULL DEFAULT '',
-				PRIMARY KEY (reminder_type_id),
-				UNIQUE KEY reminder_type (reminder_type)
+		$this->dbforge->add_field(array(
+			'reminder_type_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'reminder_type' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => false,
+				'default' => '',
+				'unique' => true
+			),
+			'description' => array(
+				'type' => 'varchar',
+				'constraint' => 255,
+				'null' => false,
+				'default' => ''
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('reminder_type_id', true);
+		$this->dbforge->create_table('reminder_types', true);
 
 		// Reminders
-		$query = "
-			CREATE TABLE reminders (
-				reminder_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-				reminder_type_id int(11) NOT NULL DEFAULT '0',
-				user_id int(11) NOT NULL DEFAULT '0',
-				entry text NOT NULL,
-				inserted_ts timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-				PRIMARY KEY (reminder_id)
+		$this->dbforge->add_field(array(
+			'reminder_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'null' => false,
+				'auto_increment' => true
+			),
+			'reminder_type_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false,
+				'default' => 0
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false,
+				'default' => 0
+			),
+			'entry' => array(
+				'type' => 'TEXT',
+				'null' => false
+			),
+			'inserted_ts' => array(
+				'type' => 'TIMESTAMP'
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key('reminder_id', true);
+		$this->dbforge->create_table('reminders', true);
 
 		// User Reminders
-		$query = "
-			CREATE TABLE user_reminders (
-				group_id int(11) NOT NULL,
-				user_id int(11) NOT NULL,
-				reminder_type_id int(11) NOT NULL,
-				UNIQUE KEY group_id (group_id,user_id,reminder_type_id)
+		$this->dbforge->add_field(array(
+			'group_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false,
+				'default' => 0
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false,
+				'default' => 0
+			),
+			'reminder_type_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => false,
+				'default' => 0
 			)
-		";
-		$this->db->query($query);
+		));
+		$this->dbforge->add_key(array('group_id','user_id','reminder_type_id'));
+		$this->dbforge->create_table('user_reminders', true);
 
 		// Initial data
-		$query = "
-			INSERT INTO reminder_types (reminder_type_id, reminder_type, description)
-			VALUES
-				(1, 'weekly', 'The week ahead (sent Monday mornings)'),
-				(2, 'daily', 'Today\'s events (sent on the morning of events)'
-			);
-		";
-		$this->db->query($query);
+		$record = new StdClass();
+		$record->reminder_type_id = 1;
+		$record->reminder_type = 'weekly';
+		$record->description = 'The week ahead (sent Monday mornings)';
+		$this->db->insert('reminder_types', $record);
+
+		$record = new StdClass();
+		$record->reminder_type_id = 2;
+		$record->reminder_type = 'daily';
+		$record->description = 'Today\'s events (sent on the morning of events)';
+		$this->db->insert('reminder_types', $record);
 
 	}
 

@@ -36,7 +36,7 @@ class Ticket_Model extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->where('event_id', $event_id);
-		$this->db->where('user_id', '');
+		$this->db->where('user_id', 0);
 		$this->db->where('group_id', $group_id);
 		$tickets_available = $this->db->get('tickets');
 
@@ -121,6 +121,7 @@ class Ticket_Model extends CI_Model {
 		$record->owner_id = $this->user_model->getCurrentUser()->user_id;
 		$record->user_id = $ticket['user_id'];
 		$record->inserted_ts = date('Y-m-d h:i:s');
+		$record->updated_ts = date('Y-m-d h:i:s');
 
 		$this->db->insert('tickets', $record);
 		return $this->db->insert_id();

@@ -17,6 +17,8 @@ class Group_Model extends CI_Model {
 		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
 		$this->db->where('g.status', 1);
 		$this->db->group_by('group_id');
+		$this->db->group_by('n.entity_id');
+		$this->db->group_by('n.logo');
 		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('groups g');
 		$groups = $query->result();
@@ -57,7 +59,10 @@ class Group_Model extends CI_Model {
 		$this->db->join('entities n', 'n.entity_id = g.entity_id', 'INNER');
 		$this->db->where('g.status', 1);
 		$this->db->where('gu.user_id', $user_id);
-		$this->db->group_by('group_id');
+		$this->db->group_by('g.group_id');
+		$this->db->group_by('n.entity');
+		$this->db->group_by('n.logo');
+		$this->db->group_by('gu.role');
 		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('group_users gu');
 		$groups = $query->result();
@@ -237,6 +242,7 @@ class Group_Model extends CI_Model {
 		$record->creator_id = $user_id;
 		$record->invitation_code = $this->generateInvitationCode();
 		$record->status = 1;
+		$record->updated_ts = date('Y-m-d h:i:s');
 		$record->inserted_ts = date('Y-m-d h:i:s');
 
 		$this->db->insert('groups', $record);
@@ -419,6 +425,7 @@ class Group_Model extends CI_Model {
 		$record->invitation_code = $invitation_code;
 		$record->status = 1;
 		$record->inserted_ts = date('Y-m-d h:i:s');
+		$record->updated_ts = date('Y-m-d h:i:s');
 
 		$this->db->insert('group_invitations', $record);
 		$this->email_model->sendInvite($email, $invitation_code);
@@ -439,7 +446,11 @@ class Group_Model extends CI_Model {
 
 		$this->db->where('email', $email);
 		$this->db->where('group_id', $group_id);
-		$this->db->where('inserted_ts >= DATE_SUB( NOW(),INTERVAL 3 DAY )');
+		if ($this->db->dbdriver === 'mysql') {
+			$this->db->where('inserted_ts >= DATE_SUB( NOW(),INTERVAL 3 DAY )');
+		} else {
+			$this->db->where('inserted_ts >= NOW() - INTERVAL \'3 days\' ');
+		}
 		$query = $this->db->get('group_invitations');
 		return $query->row();
 	}
@@ -453,7 +464,11 @@ class Group_Model extends CI_Model {
 		$this->db->select('*');
 		$this->db->join('events e', 'e.entity_id = g.entity_id');
 		$this->db->where('g.group_id', $group_id);
-		$this->db->where('WEEK(e.start_time,1) = WEEK(NOW(),1)');
+		if ($this->db->dbdriver === 'mysql') {
+			$this->db->where('WEEK(e.start_time,1) = WEEK(NOW(),1)');
+		} else {
+			$this->db->where('date_trunc(\'week\', e.start_time) = date_trunc(\'week\', now())');
+		}
 		$this->db->order_by('start_time', 'ASC');
 		$query = $this->db->get('groups g');
 		$events = $query->result();
@@ -469,7 +484,11 @@ class Group_Model extends CI_Model {
 		$this->db->select('*');
 		$this->db->join('events e', 'e.entity_id = g.entity_id');
 		$this->db->where('g.group_id', $group_id);
-		$this->db->where('DATE(e.start_time) = DATE(NOW())');
+		if ($this->db->dbdriver === 'mysql') {
+			$this->db->where('DATE(e.start_time) = DATE(NOW())');
+		} else {
+			$this->db->where('date_trunc(\'day\', e.start_time) = date_trunc(\'day\', now())');
+		}
 		$this->db->order_by('start_time', 'ASC');
 		$query = $this->db->get('groups g');
 		$events = $query->result();

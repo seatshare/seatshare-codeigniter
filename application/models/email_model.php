@@ -120,19 +120,17 @@ class Email_Model extends CI_Model {
 		}
 
 		// Special email header for group messages
-		$data['header'] = '<div style="padding:10px;">';
-		$data['header'] .= sprintf(
+		$data['group_header'] = sprintf(
 			'<h2>%s <span style="font-weight:normal;">from <a href="mailto:%s">%s %s</a></span></h2>',
 			$group->group,
 			$user->email,
 			$user->first_name,
 			$user->last_name
 		);
-		$data['header'] .= sprintf(
+		$data['group_header'] .= sprintf(
 			'<p>Sent to %s</p>',
 			implode(', ', $recipient_list)
 		);
-		$data['header'] .= '</div>';
 		
 		$data['personalized'] = nl2br($personalized);
 		$data['user'] = $user;

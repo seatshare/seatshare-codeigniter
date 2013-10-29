@@ -21,13 +21,14 @@ class User_Model extends CI_Model {
 	 */
 	public function login( $username='', $password='' ) {
 		$this->db->select( $this->public_fields );
-		$this->db->where( sprintf( '(username = %s OR email = %s)', $this->db->escape($username), $this->db->escape($username) ) );
+		$this->db->where('username', $username);
+		$this->db->or_where('email', $username);
 		$this->db->where( 'password', md5( $password . $this->config->item( 'encryption_key' ) ) );
 		$this->db->where( 'status', 1 );
 		$query = $this->db->get( 'users' );
 
 		// If valid, set 'user' session variable. If not, clear it.
-		if ( $query->num_rows == 1 ):
+		if ( $query->num_rows() === 1 ):
 			$this->session->set_userdata( 'user', serialize( array_shift( $query->result() ) ) );
 		return true;
 		else:
@@ -164,6 +165,7 @@ class User_Model extends CI_Model {
 			return false;
 		}
 		$update_user_data = array(
+			'updated_ts' => date('Y-m-d h:i:s'),
 			'password' => md5( $password . $this->config->item( 'encryption_key' ) ),
 			'activation_key' => ''
 		);
@@ -237,6 +239,7 @@ class User_Model extends CI_Model {
 		// Generate and set the password reset key
 		$user->activation_key = $this->generatePasswordResetKey();
 		$this->db->where( 'user_id', $user->user_id );
+		$user_data['updated_ts'] = date('Y-m-d h:i:s');
 		$user_data['activation_key'] = $user->activation_key;
 		$this->db->update( 'users', $user_data );
 

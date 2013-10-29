@@ -40,14 +40,14 @@ class Migration_group_invitations extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => 50,
 				'null' => false,
-				'default' => ''
+				'default' => '',
+				'unique' => ''
 			),
 			'inserted_ts' => array(
 				'type' => 'TIMESTAMP'
 			)
 		));
 		$this->dbforge->add_key('invitation_id', true);
-		$this->dbforge->add_key('invitation_code');
 		$this->dbforge->create_table('group_invitations', true);
 
 	}

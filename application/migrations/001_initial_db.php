@@ -59,7 +59,7 @@ class Migration_initial_db extends CI_Migration {
 				'default' => ''
 			),
 			'start_time' => array(
-				'type' => 'DATETIME',
+				'type' => 'TIMESTAMP',
 				'null' => true
 			)
 		));
