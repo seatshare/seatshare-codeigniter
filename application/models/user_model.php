@@ -165,7 +165,7 @@ class User_Model extends CI_Model {
 			return false;
 		}
 		$update_user_data = array(
-			'updated_ts' => date('Y-m-d h:i:s'),
+			'updated_ts' => now(),
 			'password' => md5( $password . $this->config->item( 'encryption_key' ) ),
 			'activation_key' => ''
 		);
@@ -239,7 +239,7 @@ class User_Model extends CI_Model {
 		// Generate and set the password reset key
 		$user->activation_key = $this->generatePasswordResetKey();
 		$this->db->where( 'user_id', $user->user_id );
-		$user_data['updated_ts'] = date('Y-m-d h:i:s');
+		$user_data['updated_ts'] = date('Y-m-d H:i:s',now());
 		$user_data['activation_key'] = $user->activation_key;
 		$this->db->update( 'users', $user_data );
 

@@ -54,8 +54,8 @@ class Register_Controller extends MY_Controller {
 					'last_name' => $this->input->post('last_name'),
 					'email' => strtolower($this->input->post('email')),
 					'status' => 1,
-					'updated_ts' => date('Y-m-d h:i:s'),
-					'inserted_ts' => date('Y-m-d h:i:s')
+					'updated_ts' => now(),
+					'inserted_ts' => now()
 				);
 				$this->user_model->createNewUser($insert_user_data);
 				$this->user_model->login($this->input->post('username'), $this->input->post('password'));

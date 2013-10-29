@@ -120,8 +120,8 @@ class Ticket_Model extends CI_Model {
 		$record->cost = $ticket['cost'];
 		$record->owner_id = $this->user_model->getCurrentUser()->user_id;
 		$record->user_id = $ticket['user_id'];
-		$record->inserted_ts = date('Y-m-d h:i:s');
-		$record->updated_ts = date('Y-m-d h:i:s');
+		$record->inserted_ts = date('Y-m-d H:i:s',now());
+		$record->updated_ts = date('Y-m-d H:i:s',now());
 
 		$this->db->insert('tickets', $record);
 		return $this->db->insert_id();
@@ -201,7 +201,7 @@ class Ticket_Model extends CI_Model {
 		$record->event_id = $ticket['event_id'];
 		$record->user_id = $this->user_model->getCurrentUser()->user_id;
 		$record->entry = json_encode($entry);
-		$record->inserted_ts = date('Y-m-d h:i:s');
+		$record->inserted_ts = date('Y-m-d H:i:s',now());
 
 		$this->db->insert('ticket_history', $record);
 	}

@@ -242,8 +242,8 @@ class Group_Model extends CI_Model {
 		$record->creator_id = $user_id;
 		$record->invitation_code = $this->generateInvitationCode();
 		$record->status = 1;
-		$record->updated_ts = date('Y-m-d h:i:s');
-		$record->inserted_ts = date('Y-m-d h:i:s');
+		$record->updated_ts = date('Y-m-d H:i:s',now());
+		$record->inserted_ts = date('Y-m-d H:i:s',now());
 
 		$this->db->insert('groups', $record);
 		$group_id = $this->db->insert_id();
@@ -424,8 +424,8 @@ class Group_Model extends CI_Model {
 		$record->email = strtolower($email);
 		$record->invitation_code = $invitation_code;
 		$record->status = 1;
-		$record->inserted_ts = date('Y-m-d h:i:s');
-		$record->updated_ts = date('Y-m-d h:i:s');
+		$record->inserted_ts = date('Y-m-d H:i:s',now());
+		$record->updated_ts = date('Y-m-d H:i:s',now());
 
 		$this->db->insert('group_invitations', $record);
 		$this->email_model->sendInvite($email, $invitation_code);
@@ -609,7 +609,7 @@ class Group_Model extends CI_Model {
   			'group' => $group,
   			'events' => $events
   		));
-  		$record->inserted_ts =  date('Y-m-d h:i:s');
+  		$record->inserted_ts =  date('Y-m-d H:i:s',now());
   		$this->db->insert('reminders', $record);
 	}
 

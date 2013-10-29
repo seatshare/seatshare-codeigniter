@@ -80,7 +80,7 @@ $autoload['drivers'] = array('session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'file', 'form', 'gravatar');
+$autoload['helper'] = array('url', 'file', 'form', 'gravatar', 'date');
 
 
 /*
