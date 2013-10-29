@@ -3,7 +3,7 @@
 <ul class="list-unstyled">
 <?php foreach ($history as $item): ?>
 	<?php $entry = json_decode($item->entry); ?>
-	<li><?php echo $entry->user->first_name; ?> <?php echo substr($entry->user->last_name,0,1); ?>. <strong><?php echo $entry->text; ?></strong> <?php echo date('F j, Y g:ia', strtotime($item->inserted_ts)); ?></li>
+	<li><?php echo $entry->user->first_name; ?> <?php echo substr($entry->user->last_name,0,1); ?>. <strong><?php echo $entry->text; ?></strong> <?php echo date('F j, Y g:ia', gmt_to_local(strtotime($item->inserted_ts), 'UM6', true)); ?></li>
 <?php endforeach; ?>
 </ul>
 <?php else: ?>
