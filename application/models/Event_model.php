@@ -49,6 +49,7 @@ class Event_Model extends CI_Model {
 		$events = array();
 		foreach ($results as $i => $row) {
 			$row->ticketStatus = $this->ticket_model->getTicketStatusByEventId($row->event_id, $group_id, $user_id);
+			$row->tickets = $this->ticket_model->getTicketsByEventId($row->event_id);
 			$events[$i] = $row;
 		}
 		return $events;
