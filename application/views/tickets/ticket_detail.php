@@ -9,7 +9,7 @@
 	<div class="form-group">
 		<?php echo form_label('Ticket Purchaser', 'owner', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
-			<?php echo form_input(array('name'=>'owner', 'class'=>'form-control', 'readonly'=>true, 'value'=>$ticket->owner->name)); ?>
+			<p class="form-control-static"><?php echo $ticket->owner->name; ?></p>
 		</div>
 	</div>
 	<div class="form-group">
@@ -38,19 +38,19 @@
 	<div class="form-group">
 		<?php echo form_label('Ticket Holder', 'owner', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
-			<?php echo form_input(array('name'=>'owner', 'class'=>'form-control', 'readonly'=>true, 'value'=>$ticket->owner->name)); ?>
+			<p class="form-control-static"><?php echo $ticket->owner->name; ?></p>
 		</div>
 	</div>
 	<div class="form-group">
 		<?php echo form_label('Assigned To', 'assigned', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
-			<?php echo form_input(array('name'=>'assigned', 'class'=>'form-control', 'readonly'=>true, 'value'=>($ticket->assigned) ? $ticket->assigned->name : 'Unassigned')); ?>
+			<p class="form-control-static"><?php echo ($ticket->assigned) ? $ticket->assigned->name : 'Unassigned'; ?></p>
 		</div>
 	</div>
 	<div class="form-group">
 		<?php echo form_label('Cost', 'assigned', array('class'=>'col-md-3 control-label')); ?>
 		<div class="col-md-9">
-			<?php echo form_input(array('name'=>'cost', 'class'=>'form-control', 'readonly'=>true, 'value'=>number_format($ticket->cost,2))); ?>
+			<p class="form-control-static">$<?php echo number_format($ticket->cost,2); ?></p>
 		</div>
 	</div>
 
