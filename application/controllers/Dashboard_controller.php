@@ -13,6 +13,7 @@ class Dashboard_Controller extends MY_Controller {
 		$this->load->model('group_model');
 		$this->load->model('event_model');
 		$this->load->model('entity_model');
+		$this->load->model('ticket_model');
 	}
 
 	/**
