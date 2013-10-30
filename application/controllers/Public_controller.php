@@ -22,6 +22,7 @@ class Public_Controller extends MY_Controller {
 		$data['sidebar'] = $this->load->view('public/_sidebar', null, true);
 		$data['head'] = sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name'));
 		$data['title'] = 'Welcome to ' . $this->config->item('application_name');
+		$data['head'] = '<script>mixpanel.track("View home");</script>';
 		$this->load->view('public/home', $data);
 	}
 
@@ -34,6 +35,7 @@ class Public_Controller extends MY_Controller {
 		$data['title'] = 'Terms of Service - ' . $this->config->item('application_name');
 		$data['company'] = $this->config->item('application_name');
 		$data['application'] = $this->config->item('application_name') . ' (http://' . $this->config->item('application_domain') . ')';
+		$data['head'] = '<script>mixpanel.track("View terms of service");</script>';
 		$this->load->view('public/tos', $data);
 	}
 
@@ -47,6 +49,7 @@ class Public_Controller extends MY_Controller {
 		$data['company'] = $this->config->item('application_name');
 		$data['address'] = $this->config->item('application_address');
 		$data['email'] = $this->config->item('application_email');
+		$data['head'] = '<script>mixpanel.track("View privacy policy");</script>';
 		$this->load->view('public/privacy', $data);
 	}
 
@@ -78,6 +81,7 @@ class Public_Controller extends MY_Controller {
 		}
 		$data['head'] = sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name'));
 		$data['title'] = 'Contact - ' . $this->config->item('application_name');
+		$data['head'] = '<script>mixpanel.track("View contact form");</script>';
 		$this->load->view('public/contact_form', $data);
 	}
 

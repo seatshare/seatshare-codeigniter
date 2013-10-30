@@ -44,6 +44,7 @@ class Dashboard_Controller extends MY_Controller {
 
 		$data['title'] = 'Dashboard';
 		$data['sidebar'] = $this->load->view('dashboard/_sidebar', $data, true);
+		$data['head'] = '<script>mixpanel.track("View dashboard");</script>';
 		$this->load->view('dashboard/main', $data);
 	}
 }

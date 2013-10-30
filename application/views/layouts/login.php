@@ -18,6 +18,8 @@
 
 <meta name="apple-mobile-web-app-title" content="<?php echo $this->config->item('application_name'); ?>">
 
+<?php include_once('_mixpanel.php'); ?>
+
 <?php echo (isset($head)) ? $head : ''; ?>
 
 </head>

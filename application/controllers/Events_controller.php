@@ -40,6 +40,7 @@ class Events_Controller extends MY_Controller {
 		$data['event'] = $event;
 		$data['tickets'] = $tickets;
 		$data['title'] = $event->event;
+		$data['head'] = '<script>mixpanel.track("View event");</script>';
 		$this->load->view('events/event_detail', $data);
 	}
 

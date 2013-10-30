@@ -94,6 +94,7 @@ class Tickets_Controller extends MY_Controller {
 
 		$data['sidebar'] = $this->load->view('tickets/_history', $data, true);
 		$data['title'] = sprintf('%s - %s %s %s', $event->event, $ticket->section, $ticket->row, $ticket->seat);
+		$data['head'] = '<script>mixpanel.track("View ticket");</script>';
 		$this->load->view('tickets/ticket_detail', $data);
 
 	}
@@ -138,6 +139,7 @@ class Tickets_Controller extends MY_Controller {
 		$data['group_users'] = $group_users;
 		$data['assigned'] = $this->current_user;
 		$data['title'] = 'Add Ticket - ' . $event->event;
+		$data['head'] = '<script>mixpanel.track("View create single ticket");</script>';
 		$this->load->view('tickets/new_ticket', $data);
 	}
 
@@ -180,6 +182,7 @@ class Tickets_Controller extends MY_Controller {
 		$data['assigned'] = $this->current_user;
 		$data['events'] = $events;
 		$data['title'] = 'Add Season Ticket';
+		$data['head'] = '<script>mixpanel.track("View create season ticket");</script>';
 		$this->load->view('tickets/new_season_ticket', $data);
 	}
 

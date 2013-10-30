@@ -23,9 +23,11 @@ class Groups_Controller extends MY_Controller {
 		if (is_array($groups) && count($groups)) {
 			$data['groups'] = $groups;
 			$data['title'] = 'Groups';
+			$data['head'] = '<script>mixpanel.track("View groups");</script>';
 			$this->load->view('groups/groups', $data);
 		} else {
 			$data['title'] = 'Welcome!';
+			$data['head'] = '<script>mixpanel.track("View welcome");</script>';
 			$this->load->view('groups/welcome', $data);
 		}
 	}
@@ -81,6 +83,7 @@ class Groups_Controller extends MY_Controller {
 		$data['subscribed'] = $subscribed;
 		$data['sidebar'] = $this->load->view('groups/_reminders', $data, true);
 		$data['title'] = $group->group;
+		$data['head'] = '<script>mixpanel.track("View group");</script>';
 		$this->load->view('groups/view_group', $data);
 	}
 
@@ -118,6 +121,7 @@ class Groups_Controller extends MY_Controller {
 
 		$data['group'] = $group;
 		$data['title'] = $group->group;
+		$data['head'] = '<script>mixpanel.track("View group edit");</script>';
 		$this->load->view('groups/edit_group', $data);
 	}
 
@@ -163,6 +167,7 @@ class Groups_Controller extends MY_Controller {
 			}
 		}
 		$data['title'] = 'Join Group';
+		$data['head'] = '<script>mixpanel.track("View join group");</script>';
 		$this->load->view('groups/join_group', $data);
 	}
 
@@ -185,6 +190,7 @@ class Groups_Controller extends MY_Controller {
 		}
 		$data['group'] = $group;
 		$data['title'] = 'Leave Group';
+		$data['head'] = '<script>mixpanel.track("View leave group");</script>';
 		$this->load->view('groups/leave_group', $data);
 	}
 
@@ -204,6 +210,7 @@ class Groups_Controller extends MY_Controller {
 			redirect('dashboard');
 		}
 		$data['title'] = 'Invite';
+		$data['head'] = '<script>mixpanel.track("View invite");</script>';
 		$this->load->view('groups/invite', $data);
 
 	}
@@ -236,6 +243,7 @@ class Groups_Controller extends MY_Controller {
 		$data['group'] = $group;
 		$data['group_users'] = $group_users;
 		$data['title'] = 'New Group Message';
+		$data['head'] = '<script>mixpanel.track("View new group message");</script>';
 		$this->load->view('groups/new_message', $data);
 	}
 
