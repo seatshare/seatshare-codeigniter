@@ -27,14 +27,18 @@
 	<p><span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
 	<h2><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h2>
 	<p><?php echo ($event->description) ? $event->description : ''; ?></p>
-	<?php if ($event->ticketStatus['tickets_available']): ?>
-	<p><strong>There are tickets available for this event!</strong></p>
+	<?php if (!$event->ticketStatus['tickets_available']): ?>
+	<p><strong>No tickets are available right now.</strong><br />You can still <a href="<?php echo site_url('groups/new_message'); ?>" class="alert-link">send a group message</a> to see if everyone is going.</p>
+	<?php else: ?>
+	<p><strong>There are tickets available for this event!</strong><br />Click on a ticket below to send a request.</p>
+	<?php endif; ?>
 
 	<div class="progress">
 	  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?php echo ($event->ticketStatus['tickets_group']) ? number_format(($event->ticketStatus['tickets_group']-$event->ticketStatus['tickets_available'])/$event->ticketStatus['tickets_group']*100,3) : 0; ?>%">
 	  </div>
 	</div>
 
+	<?php if ($event->ticketStatus['tickets_available']): ?>
 	<table class="table">
 		<tbody>
 			<?php foreach ($event->tickets as $ticket): ?>
