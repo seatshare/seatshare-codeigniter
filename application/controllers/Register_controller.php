@@ -93,6 +93,7 @@ class Register_Controller extends MY_Controller {
 		$data['head'] = sprintf('<meta name="description" content="Register for an account with %s to start managing your season tickets." />', $this->config->item('application_name'));
 		$data['title'] = 'Register - ' . $this->config->item('application_name');
 		$data['sidebar'] = $this->load->view('register/_group', $data, true);
+		$data['head'] = '<script>mixpanel.track("View registration");</script>';
 		$this->load->view('register/new_user', $data);
 	}
 

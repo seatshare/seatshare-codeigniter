@@ -14,6 +14,7 @@ class Profile_Controller extends MY_Controller {
 
 		$data['profile'] = $profile;
 		$data['title'] = 'View Profile';
+		$data['head'] = '<script>mixpanel.track("View own profile");</script>';
 		$this->load->view('profile/view_profile', $data);
 	}
 
@@ -59,6 +60,7 @@ class Profile_Controller extends MY_Controller {
 
 		$data['profile'] = $profile;
 		$data['title'] = 'View Profile';
+		$data['head'] = '<script>mixpanel.track("View profile edit");</script>';
 		$this->load->view('profile/edit_profile', $data);
 	}
 
@@ -71,6 +73,7 @@ class Profile_Controller extends MY_Controller {
 
 		$data['profile'] = $profile;
 		$data['title'] = 'View Profile';
+		$data['head'] = '<script>mixpanel.track("View profile");</script>';
 		$this->load->view('profile/view_profile', $data);
 	}
 
