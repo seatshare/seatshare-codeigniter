@@ -40,6 +40,7 @@
 <script src="<?php echo site_url('/assets/libraries/momentjs/moment.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/underscorejs/underscore.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/clndr/clndr.js'); ?>"> </script>
+<script src="<?php echo site_url('/assets/libraries/purl/purl.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/js/seatshare.js'); ?>"> </script>
 
