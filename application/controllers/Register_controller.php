@@ -81,6 +81,7 @@ class Register_Controller extends MY_Controller {
 				$this->email_model->sendWelcome($profile);
 
 				// If from an invitation email, redirect to accept it.
+				$this->session->set_userdata('signup', time());
 				if ($this->input->post('invitation_code') != '') {
 					redirect('groups/join/?invitation_code=' . $this->input->post('invitation_code'));
 				} else {

@@ -18,8 +18,7 @@ class Groups_Controller extends MY_Controller {
 	 * Group List
 	 **/
 	public function index() {
-		$user_id = $this->current_user->user_id;
-		$groups = $this->group_model->getUserGroups($user_id);
+		$groups = $this->group_model->getUserGroups($this->current_user->user_id);
 		if (is_array($groups) && count($groups)) {
 			$data['groups'] = $groups;
 			$data['title'] = 'Groups';
@@ -27,7 +26,13 @@ class Groups_Controller extends MY_Controller {
 			$this->load->view('groups/groups', $data);
 		} else {
 			$data['title'] = 'Welcome!';
-			$data['head'] = '<script>mixpanel.track("View welcome");</script>';
+			if ($this->session->userdata('signup') < time()-600) {
+				$data['head'] = '<script>mixpanel.track("View welcome");</script>';
+				$data['foot'] = '<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>';
+				$this->session->unset_userdata('signup');
+			} else {
+				$data['head'] = '<script>mixpanel.track("View groups");</script>';
+			}
 			$this->load->view('groups/welcome', $data);
 		}
 	}
@@ -168,6 +173,11 @@ class Groups_Controller extends MY_Controller {
 		}
 		$data['title'] = 'Join Group';
 		$data['head'] = '<script>mixpanel.track("View join group");</script>';
+		$data['foot'] = '<script>if ($.url().param(\'invitation_code\') !== \'\') { $(\'form\').submit(); }</script>';
+		if ($this->session->userdata('signup') < time()-600) {
+			$data['foot'] .= '<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>';
+			$this->session->unset_userdata('signup');
+		}
 		$this->load->view('groups/join_group', $data);
 	}
 
