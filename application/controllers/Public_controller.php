@@ -54,6 +54,17 @@ class Public_Controller extends MY_Controller {
 	}
 
 	/**
+	 * Privacy Policy
+	 */
+	public function error_404() {
+		$this->layout = 'two_column';
+		$data['title'] = 'Page Not Found - ' . $this->config->item('application_name');
+		$data['foot'] = '<script>_gaq.push([\'_trackPageview\',\'/404error/?url=\' + document.location.pathname + document.location.search + \'&ref=\' + document.referrer]);</script>';
+		$data['sidebar'] = '<h3>Think this is an error?</h3><p>Please take a moment to <a href="' . site_url('contact') . '">contact us</a>.</p>';
+		$this->load->view('public/404', $data);
+	}
+
+	/**
 	 * Contact
 	 */
 	public function contact() {

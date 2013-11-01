@@ -23,60 +23,25 @@
 
 <?php foreach ($events as $k => $event): ?>
 <?php if ($k === 0): ?>
-<div class="jumbotron">
-	<p><span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
-	<h2><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h2>
-	<p><?php echo ($event->description) ? $event->description : ''; ?></p>
-	<?php if (!$event->ticketStatus['tickets_available']): ?>
-	<p><strong>No tickets are available right now.</strong><br />You can still <a href="<?php echo site_url('groups/new_message'); ?>" class="alert-link">send a group message</a> to see if everyone is going.</p>
-	<?php else: ?>
-	<p><strong>There are tickets available for this event!</strong><br />Click on a ticket below to send a request.</p>
-	<?php endif; ?>
-
-	<div class="progress">
-	  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?php echo ($event->ticketStatus['tickets_group']) ? number_format(($event->ticketStatus['tickets_group']-$event->ticketStatus['tickets_available'])/$event->ticketStatus['tickets_group']*100,3) : 0; ?>%">
-	  </div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?>
 	</div>
+	<div class="panel-body">
+		<h2><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h2>
+		<p><?php echo ($event->description) ? $event->description : ''; ?></p>
+		<?php if (!$event->ticketStatus['tickets_available']): ?>
+		<p class="lead"><strong>No tickets are available right now.</strong><br />You can still <a href="<?php echo site_url('groups/new_message'); ?>" class="alert-link">send a group message</a> to see if everyone is going.</p>
+		<?php else: ?>
+		<p class="lead"><strong>There are tickets available for this event!</strong><br />Click on a ticket below to send a request.</p>
+		<?php endif; ?>
 
-	<?php if ($event->ticketStatus['tickets_available']): ?>
-	<table class="table">
-		<tbody>
-			<?php foreach ($event->tickets as $ticket): ?>
-			<?php if ($ticket->assigned) { continue; } ?>
-			<tr>
-				<td><a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a></td>
-				<td>via <?php echo $ticket->owner->name; ?></td>
-				<td class="text-right">
-					<a data-toggle="tooltip" title="Request Ticket" href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>" class="btn btn-primary">$<?php echo number_format($ticket->cost, 2); ?></a>
-				</td>
-			</tr>
-			<?php endforeach; ?>
-		</tbody>
-	</table>
+		<div class="progress">
+		  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?php echo ($event->ticketStatus['tickets_group']) ? number_format(($event->ticketStatus['tickets_group']-$event->ticketStatus['tickets_available'])/$event->ticketStatus['tickets_group']*100,3) : 0; ?>%">
+		  </div>
+		</div>
 
-	<?php endif; ?>
-</div>
-<?php else: ?>
-<div class="well">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="pull-right">
-				<a href="javascript:void(0)" onclick="$('#tickets-<?php echo $event->event_id; ?>').collapse('toggle')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list"></span></a>
-			</div>
-			<p><span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-7">
-			<h3><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h3>
-			<p><?php echo ($event->description) ? $event->description : ''; ?></p>
-		</div>
-		<div class="col-md-5">
-			<?php include APPPATH . '/views/shared/_tickets.php'; ?>
-		</div>
-	</div>
-	
-	<div id="tickets-<?php echo $event->event_id; ?>" class="collapse">
+		<?php if ($event->ticketStatus['tickets_available']): ?>
 		<table class="table">
 			<tbody>
 				<?php foreach ($event->tickets as $ticket): ?>
@@ -91,6 +56,45 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+
+		<?php endif; ?>
+	</div>
+</div>
+<?php else: ?>
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<div class="pull-right">
+				<a href="javascript:void(0)" onclick="$('#tickets-<?php echo $event->event_id; ?>').collapse('toggle')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list"></span></a>
+			</div>
+			<span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-7">
+				<h3><a href="<?php echo site_url('events/event/'.$event->event_id); ?>"><?php echo $event->event; ?></a></h3>
+				<p><?php echo ($event->description) ? $event->description : ''; ?></p>
+			</div>
+			<div class="col-md-5">
+				<?php include APPPATH . '/views/shared/_tickets.php'; ?>
+			</div>
+		</div>
+		
+		<div id="tickets-<?php echo $event->event_id; ?>" class="collapse">
+			<table class="table">
+				<tbody>
+					<?php foreach ($event->tickets as $ticket): ?>
+					<?php if ($ticket->assigned) { continue; } ?>
+					<tr>
+						<td><a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a></td>
+						<td>via <?php echo $ticket->owner->name; ?></td>
+						<td class="text-right">
+							<a data-toggle="tooltip" title="Request Ticket" href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>" class="btn btn-primary">$<?php echo number_format($ticket->cost, 2); ?></a>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 <?php endif; ?>

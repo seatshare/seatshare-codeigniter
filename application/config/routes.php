@@ -54,7 +54,7 @@ $route['([a-z_\-]+)/([a-z_\-]+)'] = '$1_controller/$2';
 $route['([a-z_\-]+)/([a-z_\-]+)/([a-zA-z0-9_\-\.]+)'] = '$1_controller/$2/$3';
 
 $route['default_controller'] = "public_controller";
-$route['404_override'] = '';
+$route['404_override'] = 'public_controller/error_404';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
