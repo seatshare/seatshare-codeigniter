@@ -8,6 +8,7 @@ class Email_Model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('group_model');
+		$this->load->model('entity_model');
 		$this->load->library('email');
 	}
 
@@ -19,12 +20,14 @@ class Email_Model extends CI_Model {
 	 **/
 	public function sendInvite($email='', $invitation_code='') {
 		$group = $this->group_model->getCurrentGroup();
+		$entity = $this->entity_model->getEntityByGroupId($group->group_id);
 		$user = $this->user_model->getCurrentUser();
 		if (!$email || !is_object($group) || !$invitation_code || !$group->group_id) {
 			return false;
 		}
 
 		$data['group'] = $group;
+		$data['entity'] = $entity;
 		$data['invitation_code'] = $invitation_code;
 		$data['user'] = $user;
 		$message = $this->load->view('emails/invite', $data, true);
