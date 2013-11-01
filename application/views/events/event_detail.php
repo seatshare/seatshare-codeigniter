@@ -1,18 +1,22 @@
-<div class="row">
-	<div class="col-md-2">
-		<img src="<?php echo $entity->logo; ?>" alt="<?php echo $entity->entity; ?>"  class="img-responsive img-thumbnail" />
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?>
 	</div>
-	<div class="col-md-6">
-		<p><span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?></p>
-		<h3><?php echo $event->event; ?></h3>
-		<p><?php echo $event->description; ?></p>
-	</div>
-	<div class="col-md-4">
-		<?php include APPPATH . '/views/shared/_tickets.php'; ?>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-2">
+				<img src="<?php echo $entity->logo; ?>" alt="<?php echo $entity->entity; ?>"  class="img-responsive img-thumbnail" />
+			</div>
+			<div class="col-md-6">
+				<h3><?php echo $event->event; ?></h3>
+				<p><?php echo $event->description; ?></p>
+			</div>
+			<div class="col-md-4">
+				<?php include APPPATH . '/views/shared/_tickets.php'; ?>
+			</div>
+		</div>
 	</div>
 </div>
-
-<hr />
 
 <?php if (strtotime($event->start_time) > time()): ?>
 <?php if ($event->ticketStatus['tickets_available'] > 0): ?>
