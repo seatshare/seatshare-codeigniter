@@ -25,7 +25,9 @@ ul.group-members li {
 }
 
 .navbar-inverse .logo {
-	background-image: url(../images/seatshare-150x50-inverted.png);
+	background-image: url(../images/seatshare-inverted.svg);
+	background-size: 150px 50px;
+	background-repeat: no-repeat;
 	height: 50px;
 	width: 150px;
 	overflow: hidden;
