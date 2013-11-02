@@ -113,18 +113,17 @@
                 <p><?php echo $this->config->item('application_name'); ?> is web-based software, so you get the latest features as soon as they are released.</p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="home-cta">
+                    <p class="lead text-center"><a href="<?php echo site_url('register'); ?>" class="btn btn-primary btn-lg">Create Your <?php echo $this->config->item('application_name'); ?> Account</a></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <br />
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="home-cta">
-            <p class="lead text-center"><a href="<?php echo site_url('register'); ?>" class="btn btn-primary btn-lg">Create Your <?php echo $this->config->item('application_name'); ?> Account</a></p>
-        </div>
-    </div>
-</div>
 
 <?php include_once '_footer.php'; ?>
 
