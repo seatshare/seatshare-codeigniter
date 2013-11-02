@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><?php echo (isset($title)) ? $title : $this->config->item('application_name'); ?></title>
+<title><?php echo ($this->template->getPageTitle()) ? $this->template->getPageTitle() : $this->config->item('application_name'); ?></title>
 
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
@@ -20,7 +20,7 @@
 
 <?php include_once('_mixpanel.php'); ?>
 
-<?php echo (isset($head)) ? $head : ''; ?>
+<?php echo $this->template->getHead(); ?>
 
 </head>
 
@@ -59,7 +59,7 @@
 
 <?php include_once '_growl.php'; ?>
 
-<?php echo (isset($foot)) ? $foot : ''; ?>
+<?php echo $this->template->getFoot(); ?>
 
 </body>
 </html>

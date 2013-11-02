@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?php echo (isset($title)) ? $title : $this->config->item('application_name'); ?></title>
+<title><?php echo ($this->template->getPageTitle()) ? $this->template->getPageTitle() : $this->config->item('application_name'); ?></title>
 
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/clndr/clndr.css'); ?>">
@@ -20,7 +20,7 @@
 
 <?php include_once('_mixpanel.php'); ?>
 
-<?php echo (isset($head)) ? $head : ''; ?>
+<?php echo $this->template->getHead(); ?>
 
 </head>
 <body>
@@ -29,19 +29,19 @@
 
 <div class="container">
 
-	<div class="row">
-		<section class="col-md-8">
+    <div class="row">
+        <section class="col-md-8">
 
-			{yield}
+            {yield}
 
-		</section>
+        </section>
 
-		<nav class="col-md-4">
-			<?php echo (isset($sidebar)) ? $sidebar : ''; ?>
-		</nav>
-	</div>
+        <nav class="col-md-4">
+            <?php echo (isset($sidebar)) ? $sidebar : ''; ?>
+        </nav>
+    </div>
 
-	<?php include_once '_footer.php'; ?>
+    <?php include_once '_footer.php'; ?>
 
 </div>
 
@@ -58,7 +58,7 @@
 
 <?php include_once '_growl.php'; ?>
 
-<?php echo (isset($foot)) ? $foot : ''; ?>
+<?php echo $this->template->getFoot(); ?>
 
 </body>
 </html>

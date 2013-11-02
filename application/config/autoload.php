@@ -39,7 +39,6 @@
 
 $autoload['packages'] = array();
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Libraries
@@ -52,8 +51,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session');
-
+$autoload['libraries'] = array('database', 'session', 'template');
 
 /*
 | -------------------------------------------------------------------
@@ -70,7 +68,6 @@ $autoload['libraries'] = array('database', 'session');
 
 $autoload['drivers'] = array('session');
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Helper Files
@@ -81,7 +78,6 @@ $autoload['drivers'] = array('session');
 */
 
 $autoload['helper'] = array('url', 'file', 'form', 'gravatar', 'date');
-
 
 /*
 | -------------------------------------------------------------------
@@ -98,7 +94,6 @@ $autoload['helper'] = array('url', 'file', 'form', 'gravatar', 'date');
 
 $autoload['config'] = array('application', 'api_keys');
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Language files
@@ -114,7 +109,6 @@ $autoload['config'] = array('application', 'api_keys');
 
 $autoload['language'] = array();
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Models
@@ -126,7 +120,6 @@ $autoload['language'] = array();
 */
 
 $autoload['model'] = array('user_model', 'group_model');
-
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */
