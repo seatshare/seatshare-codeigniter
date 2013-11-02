@@ -17,7 +17,7 @@ class Public_Controller extends MY_Controller
      **/
     public function index()
     {
-        $this->layout = 'two_column';
+        $this->layout = 'home';
         if ($this->user_model->isLoggedIn()) {
             redirect('dashboard');
         }
@@ -25,7 +25,6 @@ class Public_Controller extends MY_Controller
         $this->template->setHead(sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name')));
         $this->template->setPageTitle('Welcome to ' . $this->config->item('application_name'));
         $this->template->setHead('<script>mixpanel.track("View home");</script>');
-        $this->load->view('public/home', $data);
     }
 
     /**
