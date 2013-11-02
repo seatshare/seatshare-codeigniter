@@ -47,7 +47,7 @@ class Login_Controller extends MY_Controller
 
         $this->template->setHead(sprintf('<meta name="description" content="Sign in to %s to manage your tickets and groups." />', $this->config->item('application_name')));
         $this->template->setPageTitle('User Login');
-        $this->tepmlate->setHead('<script>mixpanel.track("View login");</script>');
+        $this->template->setHead('<script>mixpanel.track("View login");</script>');
         $this->load->view('login/login_form', $data);
     }
 
