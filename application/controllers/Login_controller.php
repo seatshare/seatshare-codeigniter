@@ -45,6 +45,7 @@ class Login_Controller extends MY_Controller
             }
         }
 
+        $data = array();
         $this->template->setHead(sprintf('<meta name="description" content="Sign in to %s to manage your tickets and groups." />', $this->config->item('application_name')));
         $this->template->setPageTitle('User Login');
         $this->template->setHead('<script>mixpanel.track("View login");</script>');
@@ -92,6 +93,7 @@ class Login_Controller extends MY_Controller
                 }
             }
 
+            $data = array();
             $this->template->setPageTitle('Change Password');
             $this->template->setHead('<script>mixpanel.track("View change password");</script>');
             $this->load->view('login/change_password', $data);
@@ -109,6 +111,7 @@ class Login_Controller extends MY_Controller
                 redirect('login');
             }
 
+            $data = array();
             $this->template->setPageTitle('Forgot Password');
             $this->template->setHead(sprintf('<meta name="description" content="Provide your email address or username to %s to reset your password." />', $this->config->item('application_name')));
             $this->template->setHead('<script>mixpanel.track("View forgot password");</script>');
