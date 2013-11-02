@@ -17,6 +17,7 @@
 <link rel="icon" type="image/png" href="<?php echo site_url('assets/images/favicon.png'); ?>">
 
 <meta name="apple-mobile-web-app-title" content="<?php echo $this->config->item('application_name'); ?>">
+<meta name="apple-mobile-web-app-capable" content="yes" />
 
 <?php include_once('_mixpanel.php'); ?>
 
