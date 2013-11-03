@@ -37,7 +37,7 @@
                 <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/seatshare-inverted.svg'); ?>" class="home-logo img-responsive" alt="SeatShare" title="SeatShare Logo" /></a>
             </div>
             <div class="col-md-5">
-                <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-laptop.png'); ?>" class="home-screenshot img-responsive visible-md visible-lg" alt="Screenshots" title="Simulated Screenshots" /></a>
+                <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-laptop.png'); ?>" class="home-screenshot img-responsive visible-md visible-lg" alt="Screenshots" title="Simulated Desktop Screenshot" /></a>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-iphone.png'); ?>" class="home-screenshot img-responsive visible-md visible-lg" alt="Screenshots" title="Simulated Screenshots" /></a>
+        <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-iphone.png'); ?>" class="img-responsive visible-md visible-lg" alt="Screenshots" title="Simulated Mobile Screenshot" /></a>
     </div>
     <div class="col-md-9">
         <div class="row">
@@ -99,8 +99,6 @@
         </div>
     </div>
 </div>
-
-<br />
 
 <?php include_once '_footer.php'; ?>
 

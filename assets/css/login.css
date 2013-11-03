@@ -39,7 +39,7 @@ body {
 }
 
 div.logo {
-  background-image: url(../images/seatshare-600x200-transparent.png);
+  background-image: url(../images/seatshare.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 300px 100px;
