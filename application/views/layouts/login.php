@@ -45,6 +45,10 @@
 
 </div>
 
+<div class="sr-only">
+  <p>Existing users can use this page to access their account. If you need an access, you can <a href="<?php echo site_url('register'); ?>">create an account</a>. You can also <a href="<?php echo site_url('login/forgot_password'); ?>">retrieve your username and password</a> if needed.</p>
+</div>
+
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script src="<?php echo site_url('/assets/libraries/bootstrap/js/bootstrap.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/jquery.growl/javascripts/jquery.growl.js'); ?>"> </script>

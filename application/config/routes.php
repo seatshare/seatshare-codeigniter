@@ -38,15 +38,15 @@
 |
 */
 
-
 // Miscellaneous
-$route['logout'] = 'login_controller/logout'; 
+$route['logout'] = 'login_controller/logout';
 $route['user/([a-zA-z0-9_\-\.]+)'] = 'profile_controller/view/$1';
 
 // Public routes
 $route['tos'] = 'public_controller/tos';
 $route['privacy'] = 'public_controller/privacy';
 $route['contact'] = 'public_controller/contact';
+$route['(sitemap\.xml|sitemap)'] = 'public_controller/sitemap';
 
 // Patches routing to allow for *_controller naming convention
 $route['([a-z]+)'] = '$1_controller/index';
