@@ -4,6 +4,10 @@ IndexIgnore */*
 # Turn on the RewriteEngine
 RewriteEngine On
 
+# Remove www to avoid double indexing
+RewriteCond %{HTTP_HOST} ^www\.seatsha\.re$ [NC]
+RewriteRule (.*) http://seatsha.re/$1 [R=301,L]
+
 # Hide certain file types
 <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|md)$">
 Order Allow,Deny

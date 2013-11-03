@@ -21,12 +21,12 @@ If all went well, you should now be able to navigate to the project URL and regi
 
 ## [Database Migrations](https://github.com/stephenyeargin/seatshare/wiki/Database-Migrations)
 
-1. Run from the project directory root: `php index.php migration`
+1. Run from the project directory root: `./application/bin/run_migrations.sh` or `php index.php migration`
 2. You can compare code versions in `application/config/migration.php` and the `migrations.version` database field.
 
 ## [Deploying](https://github.com/stephenyeargin/seatshare/wiki/Deploying)
 
 1. Send me a public key to add to the server
 2. Deployments use `whiskey_disk`
-3. `wd deploy --to=staging --path=application/config/deploy.yml` for seatshare.yearg.in
+3. `wd deploy --to=staging --path=application/config/deploy.yml` for staging.seatsha.re
 4. `wd deploy --to=production --path=application/config/deploy.yml` for seatsha.re
