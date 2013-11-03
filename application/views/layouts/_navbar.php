@@ -29,7 +29,7 @@
       </ul>
       <?php else: ?>
       <ul class="nav navbar-nav pull-right">
-        <li class="<?php echo ($this->uri->segment(1) == 'logout') ? 'active' : ''; ?>"><a href="<?php echo site_url('register'); ?>">Register</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'logout') ? 'active' : ''; ?>"><a href="<?php echo site_url('register'); ?>">Create Account</a></li>
         <li><a href="<?php echo site_url('login'); ?>">Login</a></li>
       </ul>
       <?php endif; ?>

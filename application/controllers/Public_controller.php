@@ -22,8 +22,8 @@ class Public_Controller extends MY_Controller
             redirect('dashboard');
         }
         $data['sidebar'] = $this->load->view('public/_sidebar', null, true);
-        $this->template->setHead(sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name')));
         $this->template->setPageTitle('Welcome to ' . $this->config->item('application_name'));
+        $this->template->setHead(sprintf('<meta name="description" content="%s is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />', $this->config->item('application_name')));
         $this->template->setHead('<script>mixpanel.track("View home");</script>');
     }
 
@@ -33,10 +33,10 @@ class Public_Controller extends MY_Controller
     public function tos()
     {
         $this->layout = 'two_column';
-        $this->template->setHead(sprintf('<meta name="description" content="The Terms of Service %s are the rules that govern access and use of the website." />', $this->config->item('application_name')));
-        $this->template->setPageTitle('Terms of Service - ' . $this->config->item('application_name'));
         $data['company'] = $this->config->item('application_name');
         $data['application'] = $this->config->item('application_name') . ' (http://' . $this->config->item('application_domain') . ')';
+        $this->template->setPageTitle('Terms of Service - ' . $this->config->item('application_name'));
+        $this->template->setHead(sprintf('<meta name="description" content="The Terms of Service %s are the rules that govern access and use of the website." />', $this->config->item('application_name')));
         $this->template->setHead('<script>mixpanel.track("View terms of service");</script>');
         $this->load->view('public/tos', $data);
     }
@@ -47,11 +47,11 @@ class Public_Controller extends MY_Controller
     public function privacy()
     {
         $this->layout = 'two_column';
-        $this->template->setHead(sprintf('<meta name="description" content="%s  values your privacy and will not sell or share your information." />', $this->config->item('application_name')));
-        $this->template->setPageTitle('Privacy Policy - ' . $this->config->item('application_name'));
         $data['company'] = $this->config->item('application_name');
         $data['address'] = $this->config->item('application_address');
         $data['email'] = $this->config->item('application_email');
+        $this->template->setPageTitle('Privacy Policy - ' . $this->config->item('application_name'));
+        $this->template->setHead(sprintf('<meta name="description" content="%s  values your privacy and will not sell or share your information." />', $this->config->item('application_name')));
         $this->template->setHead('<script>mixpanel.track("View privacy policy");</script>');
         $this->load->view('public/privacy', $data);
     }
@@ -62,9 +62,9 @@ class Public_Controller extends MY_Controller
     public function error_404()
     {
         $this->layout = 'two_column';
+        $data['sidebar'] = '<h3>Think this is an error?</h3><p>Please take a moment to <a href="' . site_url('contact') . '">contact us</a>.</p>';
         $this->template->setPageTitle('Page Not Found - ' . $this->config->item('application_name'));
         $this->template->setFoot('<script>_gaq.push([\'_trackPageview\',\'/404error/?url=\' + document.location.pathname + document.location.search + \'&ref=\' + document.referrer]);</script>');
-        $data['sidebar'] = '<h3>Think this is an error?</h3><p>Please take a moment to <a href="' . site_url('contact') . '">contact us</a>.</p>';
         $this->load->view('public/404', $data);
     }
 
@@ -74,6 +74,7 @@ class Public_Controller extends MY_Controller
     public function contact()
     {
         $this->layout = 'two_column';
+        $data = array();
         if ($this->input->post()) {
 
             // Spam honeypot field
@@ -95,10 +96,20 @@ class Public_Controller extends MY_Controller
                 $this->growl('Message sent!');
             }
         }
-        $this->template->setHead(sprintf('<meta name="description" content="Contact %s for questions or assistance." />', $this->config->item('application_name')));
         $this->template->setPageTitle('Contact - ' . $this->config->item('application_name'));
+        $this->template->setHead(sprintf('<meta name="description" content="Have questions or comments about %s? We are here to help." />', $this->config->item('application_name')));
         $this->template->setHead('<script>mixpanel.track("View contact form");</script>');
         $this->load->view('public/contact_form', $data);
+    }
+
+    /**
+     * Sitemap
+     */
+    public function sitemap()
+    {
+        $this->layout = false;
+        header('Content-type: application/xml');
+        $this->load->view('public/sitemap');
     }
 
 }
