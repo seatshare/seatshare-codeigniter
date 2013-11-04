@@ -21,7 +21,6 @@ class Public_Controller extends MY_Controller
         if ($this->user_model->isLoggedIn()) {
             redirect('dashboard');
         }
-        $data['sidebar'] = $this->load->view('public/_sidebar', null, true);
         $this->template->setPageTitle('Welcome to SeatShare');
         $this->template->setHead('<meta name="description" content="SeatShare is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />');
         $this->template->setHead('<script>mixpanel.track("View home");</script>');
