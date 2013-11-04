@@ -218,11 +218,12 @@ class Groups_Controller extends MY_Controller
      **/
     public function invite()
     {
+        $data = array();
         if ($this->input->post()) {
 
             $this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|callback_recentInviteCheck');
             if ($this->form_validation->run() != false) {
-                $this->group_model->createAndSendInvite($this->input->post('email'));
+                $this->group_model->createAndSendInvite($this->input->post('email'), $this->input->post('message'));
                 $this->growl('Invitation sent!');
             } else {
                 $this->growl(form_error('email'), 'error');

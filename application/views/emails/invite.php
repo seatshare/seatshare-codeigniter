@@ -1,3 +1,9 @@
+<?php if ($personalized): ?>
+<p><?php echo nl2br($personalized); ?></p>
+
+<hr />
+<?php endif; ?>
+
 <p>Hi!</p>
  
 <p><?php echo $user->first_name; ?> has invited you to join our <strong><?php echo $entity->entity; ?></strong> group on <a href="<?php echo site_url('/'); ?>">SeatShare</a>, a service that helps manage our season tickets.</p>

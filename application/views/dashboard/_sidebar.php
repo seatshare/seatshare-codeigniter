@@ -34,6 +34,15 @@
 			<?php echo form_input(array('name'=>'email', 'id'=>'email', 'class'=>'form-control', 'style'=>'width:240px;', 'placeholder'=>'someone@example.com', 'autocapitalize'=>'off', 'autocorrect'=>'off', 'value'=>$this->input->post('email'))); ?>
 		</div>
 		<?php echo form_submit(array('value'=>'Send Invite', 'class'=>'btn btn-primary')); ?>
+		<p>
+			<a href="javascript:void();" data-toggle="collapse" data-target="#personal_message">Include a personal message</a>
+		</p>
+		<div class="collapse" id="personal_message">
+			<div class="form-group">
+				<?php echo form_label('Personal Message', 'message', array('class'=>'')); ?>
+				<?php echo form_textarea(array('name'=>'message', 'id'=>'message', 'class'=>'form-control', 'value'=>$this->input->post('message'))); ?>
+			</div>
+		</div>
 		<?php echo form_fieldset_close(); ?>
 	</div>
 </div>

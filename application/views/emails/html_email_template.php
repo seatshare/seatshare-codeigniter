@@ -231,7 +231,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
                                         <tr>
                                             <td valign="top" class="headerContent">
-                                            	<img src="<?php echo site_url('assets/images/email-header-600x100.png'); ?>" alt="SeatShare" style="max-width:600px;" />
+                                            	<a href="<?php echo site_url(); ?>"><img src="<?php echo site_url('assets/images/email-header-600x100.png'); ?>" alt="SeatShare" style="max-width:600px;" /></a>
                                             </td>
                                         </tr>
                                     </table>

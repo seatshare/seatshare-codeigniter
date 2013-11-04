@@ -18,7 +18,7 @@ class Email_Model extends CI_Model {
 	 * @param string $email
 	 * @param string $invitation_code
 	 **/
-	public function sendInvite($email='', $invitation_code='') {
+	public function sendInvite($email='', $invitation_code='', $personalized='') {
 		$group = $this->group_model->getCurrentGroup();
 		$entity = $this->entity_model->getEntityByGroupId($group->group_id);
 		$user = $this->user_model->getCurrentUser();
@@ -30,6 +30,7 @@ class Email_Model extends CI_Model {
 		$data['entity'] = $entity;
 		$data['invitation_code'] = $invitation_code;
 		$data['user'] = $user;
+		$data['personalized'] = $personalized;
 		$message = $this->load->view('emails/invite', $data, true);
 		$subject = 'You have been invited to join ' . $group->group;
 
@@ -43,7 +44,7 @@ class Email_Model extends CI_Model {
 	 * @param object $ticket
 	 * @param string $personalized
 	 **/
-	public function sendRequest($recipient, $ticket, $personalized) {
+	public function sendRequest($recipient='', $ticket='', $personalized='') {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
 		if (!$recipient->email || !is_object($group) || !$group->group_id) {
