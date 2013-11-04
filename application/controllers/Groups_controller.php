@@ -167,6 +167,7 @@ class Groups_Controller extends MY_Controller
     {
         $this->layout = 'two_column';
 
+        $data = array();
         if ($this->input->post()) {
             $this->form_validation->set_rules('invitation_code', 'Invitation Code', 'required|callback_inviteCodeLookup');
 
@@ -180,7 +181,7 @@ class Groups_Controller extends MY_Controller
         }
         $this->template->setPageTitle('Join Group');
         $this->template->setHead('<script>mixpanel.track("View join group");</script>');
-        $this->template->setFoot('<script>if ($.url().param(\'invitation_code\') !== \'\') { $(\'form\').submit(); }</script>');
+        $this->template->setFoot('<script>if ($.url().param(\'invitation_code\')) { $(\'form\').submit(); }</script>');
         if ($this->session->userdata('signup') < time()-600) {
             $this->template->setFoot('<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>');
             $this->session->unset_userdata('signup');
