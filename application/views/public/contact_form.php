@@ -1,6 +1,6 @@
 <h2>Have questions or comments?</h1>
 
-<p class="text-muted">We value your feedback on how we can improve <?php echo $this->config->item('application_name'); ?> to better serve your needs. The form below will send an email to our team. We try to answer every message promptly, but may not be able to give an individual response.</p>
+<p class="text-muted">We value your feedback on how we can improve SeatShare to better serve your needs. The form below will send an email to our team. We try to answer every message promptly, but may not be able to give an individual response.</p>
 
 <?php echo form_open('', array('role'=>'form', 'class' => 'form-horizontal')); ?>
 

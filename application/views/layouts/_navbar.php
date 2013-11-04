@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
       </button>
       <div class="logo">
-        <a class="navbar-brand" href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>
+        <a class="navbar-brand" href="<?php echo site_url('/'); ?>">SeatShare</a>
       </div>
     </div>
     <div class="navbar-collapse collapse">

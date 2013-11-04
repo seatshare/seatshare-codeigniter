@@ -1,7 +1,7 @@
 
-<h2>Create your <?php echo $this->config->item('application_name'); ?> Account</h2>
+<h2>Create your SeatShare Account</h2>
 
-<p class="text-muted">Your <?php echo $this->config->item('application_name'); ?> account lets you join an existing group or create your own.</p>
+<p class="text-muted">Your SeatShare account lets you join an existing group or create your own.</p>
 
 <?php echo form_open('', array('role'=>'form', 'class' => 'form-horizontal')); ?>
 
@@ -32,7 +32,7 @@
             <?php echo form_label('Newsletter Signup', 'newsletter', array('class'=>'col-md-3 control-label')); ?>
             <div class="col-md-9">
                 <div class="checkbox">
-                    <label><?php echo form_checkbox(array('name'=>'newsletter', 'class'=>'', 'value'=>'features', 'checked'=>true)); ?> Ocassional new feature announcements for <?php echo $this->config->item('application_name'); ?>.</label>
+                    <label><?php echo form_checkbox(array('name'=>'newsletter', 'class'=>'', 'value'=>'features', 'checked'=>true)); ?> Ocassional new feature announcements for SeatShare.</label>
                 </div>
             </div>
         </div>

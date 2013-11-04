@@ -1,6 +1,6 @@
 <p><?php echo $recipient->first_name; ?>,</p>
 
-<p>We received a request to reset your password on <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>. To continue, please click the link below.</p>
+<p>We received a request to reset your password on <a href="<?php echo site_url('/'); ?>">SeatShare</a>. To continue, please click the link below.</p>
 
 <table>
 	<tr>
@@ -15,5 +15,5 @@
 
 <p>
 	---<br />
-	<a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>
+	<a href="<?php echo site_url('/'); ?>">SeatShare</a>
 </p>

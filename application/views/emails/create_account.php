@@ -1,8 +1,8 @@
-<h2>Welcome to <?php echo $this->config->item('application_name'); ?>!</h2>
+<h2>Welcome to SeatShare!</h2>
 
 <p><?php echo $recipient->first_name; ?>,</p>
 
-<p>You have successfully created your <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a> account. We are glad to have you on board!</p>
+<p>You have successfully created your <a href="<?php echo site_url('/'); ?>">SeatShare</a> account. We are glad to have you on board!</p>
 
 <p>Your next steps:</p>
 
@@ -16,5 +16,5 @@
 
 <p>
 	---<br />
-	<a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>
+	<a href="<?php echo site_url('/'); ?>">SeatShare</a>
 </p>

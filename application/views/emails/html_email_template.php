@@ -231,7 +231,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
                                         <tr>
                                             <td valign="top" class="headerContent">
-                                            	<img src="<?php echo site_url('assets/images/email-header-600x100.png'); ?>" alt="<?php echo $this->config->item('application_name'); ?>" style="max-width:600px;" />
+                                            	<img src="<?php echo site_url('assets/images/email-header-600x100.png'); ?>" alt="SeatShare" style="max-width:600px;" />
                                             </td>
                                         </tr>
                                     </table>
@@ -261,7 +261,7 @@
                                             	<?php if (isset($footer)): ?>
 												<?php echo $footer; ?>
                                             	<?php else: ?>
-                                            	Sent through <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>.
+                                            	Sent through <a href="<?php echo site_url('/'); ?>">SeatShare</a>.
                                             	<?php endif; ?>
                                             </td>
                                         </tr>

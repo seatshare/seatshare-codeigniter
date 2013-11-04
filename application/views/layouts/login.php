@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
 
-<title><?php echo ($this->template->getPageTitle()) ? $this->template->getPageTitle() : $this->config->item('application_name'); ?></title>
+<title><?php echo ($this->template->getPageTitle()) ? $this->template->getPageTitle() : 'SeatShare'; ?></title>
 
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/bootstrap/css/bootstrap.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('/assets/libraries/jquery.growl/stylesheets/jquery.growl.css'); ?>">
@@ -30,7 +30,7 @@
   <?php endif; ?>
 
   <div class="logo">
-    <h1><a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a></h1>
+    <h1><a href="<?php echo site_url('/'); ?>">SeatShare</a></h1>
   </div>
 
   {yield}
