@@ -1,6 +1,12 @@
+<?php if ($personalized): ?>
+<p><?php echo nl2br($personalized); ?></p>
+
+<hr />
+<?php endif; ?>
+
 <p>Hi!</p>
  
-<p><?php echo $user->first_name; ?> has invited you to join our <strong><?php echo $entity->entity; ?></strong> group on <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>, a service that helps manage our season tickets.</p>
+<p><?php echo $user->first_name; ?> has invited you to join our <strong><?php echo $entity->entity; ?></strong> group on <a href="<?php echo site_url('/'); ?>">SeatShare</a>, a service that helps manage our season tickets.</p>
 
 <table>
 	<tr>
@@ -35,7 +41,7 @@
  
 <p>
 	---<br />
-	<a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a>, on behalf of
+	<a href="<?php echo site_url('/'); ?>">SeatShare</a>, on behalf of
 	<?php echo $user->first_name; ?> <?php echo $user->last_name; ?><br />
 	<a href="mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a>
 </p>

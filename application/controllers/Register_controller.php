@@ -92,9 +92,9 @@ class Register_Controller extends MY_Controller
         }
 
         $data['invitation_code'] = $this->input->get_post('invitation_code');
-        $this->template->setHead(sprintf('<meta name="description" content="Register for an account with %s to start managing your season tickets." />', $this->config->item('application_name')));
-        $this->template->setPageTitle('Register - ' . $this->config->item('application_name'));
         $data['sidebar'] = $this->load->view('register/_group', $data, true);
+        $this->template->setPageTitle('Create Your SeatShare Account - SeatShare');
+        $this->template->setHead('<meta name="description" content="Register for an account with SeatShare to start managing your season tickets." />');
         $this->template->setHead('<script>mixpanel.track("View registration");</script>');
         $this->load->view('register/new_user', $data);
     }

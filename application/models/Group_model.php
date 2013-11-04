@@ -415,7 +415,7 @@ class Group_Model extends CI_Model {
 	 * @param string $email
 	 * @return boollean
 	 */
-	public function createAndSendInvite($email='') {
+	public function createAndSendInvite($email='', $message='') {
 		$invitation_code = $this->generateInvitationCode();
 
 		$record = new StdClass();
@@ -428,7 +428,7 @@ class Group_Model extends CI_Model {
 		$record->updated_ts = date('Y-m-d H:i:s',now());
 
 		$this->db->insert('group_invitations', $record);
-		$this->email_model->sendInvite($email, $invitation_code);
+		$this->email_model->sendInvite($email, $invitation_code, $message);
 		return true;
 	}
 

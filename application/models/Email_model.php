@@ -18,7 +18,7 @@ class Email_Model extends CI_Model {
 	 * @param string $email
 	 * @param string $invitation_code
 	 **/
-	public function sendInvite($email='', $invitation_code='') {
+	public function sendInvite($email='', $invitation_code='', $personalized='') {
 		$group = $this->group_model->getCurrentGroup();
 		$entity = $this->entity_model->getEntityByGroupId($group->group_id);
 		$user = $this->user_model->getCurrentUser();
@@ -30,6 +30,7 @@ class Email_Model extends CI_Model {
 		$data['entity'] = $entity;
 		$data['invitation_code'] = $invitation_code;
 		$data['user'] = $user;
+		$data['personalized'] = $personalized;
 		$message = $this->load->view('emails/invite', $data, true);
 		$subject = 'You have been invited to join ' . $group->group;
 
@@ -43,7 +44,7 @@ class Email_Model extends CI_Model {
 	 * @param object $ticket
 	 * @param string $personalized
 	 **/
-	public function sendRequest($recipient, $ticket, $personalized) {
+	public function sendRequest($recipient='', $ticket='', $personalized='') {
 		$group = $this->group_model->getCurrentGroup();
 		$user = $this->user_model->getCurrentUser();
 		if (!$recipient->email || !is_object($group) || !$group->group_id) {
@@ -98,7 +99,7 @@ class Email_Model extends CI_Model {
 
 		$data['recipient'] = $recipient;
 		$message = $this->load->view('emails/password_reset', $data, true);
-		$subject = 'Your password has been reset for ' . $this->config->item('application_name');
+		$subject = 'Your password has been reset for  SeatShare';
 
 		$this->sendEmail('PasswordReset', $recipient->email, $subject, $message, false);
 	}
@@ -159,7 +160,7 @@ class Email_Model extends CI_Model {
 
 		$data['recipient'] = $recipient;
 		$message = $this->load->view('emails/create_account', $data, true);
-		$subject = 'Welcome to ' . $this->config->item('application_name') . '!';
+		$subject = 'Welcome to  SeatShare' . '!';
 
 		$this->sendEmail('NewUser', $recipient->email, $subject, $message, false);
 	}
@@ -191,7 +192,7 @@ class Email_Model extends CI_Model {
 		$data['group'] = $group;
 		$data['events'] = $events_by_day;
 		$data['recipient'] = $recipient;
-		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
+		$data['footer'] = sprintf('Sent through <a href="%s">SeatShare</a> | <a href="%s">Email Preferences</a>', site_url('/'), site_url('groups/group/' . $group->group_id));
 		$message = $this->load->view('emails/weekly_reminder', $data, true);
 		$this->sendEmail('WeeklyReminder', $recipient->email, $subject, $message, false);
 	}
@@ -217,7 +218,7 @@ class Email_Model extends CI_Model {
 		$data['group'] = $group;
 		$data['events'] = $events;
 		$data['recipient'] = $recipient;
-		$data['footer'] = sprintf('Sent through <a href="%s">%s</a> | <a href="%s">Email Preferences</a>', site_url('/'), $this->config->item('application_name'), site_url('groups/group/' . $group->group_id));
+		$data['footer'] = sprintf('Sent through <a href="%s">SeatShare</a> | <a href="%s">Email Preferences</a>', site_url('/'), site_url('groups/group/' . $group->group_id));
 		$message = $this->load->view('emails/daily_reminder', $data, true);
 		$this->sendEmail('DailyReminder', $recipient->email, $subject, $message, false, $data);
 	}
@@ -252,7 +253,7 @@ class Email_Model extends CI_Model {
 		$data['content'] = $message;
 		$html_template = $this->load->view('emails/html_email_template', $data, true);
 
-		$this->email->from('no-reply@' . $this->config->item('application_domain'), $this->config->item('application_name'));
+		$this->email->from('no-reply@' . $this->config->item('application_domain'), 'SeatShare');
 		if (is_object($from) && $from->email) {
 			$this->email->reply_to($from->email, $from->first_name . ' ' . $from->last_name);
 		}
@@ -262,7 +263,7 @@ class Email_Model extends CI_Model {
 
 		// Headers for Mandrill
 		$this->email->set_header('X-MC-Tags', $type ? $type : 'General');
-		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
+		$this->email->set_header('X-MC-Subaccount', 'SeatShare');
 		$this->email->set_header('X-MC-SigningDomain', $this->config->item('application_domain'));
 
 		return $this->email->send();
@@ -294,7 +295,7 @@ class Email_Model extends CI_Model {
 		}
 
 		// For easier filtering
-		$subject = sprintf('[%s] %s', $this->config->item('application_name'), $subject);
+		$subject = sprintf('[SeatShare] %s', $subject);
 
 		$data['header'] = sprintf('<div style="padding:1.5em;"><strong>From:</strong> %s &lt;%s&gt;<br /><strong>Subject:</strong> %s</div>', $name, $email, $subject);
 		$data['subject'] = $subject;
@@ -308,7 +309,7 @@ class Email_Model extends CI_Model {
 
 		// Headers for Mandrill
 		$this->email->set_header('X-MC-Tags', 'ContactForm');
-		$this->email->set_header('X-MC-Subaccount', $this->config->item('application_name'));
+		$this->email->set_header('X-MC-Subaccount', 'SeatShare');
 		$this->email->set_header('X-MC-SigningDomain', $this->config->item('application_domain'));
 
 		return $this->email->send();

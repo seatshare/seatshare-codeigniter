@@ -46,7 +46,7 @@ class Login_Controller extends MY_Controller
         }
 
         $data = array();
-        $this->template->setHead(sprintf('<meta name="description" content="Sign in to %s to manage your tickets and groups." />', $this->config->item('application_name')));
+        $this->template->setHead('<meta name="description" content="Sign in to SeatShare to manage your tickets and groups." />');
         $this->template->setPageTitle('User Login');
         $this->template->setHead('<script>mixpanel.track("View login");</script>');
         $this->load->view('login/login_form', $data);
@@ -113,7 +113,7 @@ class Login_Controller extends MY_Controller
 
             $data = array();
             $this->template->setPageTitle('Forgot Password');
-            $this->template->setHead(sprintf('<meta name="description" content="Provide your email address or username to %s to reset your password." />', $this->config->item('application_name')));
+            $this->template->setHead('<meta name="description" content="Provide your email address or username to reset your password." />');
             $this->template->setHead('<script>mixpanel.track("View forgot password");</script>');
             $this->load->view('login/forgot_password', $data);
         }

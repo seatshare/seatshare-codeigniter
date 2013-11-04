@@ -5,14 +5,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-2">
             <p>
-                <em>Provided by <a href="<?php echo site_url('/'); ?>"><?php echo $this->config->item('application_name'); ?></a></em>
+                <em>Provided by <a href="<?php echo site_url('/'); ?>">SeatShare</a></em>
             </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="text-right">
                 <ul class="list-inline">
+                    <li><a href="http://seatshare.tumblr.com" target="_blank">Blog</a></li>
                     <li><a href="<?php echo site_url('tos'); ?>">Terms of Service</a></li>
                     <li><a href="<?php echo site_url('privacy'); ?>">Privacy Policy</a></li>
                     <li><a href="<?php echo site_url('contact'); ?>">Contact Us</a></li>

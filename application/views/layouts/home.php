@@ -45,8 +45,8 @@
 
 <div class="container">
 
-<h1>What is <?php echo $this->config->item('application_name'); ?>?</h1>
-<p class="lead"><?php echo $this->config->item('application_name'); ?> is the easiest way to manage your shared pool of tickets for a sports team or performing arts venue.</p>
+<h1>What is SeatShare?</h1>
+<p class="lead">SeatShare is the easiest way to manage your shared pool of tickets for a sports team or performing arts venue.</p>
 
 <div class="visible-xs">
     <div class="well text-center">
@@ -87,13 +87,13 @@
             </div>
             <div class="col-md-4">
                 <h2>&amp; more!</h2>
-                <p><?php echo $this->config->item('application_name'); ?> is web-based software, so you get the latest features as soon as they are released.</p>
+                <p>SeatShare is web-based software, so you get the latest features as soon as they are released.</p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="home-cta">
-                    <p class="lead text-center"><a href="<?php echo site_url('register'); ?>" class="btn btn-primary btn-lg">Create Your <?php echo $this->config->item('application_name'); ?> Account</a></p>
+                    <p class="lead text-center"><a href="<?php echo site_url('register'); ?>" class="btn btn-primary btn-lg">Create Your SeatShare Account</a></p>
                 </div>
             </div>
         </div>
