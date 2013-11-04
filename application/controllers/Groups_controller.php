@@ -65,7 +65,7 @@ class Groups_Controller extends MY_Controller
         $this->layout = 'two_column';
         $user = $this->current_user;
         $group = $this->group_model->getGroupById($group_id);
-        if (!is_object($group) || !$group->group_id) {
+        if (!$this->group_model->checkAllowedGroupById($group_id) || !is_object($group) || !$group->group_id) {
             $this->growl('Could not load specified group.', 'error');
             redirect('groups');
         }
@@ -197,7 +197,7 @@ class Groups_Controller extends MY_Controller
     {
         $this->layout = 'two_column';
         $group = $this->group_model->getGroupById($group_id);
-        if (!is_object($group) || !$group->group_id) {
+        if (!$this->group_model->checkAllowedGroupById($group_id) || !is_object($group) || !$group->group_id) {
             redirect('groups');
         }
 
