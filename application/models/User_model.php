@@ -21,8 +21,7 @@ class User_Model extends CI_Model {
 	 */
 	public function login( $username='', $password='' ) {
 		$this->db->select( $this->public_fields );
-		$this->db->where('username', $username);
-		$this->db->or_where('email', $username);
+		$this->db->where( sprintf('(username = %s OR email = %s)', $this->db->escape($username), $this->db->escape($username)));
 		$this->db->where( 'password', md5( $password . $this->config->item( 'encryption_key' ) ) );
 		$this->db->where( 'status', 1 );
 		$query = $this->db->get( 'users' );
