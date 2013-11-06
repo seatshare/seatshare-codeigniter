@@ -26,9 +26,6 @@ class User_Model extends CI_Model {
 		$this->db->where( 'status', 1 );
 		$query = $this->db->get( 'users' );
 
-		print $this->db->last_query();
-		exit;
-
 		// If valid, set 'user' session variable. If not, clear it.
 		if ( $query->num_rows() === 1 ):
 			$this->session->set_userdata( 'user', serialize( array_shift( $query->result() ) ) );
