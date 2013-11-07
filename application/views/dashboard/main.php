@@ -47,7 +47,12 @@
 				<?php foreach ($event->tickets as $ticket): ?>
 				<?php if ($ticket->assigned) { continue; } ?>
 				<tr>
-					<td><a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a></td>
+					<td>
+						<a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a>
+						<?php if ($ticket->note): ?>
+						<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
+						<?php endif; ?>
+					</td>
 					<td>via <?php echo $ticket->owner->name; ?></td>
 					<td class="text-right">
 						<a data-toggle="tooltip" title="Request Ticket" href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>" class="btn btn-primary">$<?php echo number_format($ticket->cost, 2); ?></a>
@@ -85,7 +90,12 @@
 					<?php foreach ($event->tickets as $ticket): ?>
 					<?php if ($ticket->assigned) { continue; } ?>
 					<tr>
-						<td><a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a></td>
+						<td>
+							<a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a>
+							<?php if ($ticket->note): ?>
+							<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
+							<?php endif; ?>
+						</td>
 						<td>via <?php echo $ticket->owner->name; ?></td>
 						<td class="text-right">
 							<a data-toggle="tooltip" title="Request Ticket" href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>" class="btn btn-primary">$<?php echo number_format($ticket->cost, 2); ?></a>

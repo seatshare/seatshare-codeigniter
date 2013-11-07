@@ -193,7 +193,7 @@ class User_Model extends CI_Model {
 	 * @param mixed   $user
 	 * @return boolean
 	 */
-	public function createNewUser( $user=null ) {
+	public function createUser( $user=null ) {
 		$insert = $this->db->insert( 'users', $user );
 
 		// Authenticate the user
@@ -246,6 +246,68 @@ class User_Model extends CI_Model {
 		$this->email_model->sendPasswordReset( $user );
 
 		return true;
+	}
+
+	public function getAliasesByUserId($user_id=0) {
+		$this->db->where('user_id', $user_id);
+		$this->db->order_by('last_name', 'ASC');
+		$this->db->order_by('first_name', 'ASC');
+		$query = $this->db->get('user_aliases');
+		$alias_records = $query->result();
+		$aliases = array();
+		foreach ($alias_records as $k => $row) {
+			$aliases[$k] = $row;
+			$aliases[$k]->name = $row->first_name . ' ' . $row->last_name;
+		}
+		return $aliases;
+	}
+
+	/**
+	 * Get Alias By ID
+	 */
+	public function getAliasById($alias_id=0) {
+		$query = $this->db->get_where( 'user_aliases', array( 'alias_id' => $alias_id ), 1 );
+		$alias = $query->row();
+		$alias->name = $alias->first_name . ' ' . $alias->last_name;
+		return $alias;
+	}
+
+	/**
+	 * Add Alias
+	 */
+	public function createAlias($alias=null) {
+		$alias->inserted_ts = date('Y-m-d H:i:s',now());
+		$alias->updated_ts = date('Y-m-d H:i:s',now());
+		$this->db->insert('user_aliases', $alias);
+		return true;
+	}
+
+	/**
+	 * Update Alias
+	 */
+	public function updateAlias($alias=null) {
+		if (!is_object($alias)) {
+			return false;
+		}
+		$alias->updated_ts = date('Y-m-d H:i:s',now());
+		$this->db->where( 'alias_id', $alias->alias_id );
+		$update = $this->db->update( 'user_aliases', $alias );
+
+		return $update;
+	}
+
+	/**
+	 * Delete Alias
+	 */
+	public function deleteAlias($alias_id=0) {
+		// Unassign any tickets with alias_id
+		$this->db->where('alias_id', $alias_id);
+		$ticket_data['alias_id'] = 0;
+		$this->db->update('tickets', $ticket_data);
+
+		// Delete the record
+		$this->db->where('alias_id', $alias_id);
+		$this->db->delete('user_aliases');
 	}
 
 	/* Private Methods */
