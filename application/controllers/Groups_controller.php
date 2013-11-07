@@ -21,6 +21,7 @@ class Groups_Controller extends MY_Controller
     public function index()
     {
         $groups = $this->group_model->getUserGroups($this->current_user->user_id);
+        $data = array();
         if (is_array($groups) && count($groups)) {
             $data['groups'] = $groups;
             $this->template->setPageTitle('Groups');
@@ -33,7 +34,7 @@ class Groups_Controller extends MY_Controller
                 $this->template->setFoot('<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>');
                 $this->session->unset_userdata('signup');
             } else {
-                $this->setHead('<script>mixpanel.track("View groups");</script>');
+                $this->template->setHead('<script>mixpanel.track("View groups");</script>');
             }
             $this->load->view('groups/welcome', $data);
         }

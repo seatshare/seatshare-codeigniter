@@ -140,7 +140,7 @@ class User_Model extends CI_Model {
 		if (!is_object($user)) {
 			return false;
 		}
-
+		$user->updated_ts = date('Y-m-d H:i:s',now());
 		$this->db->where( 'user_id', $user->user_id );
 		$update = $this->db->update( 'users', $user );
 
@@ -194,6 +194,8 @@ class User_Model extends CI_Model {
 	 * @return boolean
 	 */
 	public function createUser( $user=null ) {
+		$user->inserted_ts = date('Y-m-d H:i:s',now());
+		$user->updated_ts = date('Y-m-d H:i:s',now());
 		$insert = $this->db->insert( 'users', $user );
 
 		// Authenticate the user
