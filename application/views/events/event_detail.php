@@ -61,6 +61,9 @@
 					<span><?php echo $ticket->seat; ?></span>
 				</span>
 				</a>
+				<?php if ($ticket->note): ?>
+				<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
+				<?php endif; ?>
 			</td>
 			<td>
 				<a href="<?php echo site_url('user/' . $ticket->owner->username); ?>"><?php echo $ticket->owner->name; ?></a>
@@ -68,6 +71,9 @@
 			<td>
 				<?php if ($ticket->assigned): ?>
 				<a href="<?php echo site_url('user/' . $ticket->assigned->username); ?>"><?php echo $ticket->assigned->name; ?></a>
+				<?php if ($ticket->alias): ?>
+				<br />(for <?php echo $ticket->alias->name; ?>)
+				<?php endif; ?>
 				<?php else: ?>
 				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><span class="badge badge-lg">Available!</span></a>
 				<?php endif; ?>

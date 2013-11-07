@@ -35,6 +35,7 @@ class Tickets_Controller extends MY_Controller
         $ticket = $this->ticket_model->getTicketById($ticket_id, $group_id);
         $event = $this->event_model->getEventById($ticket->event_id);
         $group_users_objects = $this->group_model->getGroupUsersByGroupId($group_id);
+        $user_alias_objects = $this->user_model->getAliasesByUserId($this->current_user->user_id);
         $history = $this->ticket_model->getTicketHistoryById($ticket_id);
         $can_edit = (bool) ($ticket->owner_id == $this->current_user->user_id || $ticket->user_id == $this->user_model->current_user->user_id);
 
@@ -49,7 +50,7 @@ class Tickets_Controller extends MY_Controller
         }
 
         // Updating a ticket
-        if ($this->input->post()) {
+        if ($this->input->post() && $can_edit) {
 
             $this->form_validation->set_rules('cost', 'Cost', 'decimal');
 
@@ -58,7 +59,9 @@ class Tickets_Controller extends MY_Controller
                 $this->ticket_model->updateTicket(array(
                     'ticket_id' => $ticket->ticket_id,
                     'user_id' => $this->input->post('assigned'),
-                    'cost' => (float) $this->input->post('cost')
+                    'cost' => (float) $this->input->post('cost'),
+                    'alias_id' => (float) $this->input->post('alias'),
+                    'note' => $this->input->post('note')
                 ));
 
                 // Send email if assignee changed
@@ -89,11 +92,18 @@ class Tickets_Controller extends MY_Controller
             $group_users[$row->user_id] = $row->name;
         }
 
+        $user_aliases['0'] = '';
+        foreach ($user_alias_objects as $row) {
+            $user_aliases[$row->alias_id] = $row->name;
+        }
+
         $data['group_users'] = $group_users;
+        $data['user_aliases'] = $user_aliases;
         $data['event'] = $event;
         $data['ticket'] = $ticket;
         $data['history'] = $history;
         $data['can_edit'] = $can_edit;
+        $data['current_user_id'] = $this->current_user->user_id;
 
         $data['sidebar'] = $this->load->view('tickets/_history', $data, true);
         $this->template->setPageTitle(sprintf('%s - %s %s %s', $event->event, $ticket->section, $ticket->row, $ticket->seat));

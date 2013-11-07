@@ -38,6 +38,18 @@ $(document).ready(function() {
 	});
 });
 
+// Ticket alias toggle
+$('select[name="assigned"]').change(function() {
+	var self = this;
+	if ($(self).data('current') != $(self).val()) {
+		$('#alias_control').hide();
+		$('select[name="alias"]').val(0);
+	} else {
+		$('#alias_control').show();
+	}
+
+});
+
 // Mobile Safari in standalone mode
 if(("standalone" in window.navigator) && window.navigator.standalone){
 

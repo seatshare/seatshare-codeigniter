@@ -58,7 +58,7 @@ class Register_Controller extends MY_Controller
                     'updated_ts' => now(),
                     'inserted_ts' => now()
                 );
-                $this->user_model->createNewUser($insert_user_data);
+                $this->user_model->createUser($insert_user_data);
                 $this->user_model->login($this->input->post('username'), $this->input->post('password'));
                 $this->growl('Your account has been created!');
 

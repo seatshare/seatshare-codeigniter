@@ -13,8 +13,11 @@ class Profile_Controller extends MY_Controller
     public function index()
     {
         $profile = $this->current_user;
+        $aliases = $this->user_model->getAliasesByUserId($profile->user_id);
 
         $data['profile'] = $profile;
+        $data['aliases'] = $aliases;
+        $data['sidebar'] = $this->load->view('profile/_aliases.php', $data, true);
         $this->template->setPageTitle('View Profile');
         $this->template->setHead('<script>mixpanel.track("View own profile");</script>');
         $this->load->view('profile/view_profile', $data);
@@ -79,6 +82,61 @@ class Profile_Controller extends MY_Controller
         $this->template->setPageTitle('View Profile');
         $this->template->setHead('<script>mixpanel.track("View profile");</script>');
         $this->load->view('profile/view_profile', $data);
+    }
+
+    public function alias($alias_id=0) {
+        $alias = $this->user_model->getAliasById($alias_id);
+        if (!is_object($alias) || !$alias->alias_id) {
+            $this->growl('Unable to edit alias.', 'error');
+            redirect('profile');
+        }
+
+        if ($this->input->get('delete')) {
+            $this->user_model->deleteAlias($alias->alias_id);
+            $this->growl('User deleted!');
+            redirect('profile');
+        }
+
+        if ($this->input->post()) {
+            $record = new StdClass();
+            $record->alias_id = $alias->alias_id;
+            $record->user_id = $this->current_user->user_id;
+            $record->first_name = $this->input->post('first_name');
+            $record->last_name = $this->input->post('last_name');
+
+            $this->user_model->updateAlias($record);
+
+            $this->growl('Alias updated!');
+            redirect('profile');
+        }
+        $data['alias'] = $alias;
+        $data['action'] = 'Update';
+        $this->template->setPageTitle('Edit Alias');
+        $this->load->view('profile/edit_alias', $data);
+    }
+
+    public function newalias() {
+
+        if ($this->input->post()) {
+            $record = new StdClass();
+            $record->alias_id = $alias->alias_id;
+            $record->user_id = $this->current_user->user_id;
+            $record->first_name = $this->input->post('first_name');
+            $record->last_name = $this->input->post('last_name');
+
+            $this->user_model->createAlias($record);
+
+            $this->growl('Alias added!');
+            redirect('profile');
+        }
+
+        $alias = new StdClass();
+        $alias->first_name = '';
+        $alias->last_name = '';
+        $data['alias'] = $alias;
+        $data['action'] = 'Create';
+        $this->template->setPageTitle('Create Alias');
+        $this->load->view('profile/edit_alias', $data);
     }
 
 }
