@@ -111,6 +111,7 @@ class Profile_Controller extends MY_Controller
         }
         $data['alias'] = $alias;
         $data['action'] = 'Update';
+        $this->template->setHead('<script>mixpanel.track("View alias edit");</script>');
         $this->template->setPageTitle('Edit Alias');
         $this->load->view('profile/edit_alias', $data);
     }
@@ -135,6 +136,7 @@ class Profile_Controller extends MY_Controller
         $alias->last_name = '';
         $data['alias'] = $alias;
         $data['action'] = 'Create';
+        $this->template->setHead('<script>mixpanel.track("View create alias");</script>');
         $this->template->setPageTitle('Create Alias');
         $this->load->view('profile/edit_alias', $data);
     }
