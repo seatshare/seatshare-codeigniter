@@ -55,7 +55,7 @@ class Migration_ticket_alias extends CI_Migration {
 				'type' => 'INT',
 				'constraint' => 11,
 				'null' => false,
-				'default' => 0
+				'default' => 0,
 				'after' => 'user_id'
 			)
 		));
