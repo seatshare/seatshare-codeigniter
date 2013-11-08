@@ -184,6 +184,7 @@ class Groups_Controller extends MY_Controller
         $this->template->setHead('<script>mixpanel.track("View join group");</script>');
         $this->template->setFoot('<script>if ($.url().param(\'invitation_code\')) { $(\'form\').submit(); }</script>');
         if ($this->session->userdata('signup') < time()-600) {
+            $this->template->setHead('<script>mixpanel.track("View welcome");</script>');
             $this->template->setFoot('<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>');
             $this->session->unset_userdata('signup');
         }
