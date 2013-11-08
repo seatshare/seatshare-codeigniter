@@ -50,8 +50,9 @@ class Api_Model extends CI_Model {
 	/**
 	 * Group Invitation Count
 	 */
-	public function totalInvites() {
+	public function totalInvites($days=30) {
 		$this->db->select('COUNT(*) AS count');
+		$this->db->where('inserted_ts >=', date('Y-m-d', strtotime('-'.$days.' days')));
 		$query = $this->db->get('group_invitations');
 		return $query->row();
 	}
@@ -60,8 +61,9 @@ class Api_Model extends CI_Model {
 	/**
 	 * Group Invitation Count
 	 */
-	public function acceptedInvites() {
+	public function acceptedInvites($days=30) {
 		$this->db->select('COUNT(*) AS count');
+		$this->db->where('updated_ts >=', date('Y-m-d', strtotime('-'.$days.' days')));
 		$this->db->where('status', 0);
 		$query = $this->db->get('group_invitations');
 		return $query->row();
@@ -73,6 +75,33 @@ class Api_Model extends CI_Model {
 	public function totalTickets() {
 		$this->db->select('COUNT(*) AS count');
 		$query = $this->db->get('tickets');
+		return $query->row();
+	}
+
+	/**
+	 * Tickets Trasferred
+	 */
+	public function ticketsTransferred($days=30) {
+		$this->db->select('COUNT(*) AS count');
+		$this->db->where('t.user_id != t.owner_id');
+		$this->db->where('t.user_id != 0');
+		$this->db->where('e.start_time < now()');
+		$this->db->join('events e', 't.event_id = e.event_id');
+		$this->db->where('e.start_time >=', date('Y-m-d', strtotime('-'.$days.' days')));
+		$query = $this->db->get('tickets t');
+		return $query->row();
+	}
+
+	/**
+	 * Tickets Unused
+	 */
+	public function ticketsUnused($days=30) {
+		$this->db->select('COUNT(*) AS count');
+		$this->db->where('t.user_id = 0');
+		$this->db->where('e.start_time < now()');
+		$this->db->join('events e', 't.event_id = e.event_id');
+		$this->db->where('e.start_time >=', date('Y-m-d', strtotime('-'.$days.' days')));
+		$query = $this->db->get('tickets t');
 		return $query->row();
 	}
 

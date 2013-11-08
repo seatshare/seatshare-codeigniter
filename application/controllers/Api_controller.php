@@ -24,6 +24,11 @@ class Api_Controller extends MY_Controller {
 	 **/
 	public function dashing($method='') {
 		$this->requireValidAPIKey();
+		if ($this->input->get('days')) {
+			$days = $this->input->get('days');
+		} else {
+			$days = 30;
+		}
 		switch ($method) {
 
 			case 'user_count':
@@ -34,22 +39,37 @@ class Api_Controller extends MY_Controller {
 			case 'group_count':
 				$result = $this->api_model->groupCount();
 				$this->echoJSON($result);
+				break;
 
 			case 'total_invites':
-				$result = $this->api_model->totalInvites();
+				$result = $this->api_model->totalInvites($days);
 				$this->echoJSON($result);
+				break;
 
 			case 'accepted_invites':
-				$result = $this->api_model->acceptedInvites();
+				$result = $this->api_model->acceptedInvites($days);
 				$this->echoJSON($result);
+				break;
 
 			case 'total_tickets':
 				$result = $this->api_model->totalTickets();
 				$this->echoJSON($result);
+				break;
 
 			case 'largest_groups':
 				$result = $this->api_model->largestGroups();
 				$this->echoJSON($result);
+				break;
+
+			case 'tickets_transferred':
+				$result = $this->api_model->ticketsTransferred($days);
+				$this->echoJSON($result);
+				break;
+
+			case 'tickets_unused':
+				$result = $this->api_model->ticketsUnused($days);
+				$this->echoJSON($result);
+				break;
 
 			default:
 				$this->echoJSON('error');
