@@ -22,7 +22,7 @@ class Public_Controller extends MY_Controller
             redirect('dashboard');
         }
         $this->template->setPageTitle('Welcome to SeatShare');
-        $this->template->setHead('<meta name="description" content="SeatShare is a web-based utility helps manage a shared ticket pool for events, such as a sports team or performing arts venue." />');
+        $this->template->setHead('<meta name="description" content="SeatShare helps you manage your group\'s season tickets for sporting or performing arts events. Sign up for free." />');
         $this->template->setHead('<script>mixpanel.track("View home");</script>');
     }
 

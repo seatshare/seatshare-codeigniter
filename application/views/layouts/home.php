@@ -100,6 +100,46 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <hr />
+        <br />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-offset-1 col-md-7">
+        <h3>Getting Started</h3>
+        <p class="lead">Everything in SeatShare is organized around the idea of a group. A group is a collection of users (like you!) that often purchased season tickets or receive them from a friend. Generally, a group consists of folks that you know and trust already.</p>
+    </div>
+    <div class="col-md-3">
+        <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-groups.png'); ?>" alt="Groups" class="img-thumbnail hidden-xs" /></a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-7 col-md-push-4">
+        <h3>Calendar of Events</h3>
+        <p class="lead">When you join or create a group, you will see a list of ‘Events’ for that team or venue. In most cases, these are individual games in the season ticket package. These are pre-loaded in the system for each team and venue available.</p>
+    </div>
+    <div class="col-md-3 col-md-pull-6">
+        <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-events.png'); ?>" alt="Events" class="img-thumbnail  hidden-xs" /></a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-offset-1 col-md-7">
+        <h3>Need Tickets?</h3>
+        <p class="lead">If you want to attend an event, find an available ticket and use the dropdown menu to “Request” the ticket. This will send a message to the ticket holder saying that you want to attend that event. Ticketholders can then update the ticket’s assignee.</p>
+        <p class="lead text-center"><a href="<?php echo site_url('register'); ?>" class="btn btn-primary btn-lg">Create Your SeatShare Account</a></p>
+    </div>
+    <div class="col-md-3">
+        <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-tickets.png'); ?>" alt="Tickets" class="img-thumbnail hidden-xs" /></a>
+    </div>
+</div>
+
+
 <?php include_once '_footer.php'; ?>
 
 </div>
