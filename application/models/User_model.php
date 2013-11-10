@@ -28,7 +28,8 @@ class User_Model extends CI_Model {
 
 		// If valid, set 'user' session variable. If not, clear it.
 		if ( $query->num_rows() === 1 ):
-			$this->session->set_userdata( 'user', serialize( array_shift( $query->result() ) ) );
+			$user_record = $query->result();
+			$this->session->set_userdata( 'user', serialize( array_shift( $user_record ) ) );
 		return true;
 		else:
 			$this->session->unset_userdata( 'user' );

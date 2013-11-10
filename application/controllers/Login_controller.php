@@ -26,9 +26,12 @@ class Login_Controller extends MY_Controller
         }
 
         if ($this->input->post('username') && $this->input->post('password')) {
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+
             $status = $this->user_model->login(
-                $this->input->post('username'),
-                $this->input->post('password')
+                $username,
+                $password
             );
             if ($status) {
                 if ($this->session->userdata('return')) {
