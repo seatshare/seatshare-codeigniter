@@ -2,6 +2,10 @@ var SITE_ROOT = '';
 
 // Navbar group switching
 $(document).ready(function() {
+	if (!$('#group_switcher').length) {
+		return;
+	}
+
 	$('#group_switcher').change(function(e) {
 		window.location = SITE_ROOT+'/groups/switch_groups/' + $(this).val();
 	});
@@ -39,15 +43,19 @@ $(document).ready(function() {
 });
 
 // Ticket alias toggle
-$('select[name="assigned"]').change(function() {
-	var self = this;
-	if ($(self).data('current') != $(self).val()) {
-		$('#alias_control').hide();
-		$('select[name="alias"]').val(0);
-	} else {
-		$('#alias_control').show();
+$(document).ready(function() {
+	if (!$('select[name="assigned"]').length) {
+		return;
 	}
-
+	$('select[name="assigned"]').change(function() {
+		var self = this;
+		if ($(self).data('current') != $(self).val()) {
+			$('#alias_control').hide();
+			$('select[name="alias"]').val(0);
+		} else {
+			$('#alias_control').show();
+		}
+	});
 });
 
 // Mobile Safari in standalone mode
