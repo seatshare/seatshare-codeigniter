@@ -9,7 +9,7 @@ class Migration_Controller extends MY_Controller
     {
         parent::__construct();
         if (!$this->input->is_cli_request()) {
-            show_error('Must run from command line.' . PHP_EOL);
+            // show_error('Must run from command line.' . PHP_EOL);
         }
         $this->layout = false;
         $this->load->library('migration');
