@@ -45,7 +45,7 @@
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = 'heroku';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
@@ -63,6 +63,22 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+$db['heroku']['hostname'] = 'ec2-23-23-81-171.compute-1.amazonaws.com';
+$db['heroku']['username'] = 'fienprxwnxtzsq';
+$db['heroku']['password'] = 'dHSR72aYaQCMSLqI85vA0to_NQ';
+$db['heroku']['database'] = 'd4u7ig8t2obcjv';
+$db['heroku']['dbdriver'] = 'postgre';
+$db['heroku']['dbprefix'] = '';
+$db['heroku']['pconnect'] = TRUE;
+$db['heroku']['db_debug'] = TRUE;
+$db['heroku']['cache_on'] = FALSE;
+$db['heroku']['cachedir'] = '';
+$db['heroku']['char_set'] = 'utf8';
+$db['heroku']['dbcollat'] = 'utf8_general_ci';
+$db['heroku']['swap_pre'] = '';
+$db['heroku']['autoinit'] = TRUE;
+$db['heroku']['stricton'] = FALSE;
 
 
 /* End of file database.php */
