@@ -13,8 +13,8 @@ class Migration_sample_data extends CI_Migration {
 		$query = "
 			INSERT INTO entities (entity_id, entity, logo, status)
 			VALUES
-				(1, 'Nashville Predators', 'http://upload.wikimedia.org/wikipedia/en/9/9c/Nashville_Predators_Logo_%282011%29.svg', 1),
-				(2, 'Belmont Bruins', 'http://upload.wikimedia.org/wikipedia/en/3/3d/BelmontBruins.png', 1)
+				(1, 'Nashville Predators', 'https://upload.wikimedia.org/wikipedia/en/9/9c/Nashville_Predators_Logo_%282011%29.svg', 1),
+				(2, 'Belmont Bruins', 'https://upload.wikimedia.org/wikipedia/en/3/3d/BelmontBruins.png', 1)
 		";
 		$this->db->query($query);
 
