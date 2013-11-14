@@ -144,7 +144,7 @@
 
 </div>
 
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+<script src="//code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script src="<?php echo site_url('/assets/libraries/bootstrap/js/bootstrap.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/momentjs/moment.js'); ?>"> </script>
 <script src="<?php echo site_url('/assets/libraries/underscorejs/underscore.js'); ?>"> </script>
