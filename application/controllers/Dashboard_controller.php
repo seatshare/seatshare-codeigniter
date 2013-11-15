@@ -11,6 +11,7 @@ class Dashboard_Controller extends MY_Controller
     {
         parent::__construct();
         $this->requireLogin();
+        $this->requireSSL();
         $this->load->model('group_model');
         $this->load->model('event_model');
         $this->load->model('entity_model');

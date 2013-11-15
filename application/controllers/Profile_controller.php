@@ -7,6 +7,7 @@ class Profile_Controller extends MY_Controller
         parent::__construct();
         $this->layout = 'two_column';
         $this->requireLogin();
+        $this->requireSSL();
         $this->load->library('form_validation');
     }
 

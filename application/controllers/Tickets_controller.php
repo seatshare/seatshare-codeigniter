@@ -10,6 +10,7 @@ class Tickets_Controller extends MY_Controller
         parent::__construct();
         $this->layout = 'two_column';
         $this->requireLogin();
+        $this->requireSSL();
         $this->load->library('form_validation');
         $this->load->model('ticket_model');
         $this->load->model('event_model');

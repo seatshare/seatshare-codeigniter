@@ -43,6 +43,23 @@ class MY_Controller extends CI_Controller {
 	}
 
 	/**
+	 * Require SSL
+	 */
+	public function requireSSL() {
+		if (ENVIRONMENT != 'production') {
+			return;
+		}
+		$CI =& get_instance();
+		if (!$CI->config->config['base_url']) {
+			$CI->config->config['base_url'] = sprintf('%s://%s', $_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['HTTP_HOST']);
+		}
+        $CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
+        if ($_SERVER['SERVER_PORT'] != 443) {
+            redirect($CI->uri->uri_string());
+        }
+	}
+
+	/**
 	 * Growl
 	 *
 	 * @return string $message

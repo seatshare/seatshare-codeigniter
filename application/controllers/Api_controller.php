@@ -9,6 +9,7 @@ class Api_Controller extends MY_Controller {
 	 **/
 	public function __construct() {
 		parent::__construct();
+		$this->requireSSL();
 		$this->load->model('api_model');
 	}
 
