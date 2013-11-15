@@ -17,6 +17,7 @@ class Login_Controller extends MY_Controller
      **/
     public function index()
     {
+        $this->requireSSL();
         if ($this->user_model->isLoggedIn()) {
             redirect('dashboard');
         }

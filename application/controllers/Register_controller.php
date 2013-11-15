@@ -8,6 +8,7 @@ class Register_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->requireSSL();
         $this->layout = 'two_column';
         if ($this->user_model->isLoggedIn()) {
             $this->growl('You are already registered.', 'error');

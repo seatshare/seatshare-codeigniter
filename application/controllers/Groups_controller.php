@@ -9,6 +9,7 @@ class Groups_Controller extends MY_Controller
     {
         parent::__construct();
         $this->requireLogin();
+        $this->requireSSL();
         $this->load->library('form_validation');
         $this->load->model('entity_model');
         $this->load->model('email_model');
