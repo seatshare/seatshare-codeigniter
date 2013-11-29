@@ -51,7 +51,8 @@ class MY_Controller extends CI_Controller {
 		}
 		$CI =& get_instance();
 		if (!$CI->config->config['base_url']) {
-			$CI->config->config['base_url'] = sprintf('%s://%s', $_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['HTTP_HOST']);
+			$fwd_protocol = $_SERVER['HTTP_X_FORWARDED_PROTO'] ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http';
+			$CI->config->config['base_url'] = sprintf('%s://%s', $fwd_protocol, $_SERVER['HTTP_HOST']);
 		}
         $CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
         if ($_SERVER['SERVER_PORT'] != 443) {

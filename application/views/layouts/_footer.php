@@ -17,7 +17,7 @@
                     <li><a href="<?php echo site_url('tos'); ?>">Terms of Service</a></li>
                     <li><a href="<?php echo site_url('privacy'); ?>">Privacy Policy</a></li>
                     <li><a href="<?php echo site_url('contact'); ?>">Contact Us</a></li>
-                    <li><a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics" title="Mobile Analytics by Mixpanel" /></a>
+                    <li><a href="https://mixpanel.com/f/partner"><img src="https://cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics" title="Mobile Analytics by Mixpanel" /></a>
                 </ul>
             </div>
         </div>
