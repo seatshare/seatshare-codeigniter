@@ -195,8 +195,9 @@ class User_Model extends CI_Model {
 	 * @return boolean
 	 */
 	public function createUser( $user=null ) {
-		$user->inserted_ts = date('Y-m-d H:i:s',now());
-		$user->updated_ts = date('Y-m-d H:i:s',now());
+		$user->inserted_ts = date('Y-m-d H:i:s', now());
+		$user->updated_ts = date('Y-m-d H:i:s', now());
+		$user->status = 1;
 		$insert = $this->db->insert( 'users', $user );
 
 		// Authenticate the user
