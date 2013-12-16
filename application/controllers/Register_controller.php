@@ -49,15 +49,15 @@ class Register_Controller extends MY_Controller
             $this->form_validation->set_message('tos_agree', 'You must agree to the terms of service.');
 
             if ($this->form_validation->run() != false) {
-                $insert_user_data = array(
-                    'username' => $this->input->post('username'),
-                    'password' => md5($this->input->post('password') . $this->config->item('encryption_key')),
-                    'first_name' => $this->input->post('first_name'),
-                    'last_name' => $this->input->post('last_name'),
-                    'email' => strtolower($this->input->post('email')),
-                    'status' => 1,
-                );
-                $this->user_model->createUser($insert_user_data);
+
+                $record = new StdClass();
+                $record->username = $this->input->post('username');
+                $record->password = md5($this->input->post('password') . $this->config->item('encryption_key'));
+                $record->first_name = $this->input->post('first_name');
+                $record->last_name = $this->input->post('last_name');
+                $record->email = strtolower($this->input->post('email'));
+
+                $this->user_model->createUser($record);
                 $this->user_model->login($this->input->post('username'), $this->input->post('password'));
                 $this->growl('Your account has been created!');
 
