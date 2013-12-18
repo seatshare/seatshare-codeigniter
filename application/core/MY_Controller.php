@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller {
 		parent::__construct();
 		// Clean up CLI-based routes to use proper base_url
 		if ($this->input->is_cli_request()) {
-			$this->config->set_item('base_url', '//' . $this->config->item('application_domain') . '/');
+			$this->config->set_item('base_url', 'https://' . $this->config->item('application_domain') . '/');
 			$this->layout = false;
 		} elseif ($this->user_model->isLoggedIn()) {
 			$this->current_user = $this->user_model->getCurrentUser();
