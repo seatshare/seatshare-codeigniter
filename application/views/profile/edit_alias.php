@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<?php echo form_fieldset('Your details'); ?>
+		<?php echo form_fieldset('Alias details'); ?>
 		<div class="form-group">
 			<?php echo form_label('First Name', 'first_name', array('class'=>'col-md-3 control-label')); ?>
 			<div class="col-md-9">
