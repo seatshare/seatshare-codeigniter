@@ -243,6 +243,10 @@ class Email_Model extends CI_Model {
 			$config['mailtype'] = 'html';
 			require (APPPATH . 'config/email.php');
 			$this->email->initialize($config);
+		} else {
+			error_log('Not sending message because email.php file is missing.');
+			error_log('Subject: ' . $subject);
+			return false;
 		}
 
 		if (!$to || !$subject || !$message) {
@@ -288,6 +292,10 @@ class Email_Model extends CI_Model {
 			$config['mailtype'] = 'html';
 			require (APPPATH . 'config/email.php');
 			$this->email->initialize($config);
+		} else {
+			error_log('Not sending message because email.php file is missing.');
+			error_log('Subject: ' . $subject);
+			return false;
 		}
 
 		if (!$subject || !$message || !$name || !$email) {

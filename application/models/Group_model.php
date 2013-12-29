@@ -512,6 +512,7 @@ class Group_Model extends CI_Model {
 			$user = $this->user_model->getUserById($row->user_id);
 			foreach ($events as &$event) {
 				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
+				$event->tickets = $this->ticket_model->getTicketsByEventId($event->event_id);
 			}
 			$this->email_model->sendWeeklyReminder($user, $group, $events);
 			$this->logReminder(1, $user, $group, $events);
@@ -538,6 +539,7 @@ class Group_Model extends CI_Model {
 			$user = $this->user_model->getUserById($row->user_id);
 			foreach ($events as &$event) {
 				$event->ticketStatus = $this->ticket_model->getTicketStatusByEventId($event->event_id, $group_id, $row->user_id);
+				$event->tickets = $this->ticket_model->getTicketsByEventId($event->event_id);
 			}
 			$status = $this->email_model->sendDailyReminder($user, $group, $events);
 			$this->logReminder(2, $user, $group, $events);

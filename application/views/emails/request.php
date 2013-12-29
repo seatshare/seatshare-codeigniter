@@ -9,7 +9,7 @@
 
 <p><?php echo $user->first_name; ?> (<?php echo $user->email; ?>) has requested a ticket from you for the following event in your group <?php echo $group->group; ?> </p>
 
-<table>
+<table cellpadding="10px">
 	<tr>
 		<th style="width:100px">Group</th>
 		<td><?php echo $group->group; ?></td>
