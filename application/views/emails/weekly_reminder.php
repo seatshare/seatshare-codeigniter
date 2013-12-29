@@ -12,9 +12,9 @@
 <?php if (isset($events[$dow]) && is_array($events[$dow]) && count($events[$dow])): ?>
 <?php foreach ($events[$dow] as $event): ?>
 
-<table>
+<table cellpadding="10px">
 	<tr>
-		<th style="witdh:100px">Event</th>
+		<th style="width:100px">Event</th>
 		<td><a href="<?php echo site_url('events/event/' . $event->event_id); ?>"><?php echo $event->event; ?></a></td>
 	</tr>
 	<tr>
@@ -35,6 +35,22 @@
 				<li><span style="font-weight:bold;"><?php echo $event->ticketStatus['tickets_group']; ?></span> total in the group</li>
 				<li><span style="font-weight:bold;"><?php echo $event->ticketStatus['tickets_user']; ?></span> held by you</li>
 			</ul>
+			<?php if (is_array($event->tickets) && count($event->tickets)): ?>
+			<table width="100%" cellpadding="10px">
+				<tbody>
+					<?php foreach ($event->tickets as $ticket): ?>
+					<?php if ($ticket->assigned) { continue; } ?>
+					<tr>
+						<td><a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a></td>
+						<td>via <?php echo $ticket->owner->name; ?></td>
+						<td>
+							<a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>">$<?php echo number_format($ticket->cost, 2); ?></a>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<?php endif; ?>
 		</td>
 	</tr>
 </table>
