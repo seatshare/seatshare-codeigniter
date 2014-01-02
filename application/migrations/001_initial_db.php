@@ -132,7 +132,6 @@ class Migration_initial_db extends CI_Migration {
 			)
 		));
 		$this->dbforge->add_key('group_id', true);
-		$this->dbforge->add_key('invitation_code');
 		$this->dbforge->create_table('groups', true);
 
 		// Tickets
@@ -288,8 +287,6 @@ class Migration_initial_db extends CI_Migration {
 			)
 		));
 		$this->dbforge->add_key('user_id', true);
-		$this->dbforge->add_key('username');
-		$this->dbforge->add_key('email');
 		$this->dbforge->create_table('users', true);
 
 	}
