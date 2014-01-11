@@ -182,13 +182,14 @@ class Groups_Controller extends MY_Controller
             }
         }
         $this->template->setPageTitle('Join Group');
-        $this->template->setHead('<script>mixpanel.track("View join group");</script>');
-        $this->template->setFoot('<script>if ($.url().param(\'invitation_code\')) { $(\'form\').submit(); }</script>');
         if ($this->session->userdata('signup') > 0) {
             $this->template->setHead('<script>mixpanel.track("View welcome");</script>');
             $this->template->setFoot('<script>_gaq.push([\'_trackPageview\', \'/thank-you\']);</script>');
             $this->session->unset_userdata('signup');
+        } else {
+            $this->template->setHead('<script>mixpanel.track("View join group");</script>');
         }
+        $this->template->setFoot('<script>if($.url().param(\'invitation_code\')){setTimeout(function(){$(\'form\').submit();},200);}</script>');
         $this->load->view('groups/join_group', $data);
     }
 
