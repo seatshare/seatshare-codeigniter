@@ -2,7 +2,7 @@
 
 <?php if ($can_edit): ?>
 
-<?php echo form_open('', array('role'=>'form', 'class' => 'form-horizontal')); ?>
+<?php echo form_open_multipart('', array('role'=>'form', 'class' => 'form-horizontal')); ?>
 
 <?php echo (validation_errors()) ? '<div class="alert alert-danger">' . validation_errors() . '</div>' : ''; ?>
 
@@ -39,6 +39,38 @@
 			<?php echo form_textarea(array('name'=>'note', 'class'=>'form-control', 'placeholder'=>'Add a public note for the ticket.', 'value'=>$ticket->note)); ?>
 		</div>
 	</div>
+
+	<?php if (is_array($ticket->files) && count($ticket->files)): ?>
+	<div class="row">
+		<div class="col-md-offset-3 col-md-9">
+			<table class="table">
+				<tr>
+					<th>Attachments</th>
+					<th class="action"></th>
+				</tr>
+				<?php foreach ($ticket->files as $file): ?>
+				<tr>
+					<td>
+						<a href="<?php echo $this->config->item('aws_s3_public'); ?>/<?php echo $file->path; ?>"><span class="glyphicon glyphicon-save"></span> <?php echo ($file->file_name) ? htmlentities($file->file_name) : 'Download'; ?></a>
+						<br /><small>Uploaded <?php echo date('F j, Y g:ia', gmt_to_local(strtotime($file->inserted_ts), 'UM6', true)); ?></small>
+					</td>
+					<td><a href="<?php echo site_url('tickets/deletefile/' . $file->ticket_file_id); ?>" class="btn btn-sm btn-danger confirm"><span class="glyphicon glyphicon-trash"></span></a></td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+		</div>
+	</div>
+
+	<?php endif; ?>
+
+	<div class="form-group">
+		<div class="col-md-offset-3 col-md-9">
+			<label for="ticket_file" class="sr-only">File input</label>
+			<input type="file" id="ticket_file" name="ticket_file" />
+			<p class="help-block">(Optional) Maximum upload size 2 MB.</p>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-md-12">
 			<p class="text-right">

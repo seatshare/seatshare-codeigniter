@@ -25,6 +25,23 @@
 	</tr>
 </table>
 
+<?php if (is_array($ticket->files) && count($ticket->files)): ?>
+<table cellpadding="10px">
+	<tr>
+		<th style="width:100px">Attachments</th>
+		<td>
+			<table>
+				<?php foreach ($ticket->files as $file): ?>
+				<tr>
+					<td><a href="<?php echo $this->config->item('aws_s3_public'); ?>/<?php echo $file->path; ?>"><?php echo $file->file_name; ?></a></td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+		</td>
+	</tr>
+</table>
+<?php endif; ?>
+
 <p>You can view the details here: <a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?></a></p>
  
 <p>Thank you!</p>

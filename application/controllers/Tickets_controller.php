@@ -15,6 +15,8 @@ class Tickets_Controller extends MY_Controller
         $this->load->model('ticket_model');
         $this->load->model('event_model');
         $this->load->model('email_model');
+
+        $this->load->helper('number');
     }
 
     /**
@@ -64,6 +66,9 @@ class Tickets_Controller extends MY_Controller
                     'alias_id' => (float) $this->input->post('alias'),
                     'note' => $this->input->post('note')
                 ));
+
+                // Process file submit
+                $this->_uploadTicket((array) $ticket);
 
                 // Send email if assignee changed
                 if ($ticket->user_id != $this->input->post('assigned') && $this->input->post('assigned') != '0' && $this->input->post('assigned') != $this->current_user->user_id) {
@@ -141,7 +146,12 @@ class Tickets_Controller extends MY_Controller
                     'cost' => $this->input->post('cost'),
                     'user_id' => $this->input->post('assigned')
                 );
+
                 $ticket['ticket_id'] = $this->ticket_model->createTicket($ticket);
+
+                // Process file submit
+                $this->_uploadTicket($ticket);
+
                 $this->ticket_model->log('created', $ticket);
                 redirect('events/event/' . $event_id);
             }
@@ -264,6 +274,69 @@ class Tickets_Controller extends MY_Controller
 
         $this->growl('Ticket request sent!');
         redirect('tickets/ticket/' . $ticket->ticket_id);
+    }
+
+    /**
+     * Delete File
+     *
+     * @param int $file_id
+     */
+    public function deletefile($file_id=0) {
+        $group_id = $this->current_group->group_id;
+        $file = $this->ticket_model->getTicketFileById($file_id);
+        $ticket = $this->ticket_model->getTicketById($file->ticket_id, $group_id);
+
+        // Only allow authorized user to delete files
+        if (!is_object($ticket) || ($ticket->user_id != $this->current_user->user_id && $ticket->owner_id != $this->current_user->user_id)) {
+            redirect('dashboard');
+        }
+
+        // Delete ticket file
+        try { 
+            $this->ticket_model->deleteTicketFile($file_id);
+        } catch (Exception $e) {
+            $this->growl($this->getMessage(), 'error');
+        }
+
+        $this->ticket_model->log('removed file', $ticket);
+
+        redirect('tickets/ticket/' . $ticket->ticket_id);
+
+
+    }
+
+    /* Private Methods */
+
+    /**
+     * Upload Ticket
+     */
+    private function _uploadTicket($ticket=array()) {
+
+        $config['upload_path'] = APPPATH . '/cache/tickets/';
+        $config['allowed_types'] = 'gif|jpg|png|pdf|doc';
+        $config['max_size'] = 2048;
+        $config['encrypt_name'] = true;
+
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+        if ( ! $this->upload->do_upload('ticket_file')) {
+            return false;
+        } else {
+            $file = $this->upload->data();
+            $file['user_id'] = (int) $ticket['user_id'];
+            $file['ticket_id'] = (int) $ticket['ticket_id'];
+            try {
+                $this->ticket_model->addTicketFile($file);
+            } catch (Exception $e) {
+                $this->growl($e->getMessage());
+                return false;
+            }
+
+            $this->ticket_model->log('attached file', $ticket);
+
+            return true;
+        }
     }
 
 }
