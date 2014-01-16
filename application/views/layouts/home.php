@@ -111,7 +111,7 @@
 <div class="row">
     <div class="col-md-offset-1 col-md-7">
         <h3>Getting Started</h3>
-        <p class="lead">Everything in SeatShare is organized around the idea of a group. A group is a collection of users (like you!) that often purchased season tickets or receive them from a friend. Generally, a group consists of folks that you know and trust already.</p>
+        <p class="lead">Everything in SeatShare is organized around the idea of a group. A group is a collection of users (like you!) that often purchase season tickets or receive them from a friend. Generally, a group consists of folks that you know and trust already.</p>
     </div>
     <div class="col-md-3">
         <a href="<?php echo site_url('register'); ?>"><img src="<?php echo site_url('assets/images/screenshot-groups.png'); ?>" alt="Screenshot" title="Groups" class="img-thumbnail hidden-xs" /></a>
