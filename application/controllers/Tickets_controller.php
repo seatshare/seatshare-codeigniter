@@ -15,8 +15,6 @@ class Tickets_Controller extends MY_Controller
         $this->load->model('ticket_model');
         $this->load->model('event_model');
         $this->load->model('email_model');
-
-        $this->load->helper('number');
     }
 
     /**
