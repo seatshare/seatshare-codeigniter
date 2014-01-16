@@ -20,7 +20,11 @@
 
 <p>SeatShare allows users to request and assign tickets to other users. The tickets may have a price for sale listed with them. SeatShare does not at this time collect money on behalf of other users. Compensation is agreed upon by the two parties involved. By using this site, you agree that SeatShare is not responsible for collecting any money owed to you nor are we responsible for making payments on your behalf.</p>
 
+<<<<<<< HEAD
 <h3>Ticket File Attachments</h3>
+=======
+<h3>Tickets File Attachments</h3>
+>>>>>>> 8ee6109e0af8fadc5adcd18a6ada329c21fc03d1
 
 <p>SeatShare provides a mechanism by which the user may upload files, such as event tickets or parking passes, to our servers for the purpose of another user downloading those files upon being assigned a ticket. Only tickets, passes and related material are permitted to be uploaded to our servers. Other content will be removed. SeatShare does not guarantee that uploaded files are retained beyond thirty (30) days after the event for which they were intended for use. SeatShare reserves the right to limit user uploads.
 
