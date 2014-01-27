@@ -75,7 +75,7 @@
 				<br />(for <?php echo $ticket->alias->name; ?>)
 				<?php endif; ?>
 				<?php else: ?>
-				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><span class="badge badge-lg">Available!</span></a>
+				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>" data-toggle="tooltip" title="Request Ticket"><span class="badge badge-lg">Available!</span></a>
 				<?php endif; ?>
 			</td>
 			<td class="text-right">

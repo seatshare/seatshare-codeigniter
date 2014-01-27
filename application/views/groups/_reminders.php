@@ -21,4 +21,6 @@
 	</div>
 </div>
 
+<?php echo form_fieldset_close(); ?>
+
 <?php echo form_close(); ?>

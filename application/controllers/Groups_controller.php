@@ -93,6 +93,7 @@ class Groups_Controller extends MY_Controller
         $data['reminders'] = $this->group_model->getReminderTypes();
         $data['subscribed'] = $subscribed;
         $data['sidebar'] = $this->load->view('groups/_reminders', $data, true);
+
         $this->template->setPageTitle($group->group);
         $this->template->setHead('<script>mixpanel.track("View group");</script>');
         $this->load->view('groups/view_group', $data);

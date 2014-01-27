@@ -22,6 +22,9 @@ class Group_Model extends CI_Model {
 		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('groups g');
 		$groups = $query->result();
+		foreach ($groups as $i => $group) {
+			$groups[$i]->members = $this->getGroupUsersByGroupId($group->group_id);
+		}
 		return $groups;
 	}
 
@@ -66,6 +69,9 @@ class Group_Model extends CI_Model {
 		$this->db->order_by('g.group', 'ASC');
 		$query = $this->db->get('group_users gu');
 		$groups = $query->result();
+		foreach ($groups as $i => $group) {
+			$groups[$i]->members = $this->getGroupUsersByGroupId($group->group_id);
+		}
 		return $groups;
 	}
 

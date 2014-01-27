@@ -16,6 +16,9 @@ $('a.confirm').click(function() {
 	return window.confirm('Are you sure?');
 });
 
+// Tooltips
+$('a[data-toggle="tooltip"], span[data-toggle="tooltip"], div[data-toggle="tooltip"]').tooltip();
+
 // Sidebar Calendar
 // @requires clndr.js
 $(document).ready(function() {
