@@ -72,3 +72,8 @@ ul.group-members li {
 .home-cta {
 	margin-top: 2em;
 }
+
+/* Tooltips */
+[data-toggle="tooltip"] {
+	cursor: pointer;
+}

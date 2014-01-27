@@ -47,6 +47,8 @@ class Dashboard_Controller extends MY_Controller
 
         $this->template->setPageTitle('Dashboard');
         $data['sidebar'] = $this->load->view('dashboard/_sidebar', $data, true);
+        $data['sidebar'] .= $this->load->view('groups/_invite', $data, true);
+
         $this->template->setHead('<script>mixpanel.track("View dashboard");</script>');
         $this->template->setHead('<link rel="stylesheet" href="' . site_url('assets/libraries/add-to-homescreen/style/add2home.css') . '">');
         $this->template->setFoot('<script type="application/javascript" src="' . site_url('assets/libraries/add-to-homescreen/src/add2home.js') . '"></script>');
