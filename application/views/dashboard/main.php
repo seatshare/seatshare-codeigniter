@@ -68,9 +68,11 @@
 <?php else: ?>
 <div class="panel panel-default">
 	<div class="panel-heading">
+			<?php if ($event->ticketStatus['tickets_available']): ?>
 			<div class="pull-right">
 				<a href="javascript:void(0)" onclick="$('#tickets-<?php echo $event->event_id; ?>').collapse('toggle')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list"></span></a>
 			</div>
+			<?php endif; ?>
 			<span class="glyphicon glyphicon-calendar"></span> <?php if (!$event->date_tba): ?><?php echo date('l', strtotime($event->start_time)); ?>, <?php echo date('F j, Y', strtotime($event->start_time)); ?> - <?php echo ($event->time_tba) ? 'TBA' : date('g:i a', strtotime($event->start_time)); ?><?php endif; ?>
 	</div>
 	<div class="panel-body">
@@ -84,6 +86,7 @@
 			</div>
 		</div>
 		
+		<?php if ($event->ticketStatus['tickets_available']): ?>
 		<div id="tickets-<?php echo $event->event_id; ?>" class="collapse">
 			<table class="table">
 				<tbody>
@@ -105,6 +108,7 @@
 				</tbody>
 			</table>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
 <?php endif; ?>
