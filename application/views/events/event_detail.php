@@ -54,15 +54,12 @@
 	<?php foreach($tickets as $ticket): ?>
 		<tr>
 			<td>
-				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>">
-				<span>
-					<span><?php echo $ticket->section; ?></span>
-					<span><?php echo $ticket->row; ?></span>
-					<span><?php echo $ticket->seat; ?></span>
-				</span>
-				</a>
+				<a href="<?php echo site_url('tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a>
 				<?php if ($ticket->note): ?>
 				<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
+				<?php endif; ?>
+				<?php if ($ticket->files): ?>
+				<span data-toggle="tooltip" title="Attachments" class="glyphicon glyphicon-paperclip"></span>
 				<?php endif; ?>
 			</td>
 			<td>

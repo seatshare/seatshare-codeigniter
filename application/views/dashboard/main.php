@@ -52,6 +52,9 @@
 						<?php if ($ticket->note): ?>
 						<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
 						<?php endif; ?>
+						<?php if ($ticket->files): ?>
+						<span data-toggle="tooltip" title="Attachments" class="glyphicon glyphicon-paperclip"></span>
+						<?php endif; ?>
 					</td>
 					<td>via <?php echo $ticket->owner->name; ?></td>
 					<td class="text-right">
@@ -97,6 +100,9 @@
 							<a href="<?php echo site_url('/tickets/ticket/' . $ticket->ticket_id); ?>"><?php echo $ticket->section; ?> <?php echo $ticket->row; ?> <?php echo $ticket->seat; ?></a>
 							<?php if ($ticket->note): ?>
 							<span data-toggle="tooltip" title="<?php echo htmlentities($ticket->note); ?>" class="glyphicon glyphicon-comment"></span>
+							<?php endif; ?>
+							<?php if ($ticket->files): ?>
+							<span data-toggle="tooltip" title="Attachments" class="glyphicon glyphicon-paperclip"></span>
 							<?php endif; ?>
 						</td>
 						<td>via <?php echo $ticket->owner->name; ?></td>

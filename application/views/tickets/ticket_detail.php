@@ -114,6 +114,13 @@
 			<?php echo form_textarea(array('name'=>'message', 'class'=>'form-control', 'placeholder'=>'You can include additional notes here for this request. We will already include the ticket details.', 'value'=>'')); ?>
 		</div>
 	</div>
+	<?php if (is_array($ticket->files) && count($ticket->files)): ?>
+	<div class="form-group">
+		<?php echo form_label('Attachments', 'attachments', array('class'=>'col-md-3 control-label')); ?>
+		<div class="col-md-9">
+			<p class="form-control-static">This ticket has <strong><?php echo (count($ticket->files) == 1) ? '1 file' : count($ticket->files) . ' files'; ?></strong> attached. Only the owner or ticket assignee can download attachments.</p>
+		</div>
+	<?php endif; ?>
 	<div class="row">
 		<div class="col-md-12">
 			<p class="text-right">

@@ -77,9 +77,10 @@ class Ticket_Model extends CI_Model {
 		$tickets = array();
 		foreach ($result as $i => $row) {
 			$tickets[$i] = $row;
-			$tickets[$i]->owner = $this->user_model->getUserById($tickets[$i]->owner_id);
-			$tickets[$i]->alias = ($tickets[$i]->alias_id) ?  $this->user_model->getAliasById($tickets[$i]->alias_id) : 0;
-			$tickets[$i]->assigned = ($tickets[$i]->user_id) ? $this->user_model->getUserById($tickets[$i]->user_id) : 0;
+			$tickets[$i]->files = $this->getTicketFilesById($row->ticket_id);
+			$tickets[$i]->owner = $this->user_model->getUserById($row->owner_id);
+			$tickets[$i]->alias = ($row->alias_id) ?  $this->user_model->getAliasById($row->alias_id) : 0;
+			$tickets[$i]->assigned = ($row->user_id) ? $this->user_model->getUserById($row->user_id) : 0;
 		}
 		return $tickets;
 	}
